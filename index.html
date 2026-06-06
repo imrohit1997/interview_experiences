@@ -156,20 +156,86 @@
 
     <div class="cv-container">
         <div class="toolbar">
-            <a href="CV/CV.pdf" download="Rohit_CV.pdf" class="download-btn">
+            <a href="#" class="download-btn" style="visibility: hidden;">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
                 Download PDF
             </a>
         </div>
-        <div class="pdf-viewer">
-            <!-- IMPORTANT: Make sure your PDF file is named exactly 'CV.pdf' inside the 'CV' folder -->
-            <iframe src="CV/CV.pdf" title="Curriculum Vitae">
+        <div class="pdf-viewer" style="position: relative;">
+            <div id="loading-state" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: white; color: #64748b; font-size: 1.1rem; z-index: 10;">
+                Looking for your CV...
+            </div>
+            <iframe src="" title="Curriculum Vitae" style="opacity: 0; transition: opacity 0.5s ease; position: relative; z-index: 20;">
                 This browser does not support PDFs. Please download the PDF to view it.
             </iframe>
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const iframe = document.querySelector('iframe');
+            const downloadBtn = document.querySelector('.download-btn');
+            const loadingState = document.getElementById('loading-state');
+            
+            async function findPdfUrl() {
+                // Method 1: GitHub API (Ideal for GitHub Pages)
+                try {
+                    let repoOwner = "imrohit1997";
+                    let repoName = "interview_experiences";
+                    
+                    if (window.location.hostname.includes("github.io")) {
+                        repoOwner = window.location.hostname.split('.')[0];
+                        const pathParts = window.location.pathname.split('/');
+                        repoName = pathParts[1] || repoName;
+                    }
+
+                    const response = await fetch(`https://api.github.com/repos/${repoOwner}/${repoName}/contents/CV`);
+                    if (response.ok) {
+                        const files = await response.json();
+                        const pdfFile = files.find(f => f.name.toLowerCase().endsWith('.pdf'));
+                        if (pdfFile) return { url: `CV/${pdfFile.name}`, name: pdfFile.name };
+                    }
+                } catch (e) {
+                    console.log("GitHub API method skipped or failed.", e);
+                }
+
+                // Method 2: Local Directory Listing (Works on local dev servers)
+                try {
+                    const response = await fetch('CV/');
+                    if (response.ok) {
+                        const html = await response.text();
+                        const match = html.match(/href=["']?([^"'>]+\.pdf)["']?/i);
+                        if (match) {
+                            const fileName = match[1].split('/').pop();
+                            return { url: `CV/${fileName}`, name: decodeURIComponent(fileName) };
+                        }
+                    }
+                } catch (e) {
+                    console.log("Local directory index method skipped.", e);
+                }
+
+                return null;
+            }
+
+            const pdfInfo = await findPdfUrl();
+            
+            if (pdfInfo) {
+                iframe.src = pdfInfo.url;
+                downloadBtn.href = pdfInfo.url;
+                downloadBtn.download = pdfInfo.name;
+                
+                // Show iframe and download button once loaded
+                iframe.onload = () => {
+                    loadingState.style.display = 'none';
+                    iframe.style.opacity = '1';
+                };
+                downloadBtn.style.visibility = 'visible';
+            } else {
+                loadingState.innerHTML = `<span style="color: #ef4444; padding: 1rem; text-align: center;">Could not find the PDF file in the CV folder.<br><small style="color: #64748b; margin-top: 0.5rem; display: block;">Note: Browser security prevents dynamic file loading when opened directly from a local folder (file://). Please use a local web server or push to GitHub.</small></span>`;
+            }
+        });
+    </script>
 </body>
 </html>
