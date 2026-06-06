@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rohit Rambansh Yadav - Curriculum Vitae</title>
+    <title>Rohit Rambansh Yadav - Resume</title>
     <meta name="description" content="CV of Rohit Rambansh Yadav - Senior Backend Engineer">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        /* CSS Variables */
+        /* Modern Professional Light Theme (Inter Font) */
         :root {
-            --bg-color: #0f172a;
-            --text-primary: #f8fafc;
-            --text-secondary: #cbd5e1;
-            --text-muted: #94a3b8;
-            --accent-color: #3b82f6;
-            --accent-hover: #2563eb;
-            --glass-bg: rgba(30, 41, 59, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --card-bg: rgba(15, 23, 42, 0.4);
-            --gradient-text: linear-gradient(to right, #60a5fa, #c084fc);
+            --bg-color: #f8fafc;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent-color: #2563eb;
+            --accent-hover: #1d4ed8;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
         }
 
         * {
@@ -28,40 +31,33 @@
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: var(--bg-color);
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(225,39%,30%,0.3) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(339,49%,30%,0.3) 0, transparent 50%);
-            background-attachment: fixed;
             color: var(--text-primary);
             line-height: 1.6;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
         }
 
         a {
             color: var(--accent-color);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
 
         a:hover {
-            color: #60a5fa;
+            color: var(--accent-hover);
             text-decoration: underline;
         }
 
         .container {
-            max-width: 1000px;
+            max-width: 900px;
             margin: 0 auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 0.8s ease-out;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3.5rem 4rem;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.6s ease-out;
         }
 
         /* Header Section */
@@ -69,33 +65,31 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            border-bottom: 1px solid var(--glass-border);
+            border-bottom: 2px solid var(--border-color);
             padding-bottom: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             flex-wrap: wrap;
             gap: 1.5rem;
         }
 
         .header-content h1 {
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: var(--gradient-text);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
-            line-height: 1.1;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
         .contact-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 1.2rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-top: 1rem;
         }
-        
+
         .contact-item {
             display: flex;
             align-items: center;
@@ -103,51 +97,64 @@
         }
 
         .download-btn {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            background-color: var(--text-primary);
             color: white !important;
             text-decoration: none !important;
-            padding: 0.8rem 1.5rem;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+            box-shadow: var(--shadow-sm);
             white-space: nowrap;
         }
 
         .download-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.6);
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
         }
 
         /* Sections */
         section {
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
-            color: #f8fafc;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 0.8rem;
+            gap: 1rem;
         }
 
         h2::after {
             content: '';
-            height: 1px;
+            height: 2px;
             flex: 1;
-            background: linear-gradient(to right, var(--glass-border), transparent);
+            background-color: var(--bg-color);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            margin-top: 1.5rem;
         }
 
         p {
             color: var(--text-secondary);
             margin-bottom: 1rem;
+            font-size: 1rem;
+            text-align: justify;
         }
 
         ul {
@@ -157,54 +164,52 @@
 
         /* Cards for nested content */
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: transform 0.3s ease, background 0.3s ease;
+            background: #ffffff;
+            border-left: 3px solid var(--border-color);
+            padding: 0 0 0 1.5rem;
+            margin-bottom: 2rem;
+            transition: border-color 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-3px);
-            background: rgba(30, 41, 59, 0.8);
+            border-left-color: var(--accent-color);
         }
 
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
 
         .card-title {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            color: #f8fafc;
+            color: var(--text-primary);
         }
-        
+
         .card-subtitle {
             font-size: 1rem;
-            color: var(--text-muted);
-            font-style: italic;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 0.2rem;
         }
 
         .card-meta {
             font-size: 0.9rem;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.3rem 0.8rem;
-            border-radius: 9999px;
+            color: var(--text-secondary);
             font-weight: 500;
+            text-align: right;
         }
 
         .bullet-list li {
             position: relative;
-            padding-left: 1.5rem;
-            margin-bottom: 0.8rem;
+            padding-left: 1.2rem;
+            margin-bottom: 0.6rem;
             color: var(--text-secondary);
+            font-size: 0.95rem;
         }
 
         .bullet-list li::before {
@@ -212,31 +217,30 @@
             color: var(--accent-color);
             position: absolute;
             left: 0;
-            font-size: 1.2rem;
-            line-height: 1.2;
             font-weight: bold;
         }
-        
+
         /* Skills section specifics */
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1rem;
+            gap: 1.2rem;
         }
 
         .skill-item {
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            padding: 1rem 1.2rem;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1.2rem 1.5rem;
         }
-        
+
         .skill-title {
             font-weight: 600;
-            color: #e2e8f0;
-            margin-bottom: 0.3rem;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
         }
-        
+
         .skill-desc {
             color: var(--text-secondary);
             font-size: 0.95rem;
@@ -246,55 +250,72 @@
         .badge-list {
             display: flex;
             flex-direction: column;
-            gap: 0.8rem;
+            gap: 1rem;
         }
 
         .badge-item {
             display: flex;
-            align-items: baseline;
+            align-items: flex-start;
             gap: 0.8rem;
-            background: var(--card-bg);
-            border: 1px solid var(--glass-border);
-            padding: 1rem 1.2rem;
-            border-radius: 12px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--bg-color);
         }
 
-        .badge-item::before {
-            content: '🏆';
+        .badge-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .badge-item strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .badge-icon {
             font-size: 1.2rem;
-        }
-        
-        .cert-item::before {
-            content: '📜';
-        }
-        
-        .lead-item::before {
-            content: '🚀';
+            line-height: 1;
+            margin-top: 0.2rem;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 1.5rem;
-                border-radius: 16px;
+                padding: 2rem 1.5rem;
             }
+
             .header-content h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
+
             header {
                 flex-direction: column;
             }
+
             .download-btn {
                 width: 100%;
                 justify-content: center;
             }
+
+            .card-meta {
+                text-align: left;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -305,22 +326,31 @@
                 <div class="contact-info">
                     <span class="contact-item">📍 Kolkata, West Bengal, India</span>
                     <span class="contact-item">📞 +91-9831808979</span>
-                    <span class="contact-item">✉️ <a href="mailto:rohitrambansh@gmail.com">rohitrambansh@gmail.com</a></span>
-                    <span class="contact-item">🔗 <a href="https://linkedin.com/in/imrohit2611/" target="_blank">linkedin.com/in/imrohit2611/</a></span>
+                    <span class="contact-item">✉️ <a
+                            href="mailto:rohitrambansh@gmail.com">rohitrambansh@gmail.com</a></span>
+                    <span class="contact-item">🔗 <a href="https://linkedin.com/in/imrohit2611/"
+                            target="_blank">linkedin.com/in/imrohit2611/</a></span>
                 </div>
             </div>
-            <a href="CV/Resume_Rohit_Yadav.pdf" download="Resume_Rohit_Yadav.pdf" class="download-btn" id="download-btn">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            <a href="CV/Resume_Rohit_Yadav.pdf" download="Resume_Rohit_Yadav.pdf" class="download-btn"
+                id="download-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="18"
+                    height="18">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                Download PDF CV
+                Download PDF
             </a>
         </header>
 
         <!-- Summary -->
         <section>
             <h2>Summary</h2>
-            <p>Senior Backend Engineer with 5+ years of enterprise experience building large-scale, high-availability telecom billing platforms for UK based telecom operators. Specialized in Core Java, Spring Boot, microservices, telecom rating systems, AI/LLM automation pipelines and cloud technologies. Delivered performance improvements across CDR processing systems, led UAT for MVNO billing programs, and mentored 50+ engineers.</p>
+            <p>Senior Backend Engineer with 5+ years of enterprise experience building large-scale, high-availability
+                telecom billing platforms for UK based telecom operators. Specialized in Core Java, Spring Boot,
+                microservices, telecom rating systems, AI/LLM automation pipelines and cloud technologies. Delivered
+                performance improvements across CDR processing systems, led UAT for MVNO billing programs, and mentored
+                50+ engineers.</p>
         </section>
 
         <!-- Work Experience -->
@@ -335,16 +365,30 @@
                     <div class="card-meta">August 2020 – Present</div>
                 </div>
                 <ul class="bullet-list">
-                    <li><strong>System Architecture & Development:</strong> Designed and delivered high-availability E2E telecom billing solutions (via Java, Spring Boot, OCOMC) processing 100M+ daily CDRs, driving ~£20M in revenue, and directly contributing to critical architectural design decisions across diverse platforms.</li>
-                    <li><strong>Domain Expertise:</strong> Managed and optimized MVNO billing, interconnect billing, and complex subscriber provisioning systems.</li>
-                    <li><strong>Performance Engineering:</strong> Engineered a real-time Call Detail Record (CDR) processing mechanism utilizing multithreading, reducing processing latency by 50% to achieve near real-time performance. Consistently addressed and resolved critical production issues to improve system performance and uptime.</li>
-                    <li><strong>Client Leadership:</strong> Spearheaded the User Acceptance Testing (UAT) phase for an E2E billing application catering to a UK-based MVNO, resulting in formal client appreciation.</li>
-                    <li><strong>Mentorship & Leadership:</strong> Served as a technical mentor and trainer for Java, successfully upskilling over 50 internal and external associates. Actively volunteered in project-level and team-building activities. Participated in TCS fresher hiring process as a Technical SME.</li>
-                    <li><strong>Career Progression:</strong> Promoted to the highly competitive TCS Digital cadre within just 1.5 years of joining after successfully clearing rigorous internal technical assessments.</li>
+                    <li><strong>System Architecture & Development:</strong> Designed and delivered high-availability E2E
+                        telecom billing solutions (via Java, Spring Boot, OCOMC) processing 100M+ daily CDRs, driving
+                        ~£20M in revenue, and directly contributing to critical architectural design decisions across
+                        diverse platforms.</li>
+                    <li><strong>Domain Expertise:</strong> Managed and optimized MVNO billing, interconnect billing, and
+                        complex subscriber provisioning systems.</li>
+                    <li><strong>Performance Engineering:</strong> Engineered a real-time Call Detail Record (CDR)
+                        processing mechanism utilizing multithreading, reducing processing latency by 50% to achieve
+                        near real-time performance. Consistently addressed and resolved critical production issues to
+                        improve system performance and uptime.</li>
+                    <li><strong>Client Leadership:</strong> Spearheaded the User Acceptance Testing (UAT) phase for an
+                        E2E billing application catering to a UK-based MVNO, resulting in formal client appreciation.
+                    </li>
+                    <li><strong>Mentorship & Leadership:</strong> Served as a technical mentor and trainer for Java,
+                        successfully upskilling over 50 internal and external associates. Actively volunteered in
+                        project-level and team-building activities. Participated in TCS fresher hiring process as a
+                        Technical SME.</li>
+                    <li><strong>Career Progression:</strong> Promoted to the highly competitive TCS Digital cadre within
+                        just 1.5 years of joining after successfully clearing rigorous internal technical assessments.
+                    </li>
                 </ul>
             </div>
-            
-            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: #f8fafc;">Key Achievements:</h3>
+
+            <h3>Key Achievements</h3>
             <ul class="bullet-list" style="margin-bottom: 1.5rem;">
                 <li>Bronze Guru Award for talent development initiatives (2026)</li>
                 <li>Selected for TCS NextGen Mentorship Program (2025)</li>
@@ -362,16 +406,16 @@
                         <div class="card-title">B.Tech – ECE</div>
                         <div class="card-subtitle">Netaji Subhash Engineering College</div>
                     </div>
-                    <div style="text-align: right;">
-                        <div class="card-meta" style="margin-bottom: 0.3rem; display: inline-block;">2020</div>
-                        <div style="color: var(--text-muted); font-size: 0.95rem;">CGPA - 9.17/10</div>
+                    <div class="card-meta">
+                        <div style="margin-bottom: 0.2rem;">2020</div>
+                        <div>CGPA - 9.17/10</div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Technical Skills -->
-        <section style="margin-top: 2.5rem;">
+        <section>
             <h2>Technical Skills</h2>
             <div class="skills-grid">
                 <div class="skill-item">
@@ -380,7 +424,8 @@
                 </div>
                 <div class="skill-item">
                     <div class="skill-title">Frameworks & Libraries</div>
-                    <div class="skill-desc">Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT), Microservices, Junit, TDD, LangChain.</div>
+                    <div class="skill-desc">Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT),
+                        Microservices, Junit, TDD, LangChain.</div>
                 </div>
                 <div class="skill-item">
                     <div class="skill-title">Cloud & DevOps</div>
@@ -396,24 +441,30 @@
         <!-- Projects -->
         <section>
             <h2>Projects</h2>
-            
+
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">LLM-Based Trade Execution Bot for algorithmic trading</div>
                 </div>
                 <ul class="bullet-list">
-                    <li>Built an AI-powered Python-based algorithmic trading platform utilizing <strong>Groq (LLaMA 3.1)</strong>, Selenium, and AWS EC2 to autonomously parse Telegram trading signals and execute risk-managed multi-leg GTT orders on the Upstox platform.</li>
-                    <li>Engineered a robust system with automated daily OAuth login via TOTP, a 6-gate risk filter (EMA trend, R:R, liquidity checks), and a GitHub Actions CI/CD pipeline for zero-touch deployment.</li>
+                    <li>Built an AI-powered Python-based algorithmic trading platform utilizing <strong>Groq (LLaMA
+                            3.1)</strong>, Selenium, and AWS EC2 to autonomously parse Telegram trading signals and
+                        execute risk-managed multi-leg GTT orders on the Upstox platform.</li>
+                    <li>Engineered a robust system with automated daily OAuth login via TOTP, a 6-gate risk filter (EMA
+                        trend, R:R, liquidity checks), and a GitHub Actions CI/CD pipeline for zero-touch deployment.
+                    </li>
                 </ul>
             </div>
-            
+
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">Ariel Droplets - Smart India Hackathon Runner-Up (Final Year Project)</div>
                 </div>
                 <ul class="bullet-list">
-                    <li>Engineered a prototype system capable of condensing and generating potable drinking water directly from atmospheric moisture.</li>
-                    <li>Presented the working prototype at the Smart India Hackathon 2019, securing the runner-up position on a national stage.</li>
+                    <li>Engineered a prototype system capable of condensing and generating potable drinking water
+                        directly from atmospheric moisture.</li>
+                    <li>Presented the working prototype at the Smart India Hackathon 2019, securing the runner-up
+                        position on a national stage.</li>
                 </ul>
             </div>
         </section>
@@ -422,29 +473,38 @@
         <section>
             <h2>Certifications</h2>
             <div class="badge-list">
-                <div class="badge-item cert-item">
+                <div class="badge-item">
+                    <span class="badge-icon">📜</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Cloud & Architecture:</strong> AWS Certified Solutions Architect - Associate (2025)
+                        <strong>Cloud & Architecture:</strong> AWS Certified Solutions Architect - Associate (2025)
                     </div>
                 </div>
-                <div class="badge-item cert-item">
+                <div class="badge-item">
+                    <span class="badge-icon">📜</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Cloud & AI:</strong> Microsoft Certified: Azure Fundamentals (AZ-900) and Azure AI Fundamentals (AI-900) (2024).
+                        <strong>Cloud & AI:</strong> Microsoft Certified: Azure Fundamentals (AZ-900) and Azure AI
+                        Fundamentals (AI-900) (2024).
                     </div>
                 </div>
-                <div class="badge-item cert-item">
+                <div class="badge-item">
+                    <span class="badge-icon">📜</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Data & Process:</strong> Certification in Data Analytics by LinkedIn and Microsoft (2024); CSSC Six Sigma White Belt certification (2023).
+                        <strong>Data & Process:</strong> Certification in Data Analytics by LinkedIn and Microsoft
+                        (2024); CSSC Six Sigma White Belt certification (2023).
                     </div>
                 </div>
-                <div class="badge-item cert-item">
+                <div class="badge-item">
+                    <span class="badge-icon">🏆</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Academic Honors:</strong> Achieved State-level ranks of 56 and 60 in the Science and Mathematics Olympiad, respectively (2015).
+                        <strong>Academic Honors:</strong> Achieved State-level ranks of 56 and 60 in the Science and
+                        Mathematics Olympiad, respectively (2015).
                     </div>
                 </div>
-                <div class="badge-item cert-item">
+                <div class="badge-item">
+                    <span class="badge-icon">📜</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Additional Training:</strong> Udemy certification in Core Java, DevOps, Shell scripting, Spring Boot (2021); NPTEL certification in Python Data Structures/Algorithms (2019).
+                        <strong>Additional Training:</strong> Udemy certification in Core Java, DevOps, Shell scripting,
+                        Spring Boot (2021); NPTEL certification in Python Data Structures/Algorithms (2019).
                     </div>
                 </div>
             </div>
@@ -454,19 +514,28 @@
         <section>
             <h2>Leadership & Extracurricular Activities</h2>
             <div class="badge-list">
-                <div class="badge-item lead-item">
+                <div class="badge-item">
+                    <span class="badge-icon">🚀</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Pre-Screening Evaluator, Smart India Hackathon (2024 – 2025):</strong> Volunteered as an official pre-screening judge to rigorously review and evaluate technical solutions submitted by engineering teams nationwide.
+                        <strong>Pre-Screening Evaluator, Smart India Hackathon (2024 – 2025):</strong> Volunteered as an
+                        official pre-screening judge to rigorously review and evaluate technical solutions submitted by
+                        engineering teams nationwide.
                     </div>
                 </div>
-                <div class="badge-item lead-item">
+                <div class="badge-item">
+                    <span class="badge-icon">🚀</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Placement Representative, NSEC ECE Department (2019 – 2020):</strong> Managed corporate communications and oversaw the placement process for a batch of 120+ students. Collaborated heavily with the central Placement Cell to resolve logistical conflicts during recruitment drives.
+                        <strong>Placement Representative, NSEC ECE Department (2019 – 2020):</strong> Managed corporate
+                        communications and oversaw the placement process for a batch of 120+ students. Collaborated
+                        heavily with the central Placement Cell to resolve logistical conflicts during recruitment
+                        drives.
                     </div>
                 </div>
-                <div class="badge-item lead-item">
+                <div class="badge-item">
+                    <span class="badge-icon">🚀</span>
                     <div>
-                        <strong style="color: #e2e8f0;">Content Writing Intern, Connect My Edu (2018):</strong> Completed a virtual internship focused on researching, writing, and proofreading articles on diverse, niche topics.
+                        <strong>Content Writing Intern, Connect My Edu (2018):</strong> Completed a virtual internship
+                        focused on researching, writing, and proofreading articles on diverse, niche topics.
                     </div>
                 </div>
             </div>
@@ -478,12 +547,12 @@
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
             const downloadBtn = document.getElementById('download-btn');
-            
+
             async function findPdfUrl() {
                 try {
                     let repoOwner = "imrohit1997";
                     let repoName = "interview_experiences";
-                    
+
                     if (window.location.hostname.includes("github.io")) {
                         repoOwner = window.location.hostname.split('.')[0];
                         const pathParts = window.location.pathname.split('/');
@@ -525,4 +594,5 @@
         });
     </script>
 </body>
+
 </html>
