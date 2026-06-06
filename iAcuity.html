@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iAcuity Interview Experience</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .metadata {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        ul {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>iAcuity Interview experience</h1>
+
+    <div class="metadata">
+        <p><strong>Date:</strong> June 5, 2026</p>
+        <p><strong>Duration:</strong> 19 minutes, 34 seconds (19:02:36 – 19:22:10)</p>
+    </div>
+
+    <h2>Microservices Architecture</h2>
+
+    <div class="question">1. What are the advantages of using microservices?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Independent Deployment & Scaling:</strong> Services can be deployed independently without
+                redeploying the entire application. High-traffic services can be scaled horizontally without paying the
+                cost to scale idle components.</li>
+            <li><strong>Fault Isolation:</strong> If one service crashes (e.g., due to an out-of-memory error), it does
+                not bring down the entire system.</li>
+            <li><strong>Technology Agnostic:</strong> Different teams can choose the best language, database, or tech
+                stack for their specific service.</li>
+            <li><strong>Smaller Codebases:</strong> Easier for developers to understand, maintain, and test compared to
+                massive monoliths.</li>
+        </ul>
+    </div>
+
+    <div class="question">2. What is an API Gateway, and how does it know which service to route requests to?</div>
+    <div class="answer">
+        <p>An API Gateway acts as the single entry point for all client requests. It knows how to route traffic by
+            looking at the request metadata (URL path, HTTP headers, or query parameters) and matching it against a set
+            of configured routing rules. In dynamic environments, the gateway talks to a Service Discovery registry to
+            resolve the current IP addresses and ports of the target services before routing the request.</p>
+    </div>
+
+    <div class="question">3. What is Service Discovery, and how do services register with it?</div>
+    <div class="answer">
+        <p>Service Discovery (like Netflix Eureka or HashiCorp Consul) is a central registry that keeps track of the
+            network locations of all available microservices.</p>
+        <ul>
+            <li><strong>Registration:</strong> When a microservice instance starts up, it sends a network call to the
+                registry declaring its IP address, port, and service name.</li>
+            <li><strong>Maintenance:</strong> The service continuously sends "heartbeats" to the registry to prove it is
+                healthy. If the registry misses several heartbeats, it deregisters the instance so traffic is no longer
+                routed to it.</li>
+        </ul>
+    </div>
+
+    <h2>Database Design & Data Modeling</h2>
+
+    <div class="question">4. If you need to assign multiple roles to users, how many tables do you need, and how do you
+        link them?</div>
+    <div class="answer">
+        <p>To handle a many-to-many relationship between Users and Roles, you need <strong>three</strong> tables:</p>
+        <ol>
+            <li><code>users</code>: Stores user data. Primary key is <code>user_id</code>.</li>
+            <li><code>roles</code>: Stores role definitions (e.g., ADMIN, USER). Primary key is <code>role_id</code>.
+            </li>
+            <li><code>user_roles</code> (Join/Mapping table): Contains two foreign key columns (<code>user_id</code> and
+                <code>role_id</code>) that link back to the primary keys of the first two tables. A composite primary
+                key made of both columns prevents duplicate assignments.
+            </li>
+        </ol>
+    </div>
+
+    <h2>Application Logic, ORM, & Concurrency</h2>
+
+    <div class="question">5. What is the <code>@PrePersist</code> annotation, and why would you use it?</div>
+    <div class="answer">
+        <p><code>@PrePersist</code> is a JPA (Java Persistence API) lifecycle callback annotation. It is attached to a
+            method inside an entity class and is executed automatically right before the entity is inserted into the
+            database for the first time.</p>
+        <ul>
+            <li><strong>Use cases:</strong> Automatically setting a <code>createdAt</code> timestamp, generating a UUID,
+                or computing a custom username based on other entity fields before the INSERT statement fires.</li>
+        </ul>
+    </div>
+
+    <div class="question">6. If two concurrent requests try to create the same custom username at the same time, what
+        happens? What occurs if we use the <code>SERIALIZABLE</code> isolation level?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Default Behavior:</strong> Without proper locks, a race condition occurs. Both threads might
+                read the database, see the username is available, and attempt to insert it. If there is a unique
+                constraint on the username column, the database will throw a
+                <code>UniqueConstraintViolationException</code> on the second insert. If there is no constraint,
+                duplicate usernames will be created.
+            </li>
+            <li><strong>Using SERIALIZABLE:</strong> <code>SERIALIZABLE</code> is the strictest database transaction
+                isolation level. It prevents phantom reads by acquiring range locks or table-level locks. The
+                transactions are forced to execute sequentially. The first transaction will succeed, and the second will
+                either block until the first finishes (and then fail validation) or immediately throw a serialization
+                failure exception. While safe, this heavily degrades application performance and throughput.</li>
+        </ul>
+    </div>
+
+    <h2>Performance & Optimization</h2>
+
+    <div class="question">7. After a user is created, the email-sending logic takes a lot of time. How can we optimize
+        this using an asynchronous model?</div>
+    <div class="answer">
+        <p>You should decouple the slow email-sending process from the main HTTP request thread so the user doesn't
+            experience a delayed response.</p>
+        <ul>
+            <li><strong>Message Queues (Best Practice):</strong> The API saves the user to the database, publishes a
+                <code>UserCreatedEvent</code> message to a broker (like Kafka, RabbitMQ, or AWS SQS), and immediately
+                returns a <code>200 OK</code> to the client. A separate worker service consumes that message and sends
+                the email in the background.
+            </li>
+            <li><strong>Thread Pools / <code>@Async</code>:</strong> In a Spring Boot app, you can annotate the email
+                method with <code>@Async</code>. The main web thread hands the task off to a background thread pool and
+                immediately returns the HTTP response.</li>
+        </ul>
+    </div>
+
+</body>
+
+</html>
