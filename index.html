@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rohit - Curriculum Vitae</title>
-    <meta name="description" content="Rohit's Curriculum Vitae">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Rohit Rambansh Yadav - Curriculum Vitae</title>
+    <meta name="description" content="CV of Rohit Rambansh Yadav - Senior Backend Engineer">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* CSS Variables */
         :root {
             --bg-color: #0f172a;
             --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
             --accent-color: #3b82f6;
             --accent-hover: #2563eb;
-            --glass-bg: rgba(30, 41, 59, 0.7);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-bg: rgba(30, 41, 59, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(15, 23, 42, 0.4);
+            --gradient-text: linear-gradient(to right, #60a5fa, #c084fc);
         }
 
         * {
@@ -32,64 +36,77 @@
                 radial-gradient(at 100% 0%, hsla(339,49%,30%,0.3) 0, transparent 50%);
             background-attachment: fixed;
             color: var(--text-primary);
-            min-height: 100vh;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #60a5fa;
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Header Section */
+        header {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
-        }
-
-        .header {
-            text-align: center;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 2rem;
             margin-bottom: 2rem;
-            animation: fadeInDown 0.8s ease-out;
+            flex-wrap: wrap;
+            gap: 1.5rem;
         }
 
-        .header h1 {
-            font-size: 3rem;
+        .header-content h1 {
+            font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #60a5fa, #c084fc);
+            background: var(--gradient-text);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -1px;
+            line-height: 1.1;
         }
 
-        .header p {
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
             color: var(--text-secondary);
-            font-size: 1.1rem;
-            font-weight: 300;
+            font-size: 0.95rem;
+            margin-top: 1rem;
         }
-
-        .cv-container {
-            width: 100%;
-            max-width: 1000px;
-            height: 75vh;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 1rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeInUp 0.8s ease-out 0.2s both;
+        
+        .contact-item {
             display: flex;
-            flex-direction: column;
-        }
-
-        .toolbar {
-            display: flex;
-            justify-content: flex-end;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--glass-border);
-            margin-bottom: 1rem;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .download-btn {
             background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
-            color: white;
-            text-decoration: none;
-            padding: 0.6rem 1.5rem;
+            color: white !important;
+            text-decoration: none !important;
+            padding: 0.8rem 1.5rem;
             border-radius: 9999px;
             font-weight: 600;
             font-size: 0.95rem;
@@ -98,6 +115,7 @@
             align-items: center;
             gap: 0.5rem;
             box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+            white-space: nowrap;
         }
 
         .download-btn:hover {
@@ -105,28 +123,153 @@
             box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.6);
         }
 
-        .download-btn svg {
-            width: 18px;
-            height: 18px;
+        /* Sections */
+        section {
+            margin-bottom: 2.5rem;
         }
 
-        .pdf-viewer {
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #f8fafc;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        h2::after {
+            content: '';
+            height: 1px;
             flex: 1;
-            width: 100%;
+            background: linear-gradient(to right, var(--glass-border), transparent);
+        }
+
+        p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        /* Cards for nested content */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            background: rgba(30, 41, 59, 0.8);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #f8fafc;
+        }
+        
+        .card-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .card-meta {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-weight: 500;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .bullet-list li::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            font-weight: bold;
+        }
+        
+        /* Skills section specifics */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
             border-radius: 12px;
-            overflow: hidden;
-            background: white;
+            padding: 1rem 1.2rem;
+        }
+        
+        .skill-title {
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 0.3rem;
+        }
+        
+        .skill-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
 
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+        /* Achievements / Certifications */
+        .badge-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .badge-item {
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+        }
+
+        .badge-item::before {
+            content: '🏆';
+            font-size: 1.2rem;
+        }
+        
+        .cert-item::before {
+            content: '📜';
+        }
+        
+        .lead-item::before {
+            content: '🚀';
         }
 
         @keyframes fadeInUp {
@@ -135,52 +278,208 @@
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
+            .container {
+                padding: 1.5rem;
+                border-radius: 16px;
             }
-            .header h1 {
-                font-size: 2.2rem;
+            .header-content h1 {
+                font-size: 2.5rem;
             }
-            .cv-container {
-                height: 85vh;
+            header {
+                flex-direction: column;
+            }
+            .download-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Curriculum Vitae</h1>
-        <p>Explore my professional journey and experiences.</p>
-    </div>
-
-    <div class="cv-container">
-        <div class="toolbar">
-            <a href="#" class="download-btn" style="visibility: hidden;">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="header-content">
+                <h1>ROHIT RAMBANSH YADAV</h1>
+                <div class="contact-info">
+                    <span class="contact-item">📍 Kolkata, West Bengal, India</span>
+                    <span class="contact-item">📞 +91-9831808979</span>
+                    <span class="contact-item">✉️ <a href="mailto:rohitrambansh@gmail.com">rohitrambansh@gmail.com</a></span>
+                    <span class="contact-item">🔗 <a href="https://linkedin.com/in/imrohit2611/" target="_blank">linkedin.com/in/imrohit2611/</a></span>
+                </div>
+            </div>
+            <a href="CV/Resume_Rohit_Yadav.pdf" download="Resume_Rohit_Yadav.pdf" class="download-btn" id="download-btn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                Download PDF
+                Download PDF CV
             </a>
-        </div>
-        <div class="pdf-viewer" style="position: relative;">
-            <div id="loading-state" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: white; color: #64748b; font-size: 1.1rem; z-index: 10;">
-                Looking for your CV...
+        </header>
+
+        <!-- Summary -->
+        <section>
+            <h2>Summary</h2>
+            <p>Senior Backend Engineer with 5+ years of enterprise experience building large-scale, high-availability telecom billing platforms for UK based telecom operators. Specialized in Core Java, Spring Boot, microservices, telecom rating systems, AI/LLM automation pipelines and cloud technologies. Delivered performance improvements across CDR processing systems, led UAT for MVNO billing programs, and mentored 50+ engineers.</p>
+        </section>
+
+        <!-- Work Experience -->
+        <section>
+            <h2>Work Experience</h2>
+            <div class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">TATA Consultancy Services (Client: British Telecom, UK)</div>
+                        <div class="card-subtitle">IT Analyst</div>
+                    </div>
+                    <div class="card-meta">August 2020 – Present</div>
+                </div>
+                <ul class="bullet-list">
+                    <li><strong>System Architecture & Development:</strong> Designed and delivered high-availability E2E telecom billing solutions (via Java, Spring Boot, OCOMC) processing 100M+ daily CDRs, driving ~£20M in revenue, and directly contributing to critical architectural design decisions across diverse platforms.</li>
+                    <li><strong>Domain Expertise:</strong> Managed and optimized MVNO billing, interconnect billing, and complex subscriber provisioning systems.</li>
+                    <li><strong>Performance Engineering:</strong> Engineered a real-time Call Detail Record (CDR) processing mechanism utilizing multithreading, reducing processing latency by 50% to achieve near real-time performance. Consistently addressed and resolved critical production issues to improve system performance and uptime.</li>
+                    <li><strong>Client Leadership:</strong> Spearheaded the User Acceptance Testing (UAT) phase for an E2E billing application catering to a UK-based MVNO, resulting in formal client appreciation.</li>
+                    <li><strong>Mentorship & Leadership:</strong> Served as a technical mentor and trainer for Java, successfully upskilling over 50 internal and external associates. Actively volunteered in project-level and team-building activities. Participated in TCS fresher hiring process as a Technical SME.</li>
+                    <li><strong>Career Progression:</strong> Promoted to the highly competitive TCS Digital cadre within just 1.5 years of joining after successfully clearing rigorous internal technical assessments.</li>
+                </ul>
             </div>
-            <iframe src="" title="Curriculum Vitae" style="opacity: 0; transition: opacity 0.5s ease; position: relative; z-index: 20;">
-                This browser does not support PDFs. Please download the PDF to view it.
-            </iframe>
-        </div>
+            
+            <h3 style="margin-top: 1.5rem; margin-bottom: 1rem; color: #f8fafc;">Key Achievements:</h3>
+            <ul class="bullet-list" style="margin-bottom: 1.5rem;">
+                <li>Bronze Guru Award for talent development initiatives (2026)</li>
+                <li>Selected for TCS NextGen Mentorship Program (2025)</li>
+                <li>Ranked 22nd nationally in TCS CMI Code Masters (2025)</li>
+                <li>Contextual Master Award for system optimization (2023)</li>
+            </ul>
+        </section>
+
+        <!-- Education -->
+        <section>
+            <h2>Education</h2>
+            <div class="card" style="margin-bottom: 0;">
+                <div class="card-header" style="margin-bottom: 0;">
+                    <div>
+                        <div class="card-title">B.Tech – ECE</div>
+                        <div class="card-subtitle">Netaji Subhash Engineering College</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="card-meta" style="margin-bottom: 0.3rem; display: inline-block;">2020</div>
+                        <div style="color: var(--text-muted); font-size: 0.95rem;">CGPA - 9.17/10</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Skills -->
+        <section style="margin-top: 2.5rem;">
+            <h2>Technical Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-item">
+                    <div class="skill-title">Programming Languages</div>
+                    <div class="skill-desc">Core Java, Java 8, Python, Oracle SQL, Shell Scripting, PL/SQL.</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-title">Frameworks & Libraries</div>
+                    <div class="skill-desc">Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT), Microservices, Junit, TDD, LangChain.</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-title">Cloud & DevOps</div>
+                    <div class="skill-desc">AWS, Microsoft Azure, Jenkins, Git, Gitlab, Linux VMs, Jira, Maven.</div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-title">Methodologies & Tools</div>
+                    <div class="skill-desc">Agile, Scrum, RESTful API Integration, Amazon Q Developer.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section>
+            <h2>Projects</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">LLM-Based Trade Execution Bot for algorithmic trading</div>
+                </div>
+                <ul class="bullet-list">
+                    <li>Built an AI-powered Python-based algorithmic trading platform utilizing <strong>Groq (LLaMA 3.1)</strong>, Selenium, and AWS EC2 to autonomously parse Telegram trading signals and execute risk-managed multi-leg GTT orders on the Upstox platform.</li>
+                    <li>Engineered a robust system with automated daily OAuth login via TOTP, a 6-gate risk filter (EMA trend, R:R, liquidity checks), and a GitHub Actions CI/CD pipeline for zero-touch deployment.</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Ariel Droplets - Smart India Hackathon Runner-Up (Final Year Project)</div>
+                </div>
+                <ul class="bullet-list">
+                    <li>Engineered a prototype system capable of condensing and generating potable drinking water directly from atmospheric moisture.</li>
+                    <li>Presented the working prototype at the Smart India Hackathon 2019, securing the runner-up position on a national stage.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Certifications -->
+        <section>
+            <h2>Certifications</h2>
+            <div class="badge-list">
+                <div class="badge-item cert-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Cloud & Architecture:</strong> AWS Certified Solutions Architect - Associate (2025)
+                    </div>
+                </div>
+                <div class="badge-item cert-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Cloud & AI:</strong> Microsoft Certified: Azure Fundamentals (AZ-900) and Azure AI Fundamentals (AI-900) (2024).
+                    </div>
+                </div>
+                <div class="badge-item cert-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Data & Process:</strong> Certification in Data Analytics by LinkedIn and Microsoft (2024); CSSC Six Sigma White Belt certification (2023).
+                    </div>
+                </div>
+                <div class="badge-item cert-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Academic Honors:</strong> Achieved State-level ranks of 56 and 60 in the Science and Mathematics Olympiad, respectively (2015).
+                    </div>
+                </div>
+                <div class="badge-item cert-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Additional Training:</strong> Udemy certification in Core Java, DevOps, Shell scripting, Spring Boot (2021); NPTEL certification in Python Data Structures/Algorithms (2019).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership & Extracurricular Activities -->
+        <section>
+            <h2>Leadership & Extracurricular Activities</h2>
+            <div class="badge-list">
+                <div class="badge-item lead-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Pre-Screening Evaluator, Smart India Hackathon (2024 – 2025):</strong> Volunteered as an official pre-screening judge to rigorously review and evaluate technical solutions submitted by engineering teams nationwide.
+                    </div>
+                </div>
+                <div class="badge-item lead-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Placement Representative, NSEC ECE Department (2019 – 2020):</strong> Managed corporate communications and oversaw the placement process for a batch of 120+ students. Collaborated heavily with the central Placement Cell to resolve logistical conflicts during recruitment drives.
+                    </div>
+                </div>
+                <div class="badge-item lead-item">
+                    <div>
+                        <strong style="color: #e2e8f0;">Content Writing Intern, Connect My Edu (2018):</strong> Completed a virtual internship focused on researching, writing, and proofreading articles on diverse, niche topics.
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
+    <!-- Script to dynamically handle PDF download link -->
     <script>
         document.addEventListener("DOMContentLoaded", async () => {
-            const iframe = document.querySelector('iframe');
-            const downloadBtn = document.querySelector('.download-btn');
-            const loadingState = document.getElementById('loading-state');
+            const downloadBtn = document.getElementById('download-btn');
             
             async function findPdfUrl() {
-                // Method 1: GitHub API (Ideal for GitHub Pages)
                 try {
                     let repoOwner = "imrohit1997";
                     let repoName = "interview_experiences";
@@ -201,7 +500,6 @@
                     console.log("GitHub API method skipped or failed.", e);
                 }
 
-                // Method 2: Local Directory Listing (Works on local dev servers)
                 try {
                     const response = await fetch('CV/');
                     if (response.ok) {
@@ -220,20 +518,9 @@
             }
 
             const pdfInfo = await findPdfUrl();
-            
             if (pdfInfo) {
-                iframe.src = pdfInfo.url;
                 downloadBtn.href = pdfInfo.url;
                 downloadBtn.download = pdfInfo.name;
-                
-                // Show iframe and download button once loaded
-                iframe.onload = () => {
-                    loadingState.style.display = 'none';
-                    iframe.style.opacity = '1';
-                };
-                downloadBtn.style.visibility = 'visible';
-            } else {
-                loadingState.innerHTML = `<span style="color: #ef4444; padding: 1rem; text-align: center;">Could not find the PDF file in the CV folder.<br><small style="color: #64748b; margin-top: 0.5rem; display: block;">Note: Browser security prevents dynamic file loading when opened directly from a local folder (file://). Please use a local web server or push to GitHub.</small></span>`;
             }
         });
     </script>
