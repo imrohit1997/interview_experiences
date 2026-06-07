@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infosys AI Interview Experience</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .metadata {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        ul {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Infosys AI Interview experience</h1>
+
+    <div class="metadata">
+        <p><strong>Duration:</strong> ~19 minutes (13:09:11 – 13:28:43)</p>
+    </div>
+
+    <h2>Introduction (13:09:11)</h2>
+    <div class="question">1. Good day. Welcome to the interview. Can you please introduce yourself?</div>
+    <div class="answer">
+        <p><strong>How to Answer (Framework):</strong> Use the Present-Past-Future framework.</p>
+        <ul>
+            <li><strong>Present:</strong> State your current role and daily scope (e.g., working as a Backend Java
+                Developer optimizing enterprise systems).</li>
+            <li><strong>Past:</strong> Briefly highlight your experience and core stack (e.g., over five years working
+                with Java 8, Spring Boot, and microservices architectures) along with a specific achievement or
+                automation tool you've successfully delivered.</li>
+            <li><strong>Future:</strong> Explain why you are interviewing and how your background aligns with their
+                technical needs.</li>
+        </ul>
+    </div>
+
+    <h2>Apache Spark Transformations (13:10:26)</h2>
+    <div class="question">2. How do wide transformations differ from narrow transformations in terms of data shuffling
+        and performance impact?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Narrow Transformations</strong> (e.g., <code>map()</code>, <code>filter()</code>): Operations
+                where each input partition contributes to only one output partition. They require no data shuffling
+                across the network, making them extremely fast and efficient.</li>
+            <li><strong>Wide Transformations</strong> (e.g., <code>groupByKey()</code>, <code>reduceByKey()</code>):
+                Operations where input partitions contribute to multiple output partitions. This requires data shuffling
+                across the cluster's nodes, which heavily consumes network bandwidth and disk I/O, significantly
+                impacting performance and execution time.</li>
+        </ul>
+    </div>
+
+    <h2>Spark Caching Strategies (13:12:04)</h2>
+    <div class="question">3. What are the key considerations when choosing between caching and persistent strategies in
+        Spark?</div>
+    <div class="answer">
+        <p><code>cache()</code> is essentially a shortcut for <code>persist()</code> using the default storage level
+            (typically MEMORY_ONLY or MEMORY_AND_DISK, depending on the API/Spark version).<br>
+            <code>persist()</code> allows you to define specific storage levels (e.g., DISK_ONLY, MEMORY_ONLY_SER, or
+            replicating data across nodes with _2).
+        </p>
+        <p><strong>Key considerations:</strong></p>
+        <ol>
+            <li><strong>Memory Availability:</strong> If RAM is constrained, spilling to disk (MEMORY_AND_DISK) or
+                serializing data (MEMORY_ONLY_SER) reduces memory footprint at the cost of CPU overhead.</li>
+            <li><strong>Recomputation Cost:</strong> If the lineage is highly complex or relies on external databases,
+                persisting is critical.</li>
+            <li><strong>Frequency of Use:</strong> Only persist DataFrames/RDDs that are reused multiple times in the
+                application.</li>
+        </ol>
+    </div>
+
+    <h2>Spark SQL Optimization (13:14:27)</h2>
+    <div class="question">4. How do Spark SQL optimization techniques enhance query performance?</div>
+    <div class="answer">
+        <p>Spark SQL primarily enhances performance through the Catalyst Optimizer and the Tungsten Execution Engine.
+        </p>
+        <ul>
+            <li><strong>Catalyst Optimizer:</strong> It takes a logical plan and applies rule-based and cost-based
+                optimizations (CBO). Key techniques include predicate pushdown (filtering data at the database/storage
+                level before loading it into memory) and constant folding.</li>
+            <li><strong>Project Tungsten:</strong> It optimizes CPU and memory efficiency by managing memory explicitly
+                (avoiding Java Garbage Collection overhead) and using Whole-Stage Code Generation to collapse multiple
+                query stages into a single function.</li>
+        </ul>
+    </div>
+
+    <h2>Big Data Shuffle Challenges (13:15:56)</h2>
+    <div class="question">5. What challenges do shuffle operations present and how can they be mitigated in large-scale
+        data processing?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Challenges:</strong> Shuffles cause massive network I/O, heavy disk write/reads, and often lead
+                to data skew (where a few nodes process significantly more data than others), resulting in OutOfMemory
+                (OOM) errors and straggler tasks.</li>
+        </ul>
+        <p><strong>Mitigation:</strong></p>
+        <ul>
+            <li>Use <code>reduceByKey()</code> instead of <code>groupByKey()</code> (it pre-aggregates data locally
+                before shuffling).</li>
+            <li><strong>Salting:</strong> Add random keys to skewed data to distribute it evenly across partitions.</li>
+            <li>Use Broadcast Joins (<code>BroadcastHashJoin</code>) when joining a large table with a small table to
+                completely avoid shuffling the large table.</li>
+        </ul>
+    </div>
+
+    <h2>Java Thread Safety (13:17:56)</h2>
+    <div class="question">6. How do you ensure thread safety when using collections in a concurrent environment?</div>
+    <div class="answer">
+        <p>By utilizing the <code>java.util.concurrent</code> package rather than legacy synchronized collections.</p>
+        <ul>
+            <li>Use <code>ConcurrentHashMap</code> instead of <code>Hashtable</code> or
+                <code>Collections.synchronizedMap()</code>. It uses lock stripping, allowing multiple threads to
+                read/write concurrently without locking the entire map.</li>
+            <li>Use <code>CopyOnWriteArrayList</code> for lists where reads vastly outnumber writes, as it creates a
+                fresh copy of the underlying array on every mutation.</li>
+            <li>For queues, use implementations like <code>BlockingQueue</code> or <code>ConcurrentLinkedQueue</code>.
+            </li>
+        </ul>
+    </div>
+
+    <h2>Java Application Performance (13:19:24)</h2>
+    <div class="question">7. What strategies would you use to optimize Java application performance?</div>
+    <div class="answer">
+        <ol>
+            <li><strong>Profiling:</strong> Use tools like JVisualVM or JProfiler to identify memory leaks, CPU
+                bottlenecks, and thread locks.</li>
+            <li><strong>JVM &amp; GC Tuning:</strong> Select the right Garbage Collector (like G1GC or ZGC for low
+                latency) and tune heap sizes (<code>-Xms</code>, <code>-Xmx</code>).</li>
+            <li><strong>Connection Pooling:</strong> Use efficient database connection pools like HikariCP to reuse
+                connections rather than opening/closing them constantly.</li>
+            <li><strong>Caching:</strong> Implement caching layers (e.g., Redis, Ehcache) to avoid redundant database
+                hits.</li>
+            <li><strong>Code-Level:</strong> Minimize unnecessary object creation inside loops to reduce garbage
+                collection overhead, and use efficient data structures.</li>
+        </ol>
+    </div>
+
+    <h2>Java Streams &amp; Lambdas (13:21:30)</h2>
+    <div class="question">8. How do you use streams or lambdas to enhance code readability and maintainability?</div>
+    <div class="answer">
+        <p>Streams and lambdas allow for a declarative programming style rather than imperative. Instead of writing
+            verbose <code>for</code> loops with nested <code>if</code> statements, you can chain operations like
+            <code>.filter()</code>, <code>.map()</code>, and <code>.collect()</code>. This makes the code
+            self-documenting and expresses the intent of the logic clearly. Lambdas remove the need for bulky anonymous
+            inner classes (like <code>Runnable</code> or <code>Comparator</code>), significantly reducing boilerplate
+            code and making it easier to maintain.</p>
+    </div>
+
+    <h2>Big Data File Formats (13:23:23)</h2>
+    <div class="question">9. What makes Parquet a preferred choice over other file formats in big data processing?</div>
+    <div class="answer">
+        <p>Parquet is a columnar storage format.</p>
+        <ul>
+            <li><strong>Efficiency:</strong> It allows query engines to skip unneeded columns entirely (column
+                projection), drastically reducing disk I/O.</li>
+            <li><strong>Compression:</strong> Because data in a single column is of the same type, it compresses highly
+                efficiently using schemes like Snappy.</li>
+            <li><strong>Predicate Pushdown:</strong> It stores metadata (min/max values) for data blocks, allowing
+                engines like Spark to skip reading entire blocks if they don't match the query filters.</li>
+        </ul>
+    </div>
+
+    <h2>Distributed Computing (13:23:57)</h2>
+    <div class="question">10. How does data partitioning enhance performance in distributed computing?</div>
+    <div class="answer">
+        <p>Partitioning divides a massive dataset into smaller, manageable logical chunks distributed across different
+            worker nodes in a cluster. This enables true parallel processing—each core/node can process its own
+            partition simultaneously without waiting on others. It maximizes resource utilization and prevents any
+            single node from becoming a bottleneck.</p>
+    </div>
+
+    <h2>Apache Kafka Internals (13:24:45)</h2>
+    <div class="question">11. How do consumer groups in Kafka manage parallelism and load balancing among consumers?
+    </div>
+    <div class="answer">
+        <p>In a Kafka consumer group (identified by a shared <code>group.id</code>), each partition of a topic is
+            assigned to exactly one consumer within that group. If a topic has 10 partitions and the group has 5
+            consumers, each consumer processes 2 partitions. This balances the load. If a consumer crashes, Kafka
+            automatically triggers a rebalance and reassigns its partitions to the remaining active consumers, ensuring
+            fault tolerance and continuous parallelism.</p>
+    </div>
+
+    <h2>Kafka Architecture (13:25:23)</h2>
+    <div class="question">12. What strategies can be used to manage message retention effectively in Apache Kafka?</div>
+    <div class="answer">
+        <ol>
+            <li><strong>Time-Based Retention:</strong> Deleting messages after a specific duration (e.g.,
+                <code>log.retention.hours=168</code> for 7 days).</li>
+            <li><strong>Size-Based Retention:</strong> Deleting older messages once a topic partition reaches a specific
+                size threshold (e.g., <code>log.retention.bytes</code>).</li>
+            <li><strong>Log Compaction:</strong> Keeping only the most recent message for a specific key, which is
+                highly effective for maintaining the latest state of an entity (like a database table) without storing
+                its entire history.</li>
+        </ol>
+    </div>
+
+    <h2>ETL Pipelines &amp; Challenges (13:26:18)</h2>
+    <div class="question">13. How do you ensure data quality in an ETL pipeline? And what challenges have you faced in
+        maintaining it?</div>
+    <div class="answer">
+        <p><strong>Exact Answer (Data Quality):</strong> Implement strict schema validation on ingestion, enforce null
+            checks, handle deduplication, and set up automated alerting/monitoring for anomalies (e.g., sudden drops in
+            row counts).</p>
+        <p><strong>How to Answer (Challenges):</strong> Use the STAR method to describe a real challenge.</p>
+        <ul>
+            <li><strong>Situation/Task:</strong> Describe a time a pipeline failed due to upstream schema changes or
+                malformed data.</li>
+            <li><strong>Action:</strong> Explain how you isolated the issue (e.g., implementing dead-letter queues to
+                catch bad records without failing the whole job).</li>
+            <li><strong>Result:</strong> The pipeline became more resilient and alerting was improved.</li>
+        </ul>
+    </div>
+
+    <h2>Data Modeling (13:27:18)</h2>
+    <div class="question">14. Can you discuss the trade-offs between using a star schema versus a snowflake schema in
+        data modeling?</div>
+    <div class="answer">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Star Schema</th>
+                    <th>Snowflake Schema</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Structure</strong></td>
+                    <td>Denormalized. Fact table surrounded by flat dimension tables.</td>
+                    <td>Normalized. Dimension tables are further broken down into sub-dimensions.</td>
+                </tr>
+                <tr>
+                    <td><strong>Query Performance</strong></td>
+                    <td>Faster. Requires fewer complex joins.</td>
+                    <td>Slower. Requires multiple joins to piece data back together.</td>
+                </tr>
+                <tr>
+                    <td><strong>Storage Space</strong></td>
+                    <td>Consumes more space due to data redundancy.</td>
+                    <td>Saves space by eliminating redundancy.</td>
+                </tr>
+                <tr>
+                    <td><strong>Best Use Case</strong></td>
+                    <td>Data Marts, rapid BI reporting, fast reads.</td>
+                    <td>Data Warehouses with strict storage constraints.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Stakeholder Communication (13:27:52)</h2>
+    <div class="question">15. When you're choosing a visualization technique, how do you ensure it effectively
+        communicates insights to stakeholders?</div>
+    <div class="answer">
+        <p><strong>How to Answer (Framework):</strong></p>
+        <ol>
+            <li><strong>Audience Analysis:</strong> Explain that you first assess the technical literacy of the
+                stakeholder. (e.g., Executives need high-level trend lines and KPIs; analysts need granular pivot
+                tables).</li>
+            <li><strong>Define the Goal:</strong> Identify the single most important question the data needs to answer.
+            </li>
+            <li><strong>Iterative Feedback:</strong> Mention that you build a prototype, present it, and refine the
+                visualization based on their immediate feedback to ensure clarity.</li>
+        </ol>
+    </div>
+
+    <h2>Agile &amp; Team Collaboration (13:28:43)</h2>
+    <div class="question">16. How do you maintain delivery quality when working with cross-functional teams on a
+        project?</div>
+    <div class="answer">
+        <p><strong>How to Answer (Framework):</strong> Focus on communication and standardized processes.</p>
+        <ul>
+            <li>Discuss the importance of a clear Definition of Done (DoD) agreed upon by QA, Dev, and Product.</li>
+            <li>Mention relying on automated testing (CI/CD pipelines) to catch regressions early.</li>
+            <li>Highlight the value of regular sync-ups (daily stand-ups) to unblock dependencies across different
+                teams.</li>
+        </ul>
+    </div>
+
+</body>
+
+</html>
