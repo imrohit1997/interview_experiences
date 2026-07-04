@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Backend & Microservices Interview Experience</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .metadata {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            display: block;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Java Backend & Microservices Interview Experience</h1>
+
+    <div class="metadata">
+        <p><strong>Date:</strong> July 4, 2026</p>
+        <p><strong>Duration:</strong> ~25 minutes (13:41:31 – 14:07:03)</p>
+    </div>
+
+    <h2>Introduction (13:41:52)</h2>
+    <div class="question">1. To start off, could you please introduce yourself and share a bit about your professional background?</div>
+    <div class="answer">
+        <p><strong>How to Answer (Framework):</strong> Use the Present-Past-Future framework.</p>
+        <ul>
+            <li><strong>Present:</strong> Discuss your current role and responsibilities, highlighting your work in backend development, Java, Spring Boot, and any relevant domain (like telecom or finance).</li>
+            <li><strong>Past:</strong> Mention significant past projects such as the high-availability E2E telecom billing solution and the LLM-based trade execution bot. Highlight key technologies used and metrics improved (e.g., handling scale, improving security).</li>
+            <li><strong>Future:</strong> Tie your skills back to the position you are applying for, emphasizing your passion for building scalable, resilient microservices and exploring new technologies.</li>
+        </ul>
+    </div>
+
+    <h2>Behavioral / Experience: Telecom Billing (13:44:06)</h2>
+    <div class="question">2. Can you describe a challenging technical issue you encountered while developing the high-availability E2E telecom billing solutions and how you approached resolving it using Java and Spring Boot?</div>
+    <div class="answer">
+        <p><strong>How to Answer (STAR Method):</strong></p>
+        <ul>
+            <li><strong>Situation:</strong> Explain the context of the telecom billing system (e.g., high transaction volume, strict latency requirements, need for fault tolerance).</li>
+            <li><strong>Task:</strong> Describe the specific problem, such as thread safety issues during peak loads, database deadlocks, or maintaining consistency across distributed transactions.</li>
+            <li><strong>Action:</strong> Detail the technical steps taken to resolve it. For instance, using Spring Boot's <code>@Transactional</code> appropriately, tuning HikariCP connection pools, implementing asynchronous processing with <code>CompletableFuture</code> or message queues (like Kafka/RabbitMQ) to decouple heavy processing.</li>
+            <li><strong>Result:</strong> Share the quantifiable impact, such as a percentage increase in throughput, zero downtime during peak billing cycles, or elimination of data inconsistencies.</li>
+        </ul>
+    </div>
+
+    <h2>Behavioral / Experience: Trading Bot (13:46:20)</h2>
+    <div class="question">3. Could you explain the architecture you implemented for the LLM-based trade execution bot and how you ensured the system was both efficient and secure, particularly regarding automated OAUTH login and risk filters?</div>
+    <div class="answer">
+        <p><strong>How to Answer:</strong></p>
+        <ul>
+            <li><strong>Architecture:</strong> Describe a modular microservices or event-driven architecture. Mention how the LLM service interacts with the core trading engine and the broker's API.</li>
+            <li><strong>Security & OAuth:</strong> Explain how you handled the automated OAuth 2.0 flow securely. Discuss storing tokens in a secure vault (like HashiCorp Vault), refreshing tokens automatically without user intervention, and using encrypted communication.</li>
+            <li><strong>Efficiency & Risk Filters:</strong> Discuss the implementation of low-latency risk filters (e.g., maximum drawdown, position sizing limits) using in-memory data grids (like Redis) or fast rule engines before a trade is executed. Emphasize the separation of concerns between the slow LLM inference and the fast trade execution path.</li>
+        </ul>
+    </div>
+
+    <h2>Spring Data (13:48:21)</h2>
+    <div class="question">4. What mechanisms are there for pagination in Spring Data?</div>
+    <div class="answer">
+        <p>Spring Data provides excellent support for pagination through the <code>Pageable</code> interface and the <code>PagingAndSortingRepository</code>.</p>
+        <ul>
+            <li><strong>PageRequest:</strong> You use <code>PageRequest.of(pageNumber, pageSize, Sort)</code> to create a <code>Pageable</code> object, which is then passed to the repository method.</li>
+            <li><strong>Return Types:</strong>
+                <ul>
+                    <li><code>Page&lt;T&gt;</code>: Returns a page of entities along with pagination metadata (total pages, total elements). This executes an extra <code>COUNT</code> query.</li>
+                    <li><code>Slice&lt;T&gt;</code>: Returns a page of entities and a boolean indicating if there is a next slice. It avoids the expensive <code>COUNT</code> query, making it more efficient for large datasets (like infinite scrolling).</li>
+                    <li><code>List&lt;T&gt;</code>: Just returns the elements without any metadata.</li>
+                </ul>
+            </li>
+            <li><strong>Offset vs. Keyset Pagination:</strong> While standard Spring Data uses offset-based pagination (which gets slower for deep pages), keyset (or seek) pagination can be implemented using custom queries or libraries like Blaze-Persistence for better performance on massive datasets.</li>
+        </ul>
+    </div>
+
+    <h2>Core Java: Thread Safety (13:50:41)</h2>
+    <div class="question">5. How do you ensure thread safety in Java applications?</div>
+    <div class="answer">
+        <p>There are several strategies to ensure thread safety in Java, depending on the use case:</p>
+        <ul>
+            <li><strong>Immutability:</strong> The best way to avoid concurrency issues is to make objects immutable (using <code>final</code> fields, returning copies). Immutable objects are inherently thread-safe.</li>
+            <li><strong>Statelessness:</strong> Designing classes (like Spring Singletons) to be stateless, meaning they don't hold any conversational state between method invocations.</li>
+            <li><strong>Synchronization:</strong> Using the <code>synchronized</code> keyword for methods or blocks to enforce mutual exclusion, though this can introduce contention.</li>
+            <li><strong>Locks:</strong> Utilizing explicit locks from <code>java.util.concurrent.locks</code>, such as <code>ReentrantLock</code> or <code>ReadWriteLock</code>, which provide finer control over locking mechanisms.</li>
+            <li><strong>Concurrent Collections:</strong> Using collections from <code>java.util.concurrent</code> like <code>ConcurrentHashMap</code>, <code>CopyOnWriteArrayList</code>, or <code>BlockingQueue</code> instead of standard or synchronized collections.</li>
+            <li><strong>Atomic Variables:</strong> Using classes like <code>AtomicInteger</code> or <code>AtomicReference</code> for lock-free, thread-safe operations on single variables using Compare-And-Swap (CAS).</li>
+            <li><strong>ThreadLocal:</strong> Using <code>ThreadLocal</code> to give each thread its own isolated instance of an object.</li>
+        </ul>
+    </div>
+
+    <h2>Spring Boot Configuration (13:52:51)</h2>
+    <div class="question">6. What is the role of the application.properties or application.yml file?</div>
+    <div class="answer">
+        <p>These files are the primary mechanism for externalizing configuration in a Spring Boot application.</p>
+        <ul>
+            <li><strong>Environment Independence:</strong> They allow you to define properties (like database credentials, server ports, third-party API keys) outside the application code, enabling the same code to run in different environments (dev, test, prod).</li>
+            <li><strong>Spring Boot Auto-configuration:</strong> Spring Boot uses these properties to automatically configure beans. For example, setting <code>spring.datasource.url</code> will trigger the auto-configuration of a DataSource bean.</li>
+            <li><strong>Profiles:</strong> You can create profile-specific files (e.g., <code>application-dev.yml</code>, <code>application-prod.yml</code>) to activate different configurations based on the active Spring profile.</li>
+            <li><strong>Custom Properties:</strong> You can define your own custom properties and bind them to Java objects using the <code>@ConfigurationProperties</code> or inject them directly using <code>@Value</code>.</li>
+        </ul>
+    </div>
+
+    <h2>Microservices: Security (13:54:43)</h2>
+    <div class="question">7. How can microservices handle authentication and authorization across services?</div>
+    <div class="answer">
+        <p>In a microservices architecture, security is typically handled centrally but enforced locally:</p>
+        <ul>
+            <li><strong>API Gateway as the Entry Point:</strong> The API Gateway often handles the initial authentication (e.g., terminating OAuth2/OIDC flows, validating JWTs) and routes requests to downstream services.</li>
+            <li><strong>Stateless JWT (JSON Web Tokens):</strong>
+                <ul>
+                    <li>The Identity Provider (e.g., Keycloak, Auth0) issues a JWT containing user claims and roles upon successful login.</li>
+                    <li>The API Gateway passes this JWT to downstream microservices in the Authorization header.</li>
+                    <li>Each microservice independently verifies the JWT's signature (using a shared public key) and extracts the roles to enforce authorization (e.g., using Spring Security's <code>@PreAuthorize</code>). This makes the system stateless and highly scalable.</li>
+                </ul>
+            </li>
+            <li><strong>Service-to-Service Authentication:</strong> For internal communication between microservices, mTLS (Mutual TLS) is often used to ensure encryption in transit and verify the identity of the calling service. Alternatively, services can use client credentials grant type to obtain tokens for internal calls.</li>
+        </ul>
+    </div>
+
+    <h2>Microservices: Resilience (13:56:50)</h2>
+    <div class="question">8. Scenario: A downstream microservice depends on a database that is down. How would you ensure resilience?</div>
+    <div class="answer">
+        <p>To prevent a database failure from causing cascading failures across the system, several resilience patterns can be applied:</p>
+        <ul>
+            <li><strong>Circuit Breaker Pattern:</strong> Use a library like Resilience4j. If the database calls fail repeatedly, the circuit breaker trips and immediately returns an error or a fallback response for subsequent calls, preventing resource exhaustion (like thread pool starvation) in the calling service.</li>
+            <li><strong>Fallback Mechanism:</strong> When the circuit is open or a call fails, provide a graceful degradation path. This could mean returning cached data, default values, or simply a friendly "Service Unavailable" message instead of a generic 500 error.</li>
+            <li><strong>Retries with Exponential Backoff:</strong> For transient network glitches, implement automatic retries. Crucially, use exponential backoff and jitter to avoid overwhelming the database as it tries to recover.</li>
+            <li><strong>Timeouts:</strong> Always configure strict timeouts for database connections and queries to ensure threads aren't blocked indefinitely waiting for a response from a hanging database.</li>
+            <li><strong>Bulkheads:</strong> Isolate resources (like thread pools) for database calls so that a database failure only exhausts its dedicated pool, leaving the rest of the microservice functional to serve other requests.</li>
+        </ul>
+    </div>
+
+    <h2>Microservices: Communication (13:59:10)</h2>
+    <div class="question">9. Could you describe the communication styles used between microservices, specifically synchronous vs. asynchronous, and discuss the pros and cons of each?</div>
+    <div class="answer">
+        <table>
+            <thead>
+                <tr>
+                    <th>Style</th>
+                    <th>Mechanism</th>
+                    <th>Pros</th>
+                    <th>Cons</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Synchronous</strong></td>
+                    <td>REST over HTTP, gRPC, GraphQL. The caller waits for a response from the receiver.</td>
+                    <td>
+                        - Simpler to implement and debug.<br>
+                        - Immediate confirmation of success/failure.<br>
+                        - Natural fit for request/response UI flows.
+                    </td>
+                    <td>
+                        - Tight coupling between services.<br>
+                        - Cascading failures (if B is slow, A becomes slow).<br>
+                        - Harder to scale for long-running processes.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Asynchronous</strong></td>
+                    <td>Message Brokers (Kafka, RabbitMQ, ActiveMQ). Event-driven. The caller sends a message and doesn't wait.</td>
+                    <td>
+                        - Loose coupling (services don't need to know about each other).<br>
+                        - High availability and resilience (messages are queued if receiver is down).<br>
+                        - Excellent for handling traffic spikes (buffer).
+                    </td>
+                    <td>
+                        - Increased complexity (eventual consistency, managing message formats).<br>
+                        - Harder to trace and debug workflows.<br>
+                        - Requires handling duplicate messages (idempotency).
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Coding Assessment (14:02:39)</h2>
+    <div class="question">10. Given an array of prices, where prices represents the price of a stock on day i, determine the maximum profit you can achieve. You may complete as many buy-sell transactions as you wish, but you must sell the stock before you buy again and you can hold at most one share at a time. If no profit can be made, return zero. Output the maximum total profit as an integer.</div>
+    <div class="answer">
+        <p><strong>Approach: Greedy Algorithm</strong></p>
+        <p>Since we can make as many transactions as we want, we can simply capture all upward price movements. We iterate through the array, and whenever the price on day <code>i</code> is greater than the price on day <code>i-1</code>, we add the difference to our total profit. This effectively captures the profit from every local minimum to every local maximum.</p>
+        
+        <p><strong>Code (Java):</strong></p>
+<pre><code>class Solution {
+    public int maxProfit(int[] prices) {
+        int maxProfit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1]) {
+                maxProfit += prices[i] - prices[i - 1];
+            }
+        }
+        return maxProfit;
+    }
+}
+</code></pre>
+
+        <p><strong>Complexity Analysis:</strong></p>
+        <ul>
+            <li><strong>Time Complexity:</strong> O(N), where N is the length of the <code>prices</code> array, because we iterate through the array exactly once.</li>
+            <li><strong>Space Complexity:</strong> O(1), as we only use a single variable <code>maxProfit</code> to keep track of the accumulated profit, requiring constant extra space.</li>
+        </ul>
+    </div>
+
+</body>
+</html>
