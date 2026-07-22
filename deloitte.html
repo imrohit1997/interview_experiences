@@ -109,8 +109,51 @@
         <p><strong>Duration:</strong> ~72 minutes (09:06:34 – 10:18:13)</p>
     </div>
 
+    <h2>Introduction & Day-to-Day Activities (09:06:48)</h2>
+    <div class="question">1. Can you introduce yourself and describe your day-to-day activities (tech stack, project structure, team size, etc.)?</div>
+    <div class="answer">
+        <p><strong>How to Answer (Framework):</strong></p>
+        <ul>
+            <li><strong>Introduction:</strong> Briefly talk about your current role and overall experience.</li>
+            <li><strong>Tech Stack:</strong> Mention the core technologies you use daily (e.g., Java 8+, Spring Boot, Microservices, SQL/NoSQL databases, Kafka, Docker/Kubernetes).</li>
+            <li><strong>Project Structure:</strong> Explain the architecture briefly, such as a microservices-based architecture communicating via REST or message brokers.</li>
+            <li><strong>Team Size & Agile:</strong> Talk about your team size (e.g., 8-10 members including developers, QA, Scrum Master, Product Owner) and your Agile ceremonies (daily stand-up, sprint planning, retrospective).</li>
+            <li><strong>Day-to-Day:</strong> Mention picking up Jira tickets, participating in stand-ups, writing code and unit tests (JUnit/Mockito), peer code reviews (PRs), and deploying via CI/CD pipelines.</li>
+        </ul>
+    </div>
+
+    <h2>Java 8 Coding (09:10:39)</h2>
+    <div class="question">2. Write Java 8 code to get the first non-repeating character from a string (e.g., "swiss").</div>
+    <div class="answer">
+        <p>Using Java 8 Streams, you can collect the character counts into a <code>LinkedHashMap</code> (to preserve insertion order) and then find the first character with a count of 1.</p>
+        <pre><code>import java.util.LinkedHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+public class Main {
+    public static void main(String[] args) {
+        String input = "swiss";
+
+        Character firstNonRepeating = input.chars()
+            .mapToObj(c -&gt; (char) c)
+            .collect(Collectors.groupingBy(
+                Function.identity(), 
+                LinkedHashMap::new, 
+                Collectors.counting()
+            ))
+            .entrySet().stream()
+            .filter(entry -&gt; entry.getValue() == 1L)
+            .map(entry -&gt; entry.getKey())
+            .findFirst()
+            .orElse(null);
+
+        System.out.println("First non-repeating character: " + firstNonRepeating); // Output: w
+    }
+}</code></pre>
+    </div>
+
     <h2>Design Patterns & Refactoring (09:29:06)</h2>
-    <div class="question">1. Have you developed the Adapter pattern in the last 3-4 years? If you have to refactor your code for better efficiency and performance, which design pattern would you use?</div>
+    <div class="question">3. Have you developed the Adapter pattern in the last 3-4 years? If you have to refactor your code for better efficiency and performance, which design pattern would you use?</div>
     <div class="answer">
         <p><strong>Adapter Pattern:</strong> Yes, it is typically used when integrating with legacy systems or third-party APIs where their interfaces don't match our system's expected interface. It acts as a wrapper.</p>
         <p><strong>Refactoring for Performance:</strong></p>
@@ -122,7 +165,7 @@
     </div>
 
     <h2>Microservices Communication (09:33:05)</h2>
-    <div class="question">2. How do your microservices communicate on-prem or in the cloud? Is there any asynchronous communication?</div>
+    <div class="question">4. How do your microservices communicate on-prem or in the cloud? Is there any asynchronous communication?</div>
     <div class="answer">
         <p>Microservices generally communicate in two ways:</p>
         <ul>
@@ -132,7 +175,7 @@
     </div>
 
     <h2>Handling Failures in Microservices (09:38:12)</h2>
-    <div class="question">3. What happens if you call another service, it calls a third, and there is a cascading failure? How do you handle this?</div>
+    <div class="question">5. What happens if you call another service, it calls a third, and there is a cascading failure? How do you handle this?</div>
     <div class="answer">
         <p>A failure in a downstream service can cause cascading failures where all threads in the upstream services become blocked waiting for a response.</p>
         <p><strong>Handling Strategy: Circuit Breaker Pattern (Resilience4j / Hystrix)</strong></p>
@@ -144,7 +187,7 @@
     </div>
 
     <h2>Java 8 Features & Optional (09:41:11)</h2>
-    <div class="question">4. What methods from the Optional class are you using to check if a value is present or to return a non-value?</div>
+    <div class="question">6. What methods from the Optional class are you using to check if a value is present or to return a non-value?</div>
     <div class="answer">
         <p><code>Optional</code> is used to avoid <code>NullPointerException</code>.</p>
         <ul>
@@ -160,7 +203,7 @@
     </div>
 
     <h2>Java Functional Interfaces (09:42:25)</h2>
-    <div class="question">5. Explain Predicate, Supplier, and Consumer interfaces with examples.</div>
+    <div class="question">7. Explain Predicate, Supplier, and Consumer interfaces with examples.</div>
     <div class="answer">
         <ul>
             <li><strong>Predicate&lt;T&gt;:</strong> Takes one argument and returns a boolean. Used for filtering. Example: <code>Predicate&lt;Integer&gt; isEven = n -&gt; n % 2 == 0;</code></li>
@@ -170,7 +213,7 @@
     </div>
 
     <h2>Executor Framework & CompletableFuture (09:44:44)</h2>
-    <div class="question">6. Are you using the Executor framework in your codebase? Can you tell me about CompletableFuture?</div>
+    <div class="question">8. Are you using the Executor framework in your codebase? Can you tell me about CompletableFuture?</div>
     <div class="answer">
         <ul>
             <li><strong>Executor Framework:</strong> Yes, used to manage thread pools (e.g., <code>Executors.newFixedThreadPool(10)</code>) to prevent the overhead of creating/destroying threads for every task.</li>
@@ -179,7 +222,7 @@
     </div>
 
     <h2>Exception Handling in Java Streams (09:46:54)</h2>
-    <div class="question">7. If an exception occurs in your Java streams code, how do you handle it?</div>
+    <div class="question">9. If an exception occurs in your Java streams code, how do you handle it?</div>
     <div class="answer">
         <p>Handling checked exceptions directly inside lambda expressions used in streams is tricky because lambdas like <code>Function</code> or <code>Consumer</code> don't declare thrown checked exceptions.</p>
         <p><strong>Solutions:</strong></p>
@@ -191,7 +234,7 @@
     </div>
 
     <h2>Spring Boot Exception Handling (09:48:30)</h2>
-    <div class="question">8. How are exceptions handled in your code? Can one method handle multiple exceptions in an exception handler?</div>
+    <div class="question">10. How are exceptions handled in your code? Can one method handle multiple exceptions in an exception handler?</div>
     <div class="answer">
         <ul>
             <li><strong>Global Handling:</strong> We use the <code>@RestControllerAdvice</code> annotation to create a global exception handler for the entire application.</li>
@@ -201,7 +244,7 @@
     </div>
 
     <h2>Synchronous Communication Exception Handling (09:50:30)</h2>
-    <div class="question">9. During synchronous communication (e.g., Feign Client), if you get an exception while connecting or in the response, how do you handle it?</div>
+    <div class="question">11. During synchronous communication (e.g., Feign Client), if you get an exception while connecting or in the response, how do you handle it?</div>
     <div class="answer">
         <ul>
             <li><strong>Feign Client:</strong> Implement a custom <code>ErrorDecoder</code>. It decodes the HTTP response when the status is not 2xx and allows you to throw a custom domain exception based on the response status.</li>
@@ -210,7 +253,7 @@
     </div>
 
     <h2>JUnit Testing & Private Methods (09:51:49)</h2>
-    <div class="question">10. If a public method calls multiple private sub-methods, how do you write JUnit tests to cover all those subsequent methods?</div>
+    <div class="question">12. If a public method calls multiple private sub-methods, how do you write JUnit tests to cover all those subsequent methods?</div>
     <div class="answer">
         <p><strong>Best Practice:</strong> You should test the public method with various inputs and mock responses to hit all the conditional branches within the private methods. Private methods are implementation details and should ideally be tested through the public API.</p>
         <p><strong>If Direct Testing is Needed:</strong></p>
@@ -222,7 +265,7 @@
     </div>
 
     <h2>Security & Authorization (09:56:08)</h2>
-    <div class="question">11. How is security and authorization handled in your application?</div>
+    <div class="question">13. How is security and authorization handled in your application?</div>
     <div class="answer">
         <p>Typically, <strong>Spring Security</strong> is used.</p>
         <ul>
@@ -232,7 +275,7 @@
     </div>
 
     <h2>SOLID Principles (09:58:37)</h2>
-    <div class="question">12. Are you aware of the SOLID principles?</div>
+    <div class="question">14. Are you aware of the SOLID principles?</div>
     <div class="answer">
         <p>Yes, SOLID principles help in making the codebase scalable and maintainable:</p>
         <ul>
@@ -245,7 +288,7 @@
     </div>
 
     <h2>Java Collections: Sets (10:02:16)</h2>
-    <div class="question">13. Do you know the difference between HashSet, TreeSet, and LinkedHashSet? What does TreeSet use internally?</div>
+    <div class="question">15. Do you know the difference between HashSet, TreeSet, and LinkedHashSet? What does TreeSet use internally?</div>
     <div class="answer">
         <ul>
             <li><strong>HashSet:</strong> Uses a Hash Table internally. Does not maintain any order. Offers O(1) performance for basic operations.</li>
@@ -256,7 +299,7 @@
     </div>
 
     <h2>Spring Boot Annotations (10:05:01)</h2>
-    <div class="question">14. What is the purpose of @SpringBootApplication? How do you create a custom annotation?</div>
+    <div class="question">16. What is the purpose of @SpringBootApplication? How do you create a custom annotation?</div>
     <div class="answer">
         <p><strong>@SpringBootApplication:</strong> It is a convenience annotation that combines three annotations:</p>
         <ul>
@@ -268,7 +311,7 @@
     </div>
 
     <h2>Spring Stereotype Annotations (10:08:42)</h2>
-    <div class="question">15. What is the purpose of stereotype annotations (@Component, @Service, @Repository) in Spring Boot?</div>
+    <div class="question">17. What is the purpose of stereotype annotations (@Component, @Service, @Repository) in Spring Boot?</div>
     <div class="answer">
         <p>They are used to declare beans so Spring's component scanning can automatically detect them and register them in the Application Context.</p>
         <ul>
@@ -279,7 +322,7 @@
     </div>
 
     <h2>Multiple Databases in Spring Boot (10:11:39)</h2>
-    <div class="question">16. How do you configure two databases in a Spring Boot project?</div>
+    <div class="question">18. How do you configure two databases in a Spring Boot project?</div>
     <div class="answer">
         <p>To configure multiple databases:</p>
         <ol>
@@ -292,7 +335,7 @@
     </div>
 
     <h2>Maven Dependencies & Conflict Resolution (10:13:17)</h2>
-    <div class="question">17. If you have two JARs with identical class paths or want to exclude classes from a huge dependency to reduce compilation time, how do you handle this?</div>
+    <div class="question">19. If you have two JARs with identical class paths or want to exclude classes from a huge dependency to reduce compilation time, how do you handle this?</div>
     <div class="answer">
         <p>In Maven, this is handled using the <code>&lt;exclusions&gt;</code> tag.</p>
         <p>If Dependency A brings in an unwanted version of Dependency B (or an unnecessary huge JAR), you can exclude Dependency B from Dependency A's declaration in your <code>pom.xml</code>.</p>
@@ -311,7 +354,7 @@
     </div>
 
     <h2>CI/CD & Deployment (10:16:21)</h2>
-    <div class="question">18. How does the CI/CD pipeline work? How gets it triggered in GitLab and what is the deployment strategy?</div>
+    <div class="question">20. How does the CI/CD pipeline work? How gets it triggered in GitLab and what is the deployment strategy?</div>
     <div class="answer">
         <p><strong>Triggering:</strong> In GitLab, the CI/CD pipeline is defined in a <code>.gitlab-ci.yml</code> file. When code is pushed to a repository, GitLab's runners automatically detect this file and trigger the pipeline stages (Build, Test, SonarQube scan, Dockerize). This is driven by webhooks internally.</p>
         <p><strong>Deployment Strategy:</strong> Common modern strategies include:</p>
