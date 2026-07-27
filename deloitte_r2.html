@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deloitte Interview Experience - Round 2</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .metadata {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Deloitte Interview Experience (Round 2)</h1>
+
+    <div class="metadata">
+        <p><strong>Date:</strong> July 27, 2026</p>
+        <p><strong>Duration:</strong> ~26 minutes (10:06:00 – 10:32:25)</p>
+    </div>
+
+    <h2>Introduction & Project Architecture (10:06:10)</h2>
+    <div class="question">1. Can you give a brief introduction about yourself, your role and responsibilities, and your technology stack?</div>
+    <div class="answer">
+        <p><strong>How to Answer (Framework):</strong></p>
+        <ul>
+            <li><strong>Introduction:</strong> Summarize your 5+ years of software engineering experience developing scalable enterprise applications and microservices.</li>
+            <li><strong>Technology Stack:</strong> Highlight your expertise in core technologies including Java (8/11+), Spring Boot, Spring Batch, Hibernate/JPA, REST APIs, Microservices, and SQL/NoSQL databases.</li>
+            <li><strong>Role & Responsibilities:</strong> Mention your active involvement in the full software development lifecycle (SDLC) — from designing database schemas and developing high-throughput data processing pipelines to participating in code reviews, writing automated tests, and debugging complex production issues.</li>
+        </ul>
+    </div>
+
+    <div class="question">2. With overall 5 years of experience, which version of Java are you currently working on, and do you have knowledge of upper versions like Java 11? (10:07:22 - 10:07:45)</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Primary Version (Java 8):</strong> Extensive daily usage of Java 8 features such as Streams, Lambda expressions, Functional Interfaces, <code>Optional</code>, and the <code>java.time</code> API.</li>
+            <li><strong>Upper Versions (Java 11+):</strong> Familiarity and working knowledge of Java 11 enhancements, including:
+                <ul>
+                    <li>Local-Variable Syntax for Lambda Parameters (<code>var</code> keyword).</li>
+                    <li>New String utility methods: <code>isBlank()</code>, <code>lines()</code>, <code>strip()</code>, <code>repeat()</code>.</li>
+                    <li>New File methods: <code>Files.readString()</code> and <code>Files.writeString()</code>.</li>
+                    <li>Standardized HTTP Client (<code>java.net.http.HttpClient</code>) supporting HTTP/2 and WebSockets.</li>
+                    <li><code>Optional.isEmpty()</code> method as the direct inverse of <code>isPresent()</code>.</li>
+                    <li>Garbage Collection improvements (such as Epsilon and ZGC introduction).</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="question">3. Can you walk through a review of your current project architecture and workflow? (10:08:06)</div>
+    <div class="answer">
+        <p>Provide a comprehensive overview of your project architecture, focusing on data ingestion, processing, and storage:</p>
+        <ul>
+            <li><strong>Architecture Style:</strong> Event-driven Microservices architecture built with Spring Boot and Spring Cloud.</li>
+            <li><strong>Data Ingestion Layer:</strong> Explain how downstream systems or external vendors generate and send files (CSV, XML, JSON) or messages into the system.</li>
+            <li><strong>Processing & Business Logic Layer:</strong> Describe how data is validated, transformed, and enriched using batch jobs and asynchronous consumers.</li>
+            <li><strong>Persistence Layer:</strong> Relational databases (PostgreSQL/Oracle) managed via Hibernate/Spring Data JPA for transactional data, and caching layers (Redis) for performance optimization.</li>
+        </ul>
+    </div>
+
+    <h2>File Polling & High-Volume Data Processing (10:11:49)</h2>
+    <div class="question">4. In your project, how do you know when new files have arrived, and how are you picking up those files for processing? (10:11:49)</div>
+    <div class="answer">
+        <p>There are two primary patterns used to detect and pick up incoming files:</p>
+        <ul>
+            <li><strong>Scheduled Polling (Pull Mechanism):</strong> A scheduled task (using Spring <code>@Scheduled(cron = "0 0/5 * * * ?")</code> or Quartz Scheduler) periodically scans a designated landing directory (local SFTP folder, NFS mount, or AWS S3 bucket) for incoming files matching specific naming conventions or extensions.</li>
+            <li><strong>Event-Driven Notifications (Push Mechanism):</strong> Utilizing file system watchers (like Java <code>WatchService</code>) or cloud storage event notifications (e.g., S3 Event Notifications publishing to an SQS queue or Kafka topic) that trigger processing immediately upon file arrival.</li>
+        </ul>
+        <p>Once picked up, files are moved from the <em>landing/inbox</em> directory to a <em>staging/processing</em> directory to prevent concurrent pollers from picking up the same file while it is actively being read.</p>
+    </div>
+
+    <div class="question">5. If you are hitting the system every 5 minutes to poll for files, how do you handle duplicate files? Let's say a duplicate file arrives, what is your handling strategy? (10:12:20)</div>
+    <div class="answer">
+        <p>Handling duplicate files requires a robust deduplication and idempotency strategy across multiple layers:</p>
+        <ol>
+            <li><strong>Checksum / Hashing (Content Verification):</strong> When a file is read, we generate a cryptographic hash (SHA-256 or MD5) of the file content. We check this hash against a database table or Redis cache of previously processed file hashes. If the hash already exists, the file is identified as a duplicate.</li>
+            <li><strong>Metadata Tracking Table:</strong> We maintain a database table (e.g., <code>file_processing_log</code>) storing file metadata: <code>file_name</code>, <code>file_size</code>, <code>received_timestamp</code>, <code>checksum</code>, and <code>status</code> (PROCESSING, COMPLETED, FAILED). Before processing starts, we query this table. If a file with identical metadata is already COMPLETED or PROCESSING, it is skipped.</li>
+            <li><strong>File Move / Archive Strategy:</strong> Successfully processed files are immediately moved to an <code>archive/processed</code> folder with a timestamped suffix, while detected duplicates are moved to a <code>duplicates/rejected</code> folder and an alert is logged.</li>
+            <li><strong>Database Idempotency:</strong> At the record level, downstream database insertions use unique constraints and UPSERT operations (e.g., <code>INSERT ... ON DUPLICATE KEY UPDATE</code> or JPA <code>save()</code> with business keys) so that even if a record is re-processed, it does not create duplicate entries in the database.</li>
+        </ol>
+    </div>
+
+    <div class="question">6. You mentioned there are millions of records or files coming in, representing a huge volume. Can you explain how you process this high volume rapidly and efficiently? (10:13:04)</div>
+    <div class="answer">
+        <p>To process millions of records with high throughput and low latency, we employ several performance optimization strategies:</p>
+        <ul>
+            <li><strong>Chunk-Oriented / Batch Processing:</strong> Instead of loading and processing the entire file into memory or inserting records one-by-one, we read and write data in chunks (e.g., batch sizes of 1,000 to 5,000 records). This dramatically reduces database network roundtrips and memory overhead.</li>
+            <li><strong>Multi-Threading & Parallel Processing:</strong> We utilize Java <code>ExecutorService</code> (custom thread pools) or Spring Batch partitioners to split large files into smaller partitions and process them concurrently across multiple threads or worker nodes.</li>
+            <li><strong>Streaming APIs:</strong> We use memory-efficient streaming readers (like <code>BufferedReader</code>, StAX for XML, or FastCSV) rather than DOM parsers or holding full file contents in RAM, preventing <code>OutOfMemoryError</code>.</li>
+            <li><strong>JDBC Batching & Hibernate Optimization:</strong> In the persistence layer, we enable JDBC batching (<code>spring.jpa.properties.hibernate.jdbc.batch_size=50</code>, <code>order_inserts=true</code>) and disable second-level caching during bulk operations to maximize write speeds.</li>
+            <li><strong>Asynchronous Decoupling via Message Brokers:</strong> Once file records are read, they can be published as events to Apache Kafka or RabbitMQ topics, allowing multiple independent consumer services to process and persist the records horizontally at scale.</li>
+        </ul>
+    </div>
+
+    <div class="question">7. Are you working on batch processing, specifically Spring Batch? Can you explain its architecture and core components? (10:14:07)</div>
+    <div class="answer">
+        <p>Yes, <strong>Spring Batch</strong> is the robust framework we use for processing large volumes of data reliably. Its architecture revolves around several key components:</p>
+        <ul>
+            <li><strong>Job:</strong> Represents the entire batch process executed from start to finish. A Job is composed of one or more <strong>Steps</strong>.</li>
+            <li><strong>Step:</strong> An independent phase of a Job. Most high-volume processing uses <strong>Chunk-Oriented Processing</strong> within a Step, which consists of three interfaces:
+                <ul>
+                    <li><code>ItemReader</code>: Reads data one item at a time from a data source (e.g., <code>FlatFileItemReader</code> for CSVs or <code>JdbcCursorItemReader</code> for databases).</li>
+                    <li><code>ItemProcessor</code>: Applies business validation, data transformation, or filtering on each item read. Returning <code>null</code> filters out the item from being written.</li>
+                    <li><code>ItemWriter</code>: Receives a list (chunk) of processed items and writes them in bulk to the destination (e.g., <code>JdbcBatchItemWriter</code> or <code>JpaItemWriter</code>).</li>
+                </ul>
+            </li>
+            <li><strong>JobRepository:</strong> The persistence mechanism that stores Job and Step execution metadata, status, start/end times, and read/write commit counts in database tables (e.g., <code>BATCH_JOB_EXECUTION</code>). This enables restartability from the exact point of failure.</li>
+            <li><strong>JobLauncher:</strong> The interface responsible for launching a Job with a given set of <code>JobParameters</code>.</li>
+        </ul>
+    </div>
+
+    <h2>Java Core: Generics & Serialization (10:17:02)</h2>
+    <div class="question">8. What are Generics in Java, and why do we use them? (10:17:02)</div>
+    <div class="answer">
+        <p><strong>Generics</strong> (introduced in Java 5) enable types (classes, interfaces, and methods) to operate on objects of various types while providing compile-time type safety.</p>
+        <p><strong>Key Benefits:</strong></p>
+        <ul>
+            <li><strong>Compile-Time Type Safety:</strong> The compiler catches type mismatch errors at compile time rather than failing at runtime with a <code>ClassCastException</code>.</li>
+            <li><strong>Elimination of Manual Type Casting:</strong> When retrieving elements from a generic collection (e.g., <code>List&lt;String&gt;</code>), explicit casting is no longer required.</li>
+            <li><strong>Code Reusability:</strong> Allows writing generic algorithms and data structures that work seamlessly across different data types (e.g., Java Collections Framework).</li>
+        </ul>
+    </div>
+
+    <div class="question">9. What is the difference between Upper Bounded and Lower Bounded wildcards in Java Generics? (10:17:49)</div>
+    <div class="answer">
+        <p>Bounded wildcards restrict the types that can be used as type arguments in generic structures. They follow the <strong>PECS Principle (Producer Extends, Consumer Super)</strong>:</p>
+        <ul>
+            <li><strong>Upper Bounded Wildcards (<code>&lt;? extends T&gt;</code>):</strong> Restricts the unknown type to be a specific type <code>T</code> or any of its <strong>subclasses</strong>.
+                <ul>
+                    <li><em>Usage (Producer Extends):</em> Used when you only want to <strong>read (produce)</strong> data from a collection. For example, a method accepting <code>List&lt;? extends Number&gt;</code> can safely read integers or doubles as <code>Number</code> objects, but you cannot add new elements to it (except <code>null</code>) because the exact subtype is unknown at compile time.</li>
+                </ul>
+            </li>
+            <li><strong>Lower Bounded Wildcards (<code>&lt;? super T&gt;</code>):</strong> Restricts the unknown type to be a specific type <code>T</code> or any of its <strong>superclasses</strong> (up to <code>Object</code>).
+                <ul>
+                    <li><em>Usage (Consumer Super):</em> Used when you want to <strong>write (consume)</strong> or insert elements into a collection. For example, a method accepting <code>List&lt;? super Integer&gt;</code> allows you to safely insert <code>Integer</code> objects into a list of integers, numbers, or objects.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="question">10. Have you worked on Serialization? What are the different ways to achieve serialization in Java? (10:18:23)</div>
+    <div class="answer">
+        <p><strong>Serialization</strong> is the mechanism of converting an object's state into a stream of bytes so that it can be persisted to a file/database or transmitted over a network. The reverse process of reconstructing the object from the byte stream is called <strong>Deserialization</strong>.</p>
+        <p><strong>Ways to achieve Serialization in Java:</strong></p>
+        <ol>
+            <li><strong>Implementing the <code>java.io.Serializable</code> Interface:</strong> This is a marker interface (contains no methods). When a class implements <code>Serializable</code>, Java's default serialization mechanism (via <code>ObjectOutputStream</code> and <code>ObjectInputStream</code>) automatically serializes its fields.
+                <ul>
+                    <li><code>transient</code> keyword: Used on fields that should be skipped during serialization (e.g., passwords or temporary caches).</li>
+                    <li><code>serialVersionUID</code>: A unique version identifier used during deserialization to verify that the sender and receiver have compatible class definitions.</li>
+                </ul>
+            </li>
+            <li><strong>Implementing the <code>java.io.Externalizable</code> Interface:</strong> This interface extends <code>Serializable</code> and provides complete custom control over the serialization process by requiring implementation of two methods: <code>writeExternal(ObjectOutput out)</code> and <code>readExternal(ObjectInput in)</code>. This is faster and more memory-efficient than default serialization because you explicitly specify which fields to serialize.</li>
+            <li><strong>Modern JSON / XML Serialization (Library-Based):</strong> In contemporary microservices and REST architectures, binary Java serialization is rarely used due to cross-language incompatibility and security vulnerabilities. Instead, objects are serialized into JSON or XML using libraries like <strong>Jackson</strong> (<code>ObjectMapper</code>), <strong>Gson</strong>, or <strong>JAXB</strong>.</li>
+        </ol>
+    </div>
+
+    <h2>OOPs & Exception Handling (10:19:45)</h2>
+    <div class="question">11. Let's say Class A has a <code>public</code> method, and Class B extends Class A. Can we override that method in Class B and change its access modifier to <code>default</code> (package-private)? (10:19:45)</div>
+    <div class="answer">
+        <p><strong>No, we cannot.</strong> This violates Java's method overriding rules and the Liskov Substitution Principle.</p>
+        <p><strong>Rule:</strong> When overriding a method in a subclass, you <strong>cannot assign a more restrictive (weaker) access modifier</strong> than the access modifier of the overridden method in the superclass. You can only assign an equal or less restrictive (wider) access modifier.</p>
+        <ul>
+            <li>Visibility hierarchy (from most restrictive to least restrictive): <code>private</code> &rarr; <code>default</code> (package-private) &rarr; <code>protected</code> &rarr; <code>public</code>.</li>
+            <li>Since the method in Class A is <code>public</code> (the widest visibility), the overriding method in Class B must remain <code>public</code>. Attempting to change it to <code>default</code>, <code>protected</code>, or <code>private</code> will result in a compile-time error: <em>"attempting to assign weaker access privileges; was public"</em>.</li>
+        </ul>
+    </div>
+
+    <div class="question">12. What is the difference between Compile-time (Checked) and Runtime (Unchecked) exceptions in Java? (10:20:26)</div>
+    <div class="answer">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Checked Exceptions (Compile-Time)</th>
+                    <th>Unchecked Exceptions (Runtime)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Compiler Verification</strong></td>
+                    <td>Checked at compile time by the Java compiler. If not handled or declared, code will not compile.</td>
+                    <td>Not checked at compile time. The compiler allows compilation without mandatory handling.</td>
+                </tr>
+                <tr>
+                    <td><strong>Inheritance</strong></td>
+                    <td>Direct subclasses of <code>Exception</code> (excluding <code>RuntimeException</code> and its subclasses).</td>
+                    <td>Subclasses of <code>RuntimeException</code> (which itself is a subclass of <code>Exception</code>).</td>
+                </tr>
+                <tr>
+                    <td><strong>Root Cause / Usage</strong></td>
+                    <td>Represent recoverable external events outside the program's immediate control (e.g., missing file, network failure, DB error).</td>
+                    <td>Represent programming logic bugs or API misuses that should be fixed in code (e.g., null dereference, invalid index, illegal arguments).</td>
+                </tr>
+                <tr>
+                    <td><strong>Handling Requirement</strong></td>
+                    <td>Must be enclosed in a <code>try-catch</code> block or declared using the <code>throws</code> keyword in the method signature.</td>
+                    <td>Optional handling; can be caught if necessary, but best avoided by writing defensive code.</td>
+                </tr>
+                <tr>
+                    <td><strong>Common Examples</strong></td>
+                    <td><code>IOException</code>, <code>SQLException</code>, <code>FileNotFoundException</code>, <code>ParseException</code>.</td>
+                    <td><code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code>, <code>IllegalArgumentException</code>, <code>ClassCastException</code>.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="question">13. What is the topmost (root) class of the Exception handling hierarchy in Java? (10:21:14)</div>
+    <div class="answer">
+        <p>The topmost root class of the Java exception hierarchy is <strong><code>java.lang.Throwable</code></strong>, which is a direct subclass of <code>Object</code>.</p>
+        <p><code>Throwable</code> has two primary subclasses:</p>
+        <ul>
+            <li><strong><code>Exception</code>:</strong> Represents exceptional conditions that a reasonable application should try to catch and recover from (contains both Checked and Runtime exceptions).</li>
+            <li><strong><code>Error</code>:</strong> Represents severe problems that occur within the JVM environment itself, which an application should generally not attempt to catch or handle (e.g., <code>OutOfMemoryError</code>, <code>StackOverflowError</code>, <code>VirtualMachineError</code>).</li>
+        </ul>
+    </div>
+
+    <div class="question">14. In a method with a <code>try-catch-finally</code> block where the function does NOT throw any exception: from <code>try</code> you return 1, from <code>catch</code> you return 2, and from <code>finally</code> you return 3. What will be the output of the function? (10:21:55)</div>
+    <div class="answer">
+        <p>The output (return value) of the function will be <strong><code>3</code></strong>.</p>
+        <p><strong>Explanation:</strong> In Java, the <code>finally</code> block is guaranteed to execute whether an exception occurs or not (except in extreme cases like <code>System.exit(0)</code>, JVM crash, or fatal hardware failure). When a <code>return</code> statement is encountered inside the <code>try</code> block, the return expression is evaluated, but the actual return to the caller is deferred until the <code>finally</code> block executes.</p>
+        <p>Because the <code>finally</code> block also contains an explicit <code>return</code> statement (<code>return 3;</code>), this statement overrides any value previously scheduled to be returned from the <code>try</code> (or <code>catch</code>) block.</p>
+        <pre><code>public class ExceptionReturnExample {
+    @SuppressWarnings("finally")
+    public static int testMethod() {
+        try {
+            return 1;
+        } catch (Exception e) {
+            return 2;
+        } finally {
+            return 3; // This return overrides the return 1 from the try block!
+        }
+    }
+
+    public static void main(String[] args) {
+        System.out.println("Result: " + testMethod()); // Output: Result: 3
+    }
+}</code></pre>
+    </div>
+
+    <h2>Java Collections & Concurrency (10:22:42)</h2>
+    <div class="question">15. What is the difference between Fail-Fast and Fail-Safe iterators in collections? In the case of Fail-Fast, why does Java throw an exception? (10:22:42 - 10:23:43)</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Fail-Fast Iterators:</strong> Operate directly on the original collection's underlying data structure. If the collection is structurally modified (elements added or removed) after the iterator is created—by any thread, or even by the same thread without using the iterator's own <code>remove()</code> method—the iterator immediately throws a <code>ConcurrentModificationException</code>.
+                <ul>
+                    <li><em>Examples:</em> Iterators of standard collections like <code>ArrayList</code>, <code>HashMap</code>, <code>HashSet</code>.</li>
+                </ul>
+            </li>
+            <li><strong>Fail-Safe (Non-Fail-Fast / Weakly Consistent) Iterators:</strong> Do not throw <code>ConcurrentModificationException</code> if the collection is modified during iteration. They either iterate over a clone/copy of the collection or use weakly consistent data structures that tolerate concurrent modifications.
+                <ul>
+                    <li><em>Examples:</em> Iterators of concurrent collections like <code>CopyOnWriteArrayList</code>, <code>ConcurrentHashMap</code>.</li>
+                </ul>
+            </li>
+        </ul>
+        <p><strong>Why does Fail-Fast throw an exception? (Internal Mechanism):</strong></p>
+        <p>Standard collections maintain an internal structural modification counter named <strong><code>modCount</code></strong>. When an iterator is instantiated, it captures the current value of <code>modCount</code> in a local variable named <strong><code>expectedModCount</code></strong>.</p>
+        <p>During every iteration step (when calling <code>hasNext()</code> or <code>next()</code>), the iterator calls an internal method <code>checkForComodification()</code> which compares <code>modCount</code> against <code>expectedModCount</code>. If another thread (or direct collection calls) modified the collection structure, <code>modCount</code> increments while <code>expectedModCount</code> remains unchanged. The mismatch indicates that the underlying data has changed unpredictably, triggering a <code>ConcurrentModificationException</code> to prevent arbitrary behavior, silent data corruption, or infinite loops.</p>
+    </div>
+
+    <div class="question">16. When multiple threads are accessing and modifying a list concurrently, why shouldn't we use standard <code>ArrayList</code>, and how does <code>CopyOnWriteArrayList</code> resolve thread-safety issues? (10:24:44)</div>
+    <div class="answer">
+        <p><strong>Why standard <code>ArrayList</code> fails in multi-threaded environments:</strong> <code>ArrayList</code> is not synchronized. If one thread iterates over the list while another thread adds or removes elements, race conditions occur, leading to data corruption, indexing errors, or <code>ConcurrentModificationException</code>.</p>
+        <p><strong>How <code>CopyOnWriteArrayList</code> solves this:</strong></p>
+        <ul>
+            <li><strong>Copy-On-Write Mechanism:</strong> All mutative operations (like <code>add</code>, <code>set</code>, <code>remove</code>) are implemented by making a fresh, independent copy of the underlying array using internal locks (like <code>ReentrantLock</code>). The modification is applied to the copy, and once complete, the internal array reference is atomically updated to point to the new array.</li>
+            <li><strong>Lock-Free Reads:</strong> Read operations (like <code>get</code>, <code>iterator</code>) do not require locking. They operate on a immutable snapshot of the array that existed at the exact moment the read or iterator was initiated.</li>
+            <li><strong>When to use:</strong> Ideal for <em>read-heavy, write-infrequent</em> scenarios (such as listener lists, routing tables, or configuration caches). Since cloning the array on every write operation is memory- and CPU-intensive, it should be avoided in write-heavy workloads.</li>
+        </ul>
+    </div>
+
+    <div class="question">17. What is the contract between <code>hashCode()</code> and <code>equals()</code> methods? What happens if you override only <code>hashCode()</code> (or only <code>equals()</code>) in hashing collections like HashMap or HashSet? (10:25:08 - 10:25:41)</div>
+    <div class="answer">
+        <p><strong>The Contract between <code>hashCode()</code> and <code>equals()</code>:</strong></p>
+        <ol>
+            <li>If two objects are equal according to the <code>equals(Object)</code> method, calling <code>hashCode()</code> on both objects <strong>must produce the exact same integer result</strong>.</li>
+            <li>If two objects have the same <code>hashCode()</code>, they are <strong>not necessarily equal</strong> according to <code>equals()</code> (this is known as a hash collision).</li>
+            <li>Whenever <code>hashCode()</code> is invoked on the same object more than once during an execution of a Java application, it must consistently return the same integer, provided no information used in <code>equals comparisons</code> on the object is modified.</li>
+        </ol>
+        <p><strong>What happens if you override ONLY <code>hashCode()</code> (and NOT <code>equals()</code>)?</strong></p>
+        <p>When you insert two logically identical objects (e.g., two <code>Employee</code> objects with the same ID) into a <code>HashSet</code> or <code>HashMap</code>, they will generate the exact same hash code and land in the same bucket. However, when the hash map checks for duplicate keys in that bucket, it calls <code>equals()</code>. Since <code>equals()</code> was not overridden, it defaults to <code>Object.equals()</code>, which compares memory references (<code>==</code>). Because the two instances have different memory addresses, <code>equals()</code> returns <code>false</code>. As a result, the map/set treats them as distinct keys, leading to duplicate entries in a <code>HashSet</code> or multiple keys with identical logical values in a <code>HashMap</code>!</p>
+        <p><strong>What happens if you override ONLY <code>equals()</code> (and NOT <code>hashCode()</code>)?</strong></p>
+        <p>Two logically equal objects will be considered equal by <code>equals()</code>, but because <code>hashCode()</code> defaults to <code>Object.hashCode()</code> (often derived from memory address), they will generate completely different hash codes and land in completely different buckets in the hash table. Therefore, when you attempt to retrieve a value using <code>map.get(new Employee(100))</code>, the hash map checks the wrong bucket and returns <code>null</code>, failing to find the entry even though an equal key exists!</p>
+    </div>
+
+    <div class="question">18. Explain the internal working of <code>HashSet</code> and how it removes or prevents duplicate values. (10:26:17 - 10:26:49)</div>
+    <div class="answer">
+        <p><strong>Internal Working:</strong> Internally, a <code>HashSet</code> is backed entirely by a <code>HashMap</code> instance:</p>
+        <pre><code>private transient HashMap&lt;E,Object&gt; map;
+private static final Object PRESENT = new Object(); // Dummy value</code></pre>
+        <p>When you add an element to a <code>HashSet</code>, the set inserts the element as the <strong>key</strong> into the internal <code>HashMap</code>, while passing a constant, static dummy object named <strong><code>PRESENT</code></strong> as the <strong>value</strong> for all entries.</p>
+        <p><strong>How it prevents duplicate values:</strong></p>
+        <p>When you invoke <code>hashSet.add(element)</code>, it executes <code>map.put(element, PRESENT)</code> internally. The <code>HashMap.put()</code> method performs the following checks:</p>
+        <ol>
+            <li>It computes the hash code of <code>element</code> to find the target bucket index in the hash table array.</li>
+            <li>If the bucket is empty, a new node is created, and <code>put()</code> returns <code>null</code>. The <code>HashSet.add()</code> method sees that the return value is <code>null</code>, confirms that the element was not present, and returns <code>true</code>.</li>
+            <li>If the bucket already contains elements (collision), it traverses the linked list or red-black tree at that bucket index and compares the incoming <code>element</code> with existing keys using:
+                <code>(e.hash == hash && ((k = e.key) == element || (element != null && element.equals(k))))</code>
+            </li>
+            <li>If an existing key matches the incoming element, the <code>HashMap</code> replaces the old value with <code>PRESENT</code> and returns the old value (which is <code>PRESENT</code>).</li>
+            <li>Because <code>map.put()</code> returned an existing object (not <code>null</code>), <code>HashSet.add()</code> knows that the element is a duplicate and returns <code>false</code> without adding a new entry to the set!</li>
+        </ol>
+    </div>
+
+    <h2>Java 8 Functional Interfaces (10:27:13)</h2>
+    <div class="question">19. What is a Functional Interface in Java 8? Can one Functional Interface extend another Functional Interface? (10:27:13 - 10:27:36)</div>
+    <div class="answer">
+        <p>A <strong>Functional Interface</strong> is an interface that declares <strong>exactly one abstract method</strong> (known as the Single Abstract Method or SAM). It serves as the target type for Lambda expressions and Method References. It is annotated with <code>@FunctionalInterface</code> (optional, but recommended for compiler enforcement).</p>
+        <p><em>Note:</em> A functional interface can contain any number of <code>default</code> methods, <code>static</code> methods, or public method overrides from the <code>java.lang.Object</code> class (such as <code>toString</code>, <code>equals</code>, <code>hashCode</code>).</p>
+        <p><strong>Can a Functional Interface extend another Functional Interface?</strong></p>
+        <p>Yes, but whether the child interface remains a valid Functional Interface depends on how methods are declared:</p>
+        <ul>
+            <li><strong>Case 1 (Remains a Functional Interface):</strong> If Child Interface B extends Parent Functional Interface A and <strong>does not declare any new abstract method</strong> (or simply overrides Parent A's abstract method with the exact same signature), Interface B inherits exactly one abstract method from A and is a valid Functional Interface.</li>
+            <li><strong>Case 2 (No longer a Functional Interface):</strong> If Child Interface B extends Parent Functional Interface A and declares a <strong>new, distinct abstract method</strong>, Interface B now possesses <strong>two</strong> abstract methods. Consequently, Interface B is no longer a functional interface. If you annotate Interface B with <code>@FunctionalInterface</code> in this scenario, the compiler will trigger an error: <em>"Multiple non-overriding abstract methods found in interface B"</em>.</li>
+        </ul>
+    </div>
+
+    <h2>JPA / Hibernate & Database Persistence (10:28:09)</h2>
+    <div class="question">20. Which ORM framework are you using? What is a Criteria Query in JPA / Hibernate? (10:28:09)</div>
+    <div class="answer">
+        <p>We use <strong>Hibernate / JPA (Java Persistence API)</strong> implemented via <strong>Spring Data JPA</strong>.</p>
+        <p><strong>Criteria Query (JPA Criteria API):</strong> A programmatic, type-safe API used to construct database queries using Java objects at runtime without writing raw SQL or static JPQL/HQL strings.</p>
+        <p><strong>Why we use Criteria Queries:</strong> They are exceptionally powerful for building dynamic queries where search filters, sorting, and joins change at runtime based on optional user inputs (e.g., advanced search screens with multiple optional filter criteria). Since queries are built using Java types and metamodels, syntax errors and type mismatches are caught at compile time, and SQL injection vulnerabilities are eliminated.</p>
+        <p><strong>Core Components:</strong></p>
+        <ul>
+            <li><code>CriteriaBuilder</code>: Factory interface used to construct query elements, expressions, predicates, ordering, and grouping.</li>
+            <li><code>CriteriaQuery&lt;T&gt;</code>: Represents the overall query structure (SELECT, FROM, WHERE, ORDER BY clauses) and return type.</li>
+            <li><code>Root&lt;T&gt;</code>: Represents the root entity in the FROM clause, providing access to entity attributes and joins.</li>
+        </ul>
+    </div>
+
+    <div class="question">21. Between JPQL/HQL, Native SQL, and Criteria Queries, which one is fastest in execution speed, and why? (10:28:41)</div>
+    <div class="answer">
+        <p>In terms of runtime query execution speed, the ranking is:</p>
+        <ol>
+            <li><strong>Fastest &mdash; Native SQL (<code>@Query(nativeQuery = true)</code>):</strong> Native SQL executes the fastest because it completely bypasses the ORM query translation layer. The SQL query string is passed directly to the underlying JDBC driver and database engine without modification. Furthermore, it allows developers to utilize database-specific vendor optimizations, query hints, and complex indexing features that JPA syntax might not support.</li>
+            <li><strong>Second Fastest &mdash; JPQL / HQL (<code>@Query</code>):</strong> JPQL and HQL are object-oriented query languages that operate on entity classes rather than database tables. During initial startup or first execution, the Hibernate query parser must translate the JPQL/HQL string into vendor-specific SQL. However, Hibernate caches this compiled SQL query execution plan in its AST (Abstract Syntax Tree) cache, making subsequent executions very fast and comparable to Native SQL.</li>
+            <li><strong>Slowest &mdash; Criteria Query (JPA Criteria API):</strong> Criteria queries have the highest computational overhead during query construction. Because the query is constructed dynamically as an object tree at runtime, Hibernate must evaluate the object graph, validate types, and generate the equivalent SQL query string on the fly every time the query is built.</li>
+        </ol>
+        <p><strong>Summary Best Practice:</strong> Use Native SQL or JPQL for static, performance-critical queries. Reserve Criteria Queries (or Spring Data JPA Specifications) for complex, dynamic queries where runtime flexibility and compile-time type safety outweigh the minor SQL generation overhead.</p>
+    </div>
+
+    <div class="question">22. What are the different strategies available to create a primary key in JPA / Hibernate (<code>@GeneratedValue</code>)? (10:29:05)</div>
+    <div class="answer">
+        <p>In JPA, the <code>@GeneratedValue(strategy = GenerationType.XXX)</code> annotation specifies how primary key values are generated. There are four primary strategies:</p>
+        <ul>
+            <li><strong><code>GenerationType.IDENTITY</code>:</strong> Relies on an auto-incremented database column (e.g., <code>AUTO_INCREMENT</code> in MySQL/H2 or <code>BIGSERIAL</code> in PostgreSQL). The database generates the primary key value upon record insertion.
+                <ul>
+                    <li><em>Important Performance Note:</em> Using IDENTITY disables Hibernate's JDBC batch insert optimization (<code>hibernate.jdbc.batch_size</code>) because Hibernate must execute the INSERT statement immediately to obtain the generated ID before the transaction commits.</li>
+                </ul>
+            </li>
+            <li><strong><code>GenerationType.SEQUENCE</code>:</strong> Uses a dedicated database sequence object to generate IDs (supported natively by PostgreSQL, Oracle, and modern SQL Server). Highly efficient and fully supports JDBC batch inserts because Hibernate can pre-fetch a block of sequence IDs in memory using sequence allocation sizes (pooled / HiLo optimizer) before executing batch inserts.</li>
+            <li><strong><code>GenerationType.TABLE</code>:</strong> Uses a separate database table (typically named <code>hibernate_sequences</code>) to simulate a sequence by generating and storing the next primary key value. While database-agnostic and portable across all relational DBs, it is the slowest strategy due to row-level locking and extra database queries required to update the ID table.</li>
+            <li><strong><code>GenerationType.AUTO</code> (Default):</strong> Lets the persistence provider (Hibernate) select the most appropriate generation strategy based on the configured database dialect. In modern Hibernate versions (5+), this typically defaults to SEQUENCE for PostgreSQL/Oracle and IDENTITY/TABLE for MySQL depending on configuration.</li>
+        </ul>
+        <p><em>Bonus Mention:</em> For distributed architectures and microservices, we also use UUID primary key generation (<code>@GeneratedValue(strategy = GenerationType.UUID)</code>) to generate globally unique identifiers without requiring network roundtrips to the database.</p>
+    </div>
+
+    <div class="question">23. In Hibernate or JPA, if you need to execute a dynamic query that performs a JOIN between two tables based on an optional keyword passed from an API, how do you implement this? (10:30:09)</div>
+    <div class="answer">
+        <p>The cleanest and most scalable way to implement dynamic queries with conditional joins in Spring Boot is using <strong>Spring Data JPA Specifications (<code>Specification&lt;T&gt;</code>)</strong>, which is built on top of the JPA Criteria API.</p>
+        <p><strong>Implementation Steps:</strong></p>
+        <ol>
+            <li>Ensure your repository extends <code>JpaSpecificationExecutor&lt;Entity&gt;</code> alongside <code>JpaRepository&lt;Entity, Long&gt;</code>.</li>
+            <li>Create a custom static <code>Specification</code> method that checks whether the API keyword parameter is present.</li>
+            <li>If the keyword is present, dynamically instantiate a <code>Join</code> using <code>root.join("associatedEntity", JoinType.LEFT)</code> and construct the filtering predicate using <code>CriteriaBuilder</code>.</li>
+        </ol>
+        <p><strong>Code Example:</strong></p>
+        <p>Suppose we have an <code>Order</code> entity associated with a <code>Customer</code> entity, and we want to dynamically join and filter by Customer Name only if the API passes a search keyword:</p>
+        <pre><code>import org.springframework.data.jpa.domain.Specification;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class OrderSpecifications {
+
+    public static Specification&lt;Order&gt; getOrdersByDynamicFilter(String keyword) {
+        return (root, query, cb) -&gt; {
+            List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();
+            
+            // Default condition: fetch only active orders
+            predicates.add(cb.equal(root.get("status"), "ACTIVE"));
+
+            // Dynamically add JOIN and condition ONLY if keyword is passed from API
+            if (keyword != null &amp;&amp; !keyword.trim().isEmpty()) {
+                // Perform a Left Outer Join between Order and Customer tables
+                Join&lt;Order, Customer&gt; customerJoin = root.join("customer", JoinType.LEFT);
+                
+                // Add case-insensitive LIKE condition on customer's name
+                Predicate customerNamePredicate = cb.like(
+                    cb.lower(customerJoin.get("name")), 
+                    "%" + keyword.trim().toLowerCase() + "%"
+                );
+                predicates.add(customerNamePredicate);
+            }
+
+            // Combine all predicates with AND operator
+            return cb.and(predicates.toArray(new Predicate[0]));
+        };
+    }
+}</code></pre>
+        <p>In the Service layer, you simply invoke: <code>orderRepository.findAll(OrderSpecifications.getOrdersByDynamicFilter(keyword));</code>. If <code>keyword</code> is null or empty, the JOIN is omitted, optimizing query execution!</p>
+    </div>
+
+</body>
+</html>
