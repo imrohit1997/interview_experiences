@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infosys Interview Experience</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .metadata {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Infosys Interview Experience (Round 1)</h1>
+
+    <div class="metadata">
+        <p><strong>Date:</strong> August 1, 2026</p>
+        <p><strong>Duration:</strong> ~43 minutes (10:05:05 – 10:48:23)</p>
+    </div>
+
+    <h2>Introduction & Profile (10:07:40)</h2>
+    <div class="question">1. Can you explain your background? Are you primarily a Java developer, and what are your main domains (e.g., telecom billing)?</div>
+    <div class="answer">
+        <p><strong>Context:</strong> The interviewer asked about total years of experience, comfort level with Java features, and specific experience in the telecom billing domain.</p>
+        <ul>
+            <li><strong>Experience:</strong> Discussed having around 6 years of experience, primarily focused on Java development rather than automation.</li>
+            <li><strong>Domain:</strong> Discussed working on telecom systems, specifically providing billing services and analyzing details to prepare telecom billing.</li>
+            <li><strong>Java Versions:</strong> Confirmed being comfortable with both Java 8 and Java 11.</li>
+        </ul>
+    </div>
+
+    <h2>JVM & Memory Management (10:15:28)</h2>
+    <div class="question">2. Can you brief about the JVM architecture? What is it, why do we use it, and why do we tune it?</div>
+    <div class="answer">
+        <p><strong>JVM Architecture:</strong> The JVM (Java Virtual Machine) is the engine that provides the runtime environment to drive the Java Code or applications. It converts Java bytecode into machine language. Key components include the Classloader, Memory Area (Heap, Stack, Method Area), Execution Engine (Interpreter, JIT Compiler), and JNI (Java Native Interface).</p>
+        <p><strong>Why Tune:</strong> We tune the JVM to optimize application performance, manage memory usage, reduce latency (like Garbage Collection pauses), and improve throughput.</p>
+    </div>
+
+    <div class="question">3. What is the difference between JDK, JRE, and JVM?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>JVM (Java Virtual Machine):</strong> An abstract machine that executes Java bytecode.</li>
+            <li><strong>JRE (Java Runtime Environment):</strong> Contains the JVM plus Java binaries and other classes to execute programs successfully. (JRE = JVM + Library Classes)</li>
+            <li><strong>JDK (Java Development Kit):</strong> A software development environment used to develop Java applications. (JDK = JRE + Development Tools like javac, java, etc.)</li>
+        </ul>
+    </div>
+
+    <div class="question">4. What is the difference between Heap and Stack memory?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Heap Space:</strong> Used for dynamic memory allocation of Java objects and JRE classes at runtime. Objects created via the <code>new</code> keyword are stored here. It's accessible globally.</li>
+            <li><strong>Stack Memory:</strong> Used for static memory allocation and execution of a thread. It contains primitive values specific to a method and references to objects that are in the heap. It's accessed in LIFO order and is specific to each thread.</li>
+        </ul>
+    </div>
+
+    <div class="question">5. What are the main causes of performance issues like memory problems, network issues, or slowness in Java applications?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Memory Leaks:</strong> Objects being referenced when no longer needed, preventing Garbage Collection.</li>
+            <li><strong>Improper GC Tuning:</strong> Frequent Full GC pauses (Stop-The-World) causing slowness.</li>
+            <li><strong>Thread Deadlocks/Contention:</strong> Threads blocked waiting for resources.</li>
+            <li><strong>Inefficient DB Queries / Network Calls:</strong> High latency in external communications, lack of connection pooling.</li>
+        </ul>
+    </div>
+
+    <h2>Garbage Collection (10:21:50)</h2>
+    <div class="question">6. Why should we be very cautious when working with the Java Garbage Collector, and can we tune it?</div>
+    <div class="answer">
+        <p><strong>Why cautious:</strong> Garbage Collection is an automatic process, but it introduces <strong>Stop-The-World (STW)</strong> events where application threads are paused to reclaim memory. If GC happens too frequently or takes too long, it severely impacts application latency and throughput.</p>
+        <p><strong>Tuning:</strong> Yes, we can tune the GC by setting heap sizes (<code>-Xms</code>, <code>-Xmx</code>), choosing the right GC algorithm (e.g., <code>-XX:+UseG1GC</code>), and adjusting specific parameters like new generation size or max pause time target.</p>
+    </div>
+    
+    <div class="question">7. What are the types of Garbage Collectors? Is G1GC different from the default GC? What are the GC enhancements between Java 8 and Java 11?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Types:</strong> Serial GC, Parallel GC, CMS (Concurrent Mark Sweep) GC, G1 (Garbage First) GC, ZGC, Shenandoah.</li>
+            <li><strong>G1GC vs Others:</strong> G1GC is designed for multi-processor machines with large memory. It divides the heap into regions and prioritizes collecting regions with the most garbage, aiming to meet predictable pause-time goals.</li>
+            <li><strong>Java 8 vs Java 11:</strong> In Java 8, Parallel GC was the default. In Java 9 and thus Java 11, G1GC became the default Garbage Collector. Java 11 also introduced the Epsilon GC (No-Op GC) and ZGC (experimental low-latency GC).</li>
+        </ul>
+    </div>
+
+    <div class="question">8. What is STW (Stop-The-World)?</div>
+    <div class="answer">
+        <p>STW refers to the pause in the application execution where the JVM suspends all application threads to safely execute Garbage Collection (like marking live objects or compacting memory). During this time, the application is entirely unresponsive.</p>
+    </div>
+
+    <h2>Multithreading & Concurrency (10:30:32)</h2>
+    <div class="question">9. Why should we use the Executor Framework instead of manually creating threads?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Resource Management:</strong> Creating and destroying a new thread for every task is expensive. The Executor Framework uses thread pools to reuse existing threads.</li>
+            <li><strong>Control:</strong> It allows controlling the number of active threads, preventing <code>OutOfMemoryError</code> from spawning too many threads.</li>
+            <li><strong>Simplified Concurrency:</strong> Decouples task submission from task execution. Provides features like task queuing and scheduling.</li>
+        </ul>
+    </div>
+
+    <div class="question">10. What is the difference between CompletableFuture and the Executor Framework? Why use CompletableFuture?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Executor Framework (Futures):</strong> Submitting a task returns a <code>Future</code>. To get the result, you must call <code>future.get()</code>, which is <strong>blocking</strong>. You cannot easily chain multiple futures together.</li>
+            <li><strong>CompletableFuture:</strong> Introduced in Java 8, it implements both <code>Future</code> and <code>CompletionStage</code>. It allows you to build complex asynchronous pipelines by chaining callbacks (<code>thenApply</code>, <code>thenAccept</code>) that execute <strong>non-blockingly</strong> when the computation finishes.</li>
+        </ul>
+    </div>
+
+    <div class="question">11. If a thread is stuck in a blocked state in production, how would you troubleshoot and resolve it?</div>
+    <div class="answer">
+        <p><strong>Troubleshooting:</strong></p>
+        <ul>
+            <li>Take a <strong>Thread Dump</strong> using tools like <code>jstack</code>, <code>jcmd</code>, or VisualVM.</li>
+            <li>Analyze the thread dump to identify the blocked thread and see exactly which resource or monitor lock it is waiting for, and which thread holds that lock (finding deadlocks).</li>
+        </ul>
+        <p><strong>Resolution:</strong> Analyze the code to fix locking order (to prevent deadlocks), add timeouts to external calls, or increase connection pool sizes if it's waiting on a connection.</p>
+    </div>
+
+    <h2>Spring Boot & Production Troubleshooting (10:36:53)</h2>
+    <div class="question">12. What does the @SpringBootApplication annotation do?</div>
+    <div class="answer">
+        <p>It's a composite annotation that combines three key annotations:</p>
+        <ul>
+            <li><code>@Configuration</code>: Marks the class as a source of bean definitions.</li>
+            <li><code>@EnableAutoConfiguration</code>: Enables Spring Boot's auto-configuration mechanism to automatically configure beans based on dependencies in the classpath.</li>
+            <li><code>@ComponentScan</code>: Scans the package (and sub-packages) for Spring components (<code>@Component</code>, <code>@Service</code>, etc.).</li>
+        </ul>
+    </div>
+
+    <div class="question">13. If the startup of a Spring Boot application takes 5+ minutes, what steps would you take to debug and resolve it?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>Analyze Startup Logs:</strong> Enable debug logging to identify which beans take the longest to initialize.</li>
+            <li><strong>Lazy Initialization:</strong> Enable <code>spring.main.lazy-initialization=true</code> so beans are only created when needed, rather than all at startup.</li>
+            <li><strong>Database Connections:</strong> Check if Flyway/Liquibase scripts are taking too long, or if JPA entity scanning is inefficient.</li>
+            <li><strong>Network/External APIs:</strong> Ensure the app isn't hanging while waiting for a timeout from an external service during startup.</li>
+            <li><strong>Component Scan:</strong> Narrow down the <code>@ComponentScan</code> base packages to avoid scanning unnecessary classes.</li>
+        </ul>
+    </div>
+
+    <div class="question">14. If an API in production suddenly spikes in latency from 300ms to 3 seconds, how do you troubleshoot it?</div>
+    <div class="answer">
+        <ul>
+            <li><strong>APM Tools:</strong> Check Application Performance Monitoring tools (like New Relic, Datadog, AppDynamics) to isolate the bottleneck (is it DB, Network, or Code?).</li>
+            <li><strong>Logs & Traces:</strong> Check application logs for exceptions. Use distributed tracing (Zipkin/Jaeger) to see which microservice or component is slow.</li>
+            <li><strong>Database:</strong> Check if database queries are suddenly slow (missing indexes, database locks, slow queries log).</li>
+            <li><strong>Infrastructure:</strong> Check CPU, memory, and JVM metrics (is there a sudden GC pause/memory leak?) or network issues.</li>
+        </ul>
+    </div>
+
+    <h2>Coding Assessment (10:43:22)</h2>
+    <div class="question">15. Write a Java 8/11 program to take an array of decimals, sort them in reverse order, and then replace the middle elements. For an array of 10 elements, replace the 5th and 6th elements with the 1st and 10th elements, respectively.</div>
+    <div class="answer">
+        <pre><code>import java.util.Arrays;
+import java.util.Collections;
+
+public class ArrayManipulation {
+    public static void main(String[] args) {
+        Double[] decimals = { 1.2, 5.5, 3.4, 9.1, 2.8, 7.6, 4.4, 8.9, 6.3, 0.5 };
+        
+        // 1. Sort in reverse order
+        Arrays.sort(decimals, Collections.reverseOrder());
+        System.out.println("Reverse Sorted: " + Arrays.toString(decimals));
+        
+        // Array length is 10. Indices 0 to 9.
+        // 2. Replace middle elements
+        // 5th element (index 4) replaced by 1st (index 0)
+        // 6th element (index 5) replaced by 10th (index 9)
+        if (decimals.length == 10) {
+            decimals[4] = decimals[0];
+            decimals[5] = decimals[9];
+        }
+        
+        System.out.println("Modified Array: " + Arrays.toString(decimals));
+    }
+}
+</code></pre>
+    </div>
+
+</body>
+</html>
