@@ -109,7 +109,7 @@ export default function Home() {
                 <div className="mt-6 pt-6 border-t border-slate-800">
                   <h5 className="font-semibold text-slate-200 mb-3 text-sm uppercase tracking-wider">Key Achievements</h5>
                   <div className="flex flex-wrap gap-2">
-                    {["Bronze Guru Award (2026)", "NextGen Mentorship Program (2025)", "22nd in CMI Code Masters (2025)", "Contextual Master Award (2023)"].map((ach, i) => (
+                    {["Bronze Guru Award (2026)", "NextGen Mentorship Program (2025)", "Top 50 in CMI Code Masters (2025 & 2026)", "Contextual Master Award (2023)"].map((ach, i) => (
                       <span key={i} className="px-3 py-1 rounded-full bg-slate-800 text-xs font-medium text-slate-300">{ach}</span>
                     ))}
                   </div>
@@ -180,6 +180,18 @@ export default function Home() {
             <Zap className="text-blue-400" /> Projects
           </h2>
           <div className="space-y-6">
+            <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-2xl group hover:border-slate-700 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-2">
+                <span>Should I WFH? — Commute Decision Engine</span>
+                <a href="https://wfh.imrohit2611.co.in/" target="_blank" rel="noreferrer" className="text-sm font-normal text-blue-400 hover:text-blue-300 flex items-center gap-1"><Link2 size={14}/> wfh.imrohit2611.co.in</a>
+              </h3>
+              <ul className="space-y-2 text-slate-300 text-sm md:text-base">
+                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Purpose:</strong> A real-time decision engine that computes a "Commute Friction Score" to advise users on whether to work from home based on current weather and travel conditions.</span></li>
+                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Features:</strong> Features a mobile-first responsive UI, interactive map visualizations, dynamic scoring thresholds, and automated local alert overrides via web scraping.</span></li>
+                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Tech Stack & APIs:</strong> Built with React, Python, FastAPI, and Selenium, integrated with Mapbox (Routing), TomTom (Traffic Incidents), and Open-Meteo APIs.</span></li>
+              </ul>
+            </div>
+
             <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-2xl group hover:border-slate-700 transition-colors">
               <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">LLM-Based Trade Execution Bot for algorithmic trading</h3>
               <ul className="space-y-2 text-slate-300 text-sm md:text-base">
