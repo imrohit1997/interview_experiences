@@ -3,8 +3,11 @@
 import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, ChevronDown, ChevronRight, CheckSquare, Square, MinusSquare, FileText } from "lucide-react";
+import { pdf } from "@react-pdf/renderer";
 import { cvData, getSectionTree } from "../cvData";
-import { generateCV, type SelectedSections } from "./PdfGenerator";
+import { PdfTemplate } from "./PdfTemplate";
+
+export type SelectedSections = Record<string, boolean>;
 
 interface DownloadModalProps {
   isOpen: boolean;
@@ -139,7 +142,8 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
   }
 
   // Handle download
-  function handleDownload() {
+  async function handleDownload() {
+    let finalSelection = selected;
     if (mode === "full") {
       // Select all and generate
       const allSelected: SelectedSections = {};
@@ -151,10 +155,26 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
           }
         }
       }
-      generateCV(cvData, allSelected);
-    } else {
-      generateCV(cvData, selected);
+      finalSelection = allSelected;
     }
+
+    // Generate PDF Blob using @react-pdf/renderer
+    try {
+      const blob = await pdf(<PdfTemplate data={cvData} selected={finalSelection} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      const fileName = cvData.personalInfo.name.replace(/\s+/g, "_") + "_CV.pdf";
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Error generating PDF:", err);
+      alert("Failed to generate PDF. Please try again.");
+    }
+    
     onClose();
   }
 
