@@ -1,236 +1,427 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Download, MapPin, Phone, Mail, Link2, Briefcase, GraduationCap, Code2, Award, Zap } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  Download,
+  MapPin,
+  Phone,
+  Mail,
+  Link2,
+  Briefcase,
+  GraduationCap,
+  Code2,
+  Award,
+  Zap,
+  ChevronDown,
+  ExternalLink,
+} from "lucide-react";
+import { cvData } from "./cvData";
+import ProfileAvatar from "./components/ProfileAvatar";
+import DownloadModal from "./components/DownloadModal";
+
+// ── Section IDs for navigation ──────────────────────────────────────────────
+
+const SECTIONS = [
+  { id: "summary", label: "Summary", icon: Zap },
+  { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "education", label: "Education", icon: GraduationCap },
+  { id: "skills", label: "Skills", icon: Code2 },
+  { id: "projects", label: "Projects", icon: Zap },
+  { id: "certifications", label: "Certifications", icon: Award },
+] as const;
+
+
+
+// ── Animations ──────────────────────────────────────────────────────────────
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } },
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+};
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.9 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: "easeOut" as const } },
+};
+
+// ── Page ────────────────────────────────────────────────────────────────────
 
 export default function Home() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-  };
+  const [activeSection, setActiveSection] = useState("summary");
+  const [isDownloadOpen, setIsDownloadOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
+  const navRef = useRef<HTMLDivElement>(null);
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 }
+  const { scrollY } = useScroll();
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 300], [1, 0.95]);
+
+  // Track scroll for sticky nav shadow
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 400);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+
+  // Intersection observer for active section
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-30% 0px -60% 0px" }
+    );
+
+    for (const section of SECTIONS) {
+      const el = sectionRefs.current[section.id];
+      if (el) observer.observe(el);
     }
-  };
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Scroll to section
+  const scrollToSection = useCallback((id: string) => {
+    const el = sectionRefs.current[id];
+    if (el) {
+      const y = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  }, []);
+
+  const info = cvData.personalInfo;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-blue-500/30">
-      {/* Background Gradients */}
+    <div className="min-h-screen bg-[#060b11] text-slate-200 selection:bg-teal-500/30">
+      {/* Background effects */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/20 blur-[120px]" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-900/20 blur-[120px]" />
+        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-teal-900/20 blur-[150px]" />
+        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-900/15 blur-[150px]" />
+        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-amber-900/8 blur-[120px]" />
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-12 md:py-24">
-        {/* Header Section */}
-        <motion.header 
-          initial="hidden"
-          animate="visible"
-          variants={staggerContainer}
-          className="mb-20"
-        >
-          <motion.h1 variants={fadeInUp} className="text-4xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 tracking-tight mb-6">
-            ROHIT RAMBANSH YADAV
-          </motion.h1>
-          
-          <motion.div variants={fadeInUp} className="flex flex-wrap gap-4 text-sm md:text-base text-slate-400 mb-8">
-            <span className="flex items-center gap-2"><MapPin size={16} /> Kolkata, West Bengal, India</span>
-            <span className="flex items-center gap-2"><Phone size={16} /> +91-9831808979</span>
-            <a href="mailto:rohitrambansh@gmail.com" className="flex items-center gap-2 hover:text-blue-400 transition-colors"><Mail size={16} /> rohitrambansh@gmail.com</a>
-            <a href="https://linkedin.com/in/imrohit2611/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-blue-400 transition-colors"><Link2 size={16} /> linkedin.com/in/imrohit2611/</a>
-          </motion.div>
+      {/* ── Hero Section ─────────────────────────────────────────────────── */}
+      <motion.div
+        style={{ opacity: heroOpacity, scale: heroScale }}
+        className="relative z-10 pt-12 md:pt-20 pb-8"
+      >
+        <div className="max-w-5xl mx-auto px-6">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="hero-card"
+          >
+            {/* Gradient border glow */}
+            <div className="hero-card-glow" />
+            <div className="hero-card-inner">
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                {/* Avatar */}
+                <motion.div variants={scaleIn} className="shrink-0">
+                  <ProfileAvatar size={140} />
+                </motion.div>
 
-          <motion.div variants={fadeInUp}>
-            <a href="/CV/Resume_Rohit_Yadav.pdf" download className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-full font-medium transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-0.5">
-              <Download size={18} />
-              Download PDF
-            </a>
-          </motion.div>
-        </motion.header>
+                {/* Info */}
+                <div className="flex-1 text-center md:text-left">
+                  <motion.h1
+                    variants={fadeInUp}
+                    className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-amber-300 tracking-tight mb-2"
+                  >
+                    {info.name}
+                  </motion.h1>
 
-        {/* Summary */}
-        <motion.section 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="mb-20 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl p-8 shadow-xl"
-        >
-          <h2 className="text-2xl font-bold flex items-center gap-3 mb-6 text-white">
-            <Zap className="text-blue-400" /> Summary
-          </h2>
-          <p className="text-slate-300 leading-relaxed text-lg">
-            Senior Backend Engineer with 5+ years of enterprise experience building large-scale, high-availability telecom billing platforms for UK based telecom operators. Specialized in Core Java, Spring Boot, microservices, telecom rating systems, AI/LLM automation pipelines and cloud technologies. Delivered performance improvements across CDR processing systems, led UAT for MVNO billing programs, and mentored 50+ engineers.
-          </p>
-        </motion.section>
+                  <motion.p
+                    variants={fadeInUp}
+                    className="text-lg md:text-xl text-slate-400 font-medium mb-6"
+                  >
+                    {info.title}
+                  </motion.p>
 
-        {/* Work Experience */}
-        <motion.section 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="mb-20"
-        >
-          <h2 className="text-2xl font-bold flex items-center gap-3 mb-8 text-white">
-            <Briefcase className="text-blue-400" /> Work Experience
-          </h2>
-          
-          <div className="relative pl-8 md:pl-0">
-            {/* Timeline Line */}
-            <div className="hidden md:block absolute left-[120px] top-0 bottom-0 w-px bg-slate-800" />
-            
-            {/* Experience Item */}
-            <div className="relative md:flex gap-12 mb-12">
-              <div className="md:w-[120px] shrink-0 text-slate-400 font-medium mb-2 md:mb-0 pt-1">
-                Aug 2020 – Present
-              </div>
-              
-              {/* Timeline Dot */}
-              <div className="hidden md:block absolute left-[116px] top-2.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-4 ring-slate-950" />
-              
-              <div className="flex-1 bg-slate-900/40 border border-slate-800/60 rounded-2xl p-6 hover:border-slate-700 transition-colors">
-                <h3 className="text-xl font-bold text-white mb-1">IT Analyst</h3>
-                <h4 className="text-blue-400 font-medium mb-4">TATA Consultancy Services (Client: British Telecom, UK)</h4>
-                
-                <ul className="space-y-3 text-slate-300 text-sm md:text-base">
-                  <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>System Architecture & Development:</strong> Designed and delivered high-availability E2E telecom billing solutions processing 100M+ daily CDRs, driving ~£20M in revenue.</span></li>
-                  <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Domain Expertise:</strong> Managed and optimized MVNO billing, interconnect billing, and complex subscriber provisioning systems.</span></li>
-                  <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Performance Engineering:</strong> Engineered real-time CDR processing utilizing multithreading, reducing processing latency by 50%.</span></li>
-                  <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Client Leadership:</strong> Spearheaded UAT for an E2E billing application catering to a UK-based MVNO.</span></li>
-                  <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Mentorship & Leadership:</strong> Served as technical mentor for Java, upskilling over 50 associates. Technical SME for fresher hiring.</span></li>
-                  <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Career Progression:</strong> Promoted to highly competitive TCS Digital cadre within 1.5 years.</span></li>
-                </ul>
+                  {/* Contact pills */}
+                  <motion.div
+                    variants={fadeInUp}
+                    className="flex flex-wrap justify-center md:justify-start gap-2 mb-6"
+                  >
+                    <span className="contact-pill">
+                      <MapPin size={14} /> {info.location}
+                    </span>
+                    <span className="contact-pill">
+                      <Phone size={14} /> {info.phone}
+                    </span>
+                    <a href={`mailto:${info.email}`} className="contact-pill contact-pill-link">
+                      <Mail size={14} /> {info.email}
+                    </a>
+                    <a href={info.linkedin} target="_blank" rel="noreferrer" className="contact-pill contact-pill-link">
+                      <Link2 size={14} /> {info.linkedinLabel}
+                    </a>
+                  </motion.div>
 
-                <div className="mt-6 pt-6 border-t border-slate-800">
-                  <h5 className="font-semibold text-slate-200 mb-3 text-sm uppercase tracking-wider">Key Achievements</h5>
-                  <div className="flex flex-wrap gap-2">
-                    {["Bronze Guru Award (2026)", "NextGen Mentorship Program (2025)", "Top 50 in CMI Code Masters (2025 & 2026)", "Contextual Master Award (2023)"].map((ach, i) => (
-                      <span key={i} className="px-3 py-1 rounded-full bg-slate-800 text-xs font-medium text-slate-300">{ach}</span>
-                    ))}
-                  </div>
+                  {/* CTA buttons */}
+                  <motion.div variants={fadeInUp} className="flex flex-wrap justify-center md:justify-start gap-3">
+                    <button
+                      onClick={() => setIsDownloadOpen(true)}
+                      className="btn-primary"
+                    >
+                      <Download size={18} />
+                      Download CV
+                    </button>
+                    <button
+                      onClick={() => scrollToSection("experience")}
+                      className="btn-secondary"
+                    >
+                      View Profile
+                      <ChevronDown size={16} />
+                    </button>
+                  </motion.div>
                 </div>
               </div>
             </div>
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* ── Sticky section nav ───────────────────────────────────────────── */}
+      <div
+        ref={navRef}
+        className={`sticky top-0 z-30 transition-all duration-300 ${
+          scrolled ? "section-nav-scrolled" : "section-nav"
+        }`}
+      >
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="flex gap-1 overflow-x-auto custom-scrollbar py-3">
+            {SECTIONS.map((section) => {
+              const Icon = section.icon;
+              const isActive = activeSection === section.id;
+              return (
+                <button
+                  key={section.id}
+                  onClick={() => scrollToSection(section.id)}
+                  className={`nav-tab ${isActive ? "nav-tab-active" : ""}`}
+                >
+                  <Icon size={14} />
+                  <span className="hidden sm:inline">{section.label}</span>
+                </button>
+              );
+            })}
           </div>
+        </div>
+      </div>
+
+      {/* ── Content sections ─────────────────────────────────────────────── */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 pb-24">
+        {/* Summary */}
+        <motion.section
+          id="summary"
+          ref={(el) => { sectionRefs.current.summary = el; }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeInUp}
+          className="section-card mt-8"
+        >
+          <h2 className="section-title">
+            <Zap className="text-blue-400" size={22} />
+            Summary
+          </h2>
+          <p className="text-slate-300 leading-relaxed text-base md:text-lg">
+            {cvData.summary}
+          </p>
+        </motion.section>
+
+        {/* Experience */}
+        <motion.section
+          id="experience"
+          ref={(el) => { sectionRefs.current.experience = el; }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={fadeInUp}
+          className="mt-8"
+        >
+          <h2 className="section-title mb-8">
+            <Briefcase className="text-blue-400" size={22} />
+            Work Experience
+          </h2>
+
+          {cvData.experience.map((exp) => (
+            <div key={exp.id} className="section-card">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6">
+                <div>
+                  <h3 className="text-xl font-bold text-white">{exp.role}</h3>
+                  <h4 className="text-teal-400 font-medium">{exp.company}</h4>
+                </div>
+                <span className="text-sm text-slate-500 font-medium bg-slate-800/50 px-3 py-1 rounded-full whitespace-nowrap">
+                  {exp.dates}
+                </span>
+              </div>
+
+              <ul className="space-y-3">
+                {exp.bullets.map((bullet) => (
+                  <li key={bullet.id} className="exp-bullet">
+                    <span className="exp-bullet-dot" />
+                    <span>
+                      <strong className="text-slate-200">{bullet.label}:</strong>{" "}
+                      <span className="text-slate-400">{bullet.text}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Achievements */}
+              <div className="mt-6 pt-6 border-t border-white/5">
+                <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">
+                  Key Achievements
+                </h5>
+                <div className="flex flex-wrap gap-2">
+                  {exp.achievements.map((ach, i) => (
+                    <span key={i} className="achievement-tag">{ach}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
         </motion.section>
 
         {/* Education */}
-        <motion.section 
+        <motion.section
+          id="education"
+          ref={(el) => { sectionRefs.current.education = el; }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={fadeInUp}
-          className="mb-20"
+          className="mt-8"
         >
-          <h2 className="text-2xl font-bold flex items-center gap-3 mb-6 text-white">
-            <GraduationCap className="text-blue-400" /> Education
+          <h2 className="section-title mb-6">
+            <GraduationCap className="text-blue-400" size={22} />
+            Education
           </h2>
-          <div className="bg-gradient-to-r from-slate-900 to-slate-900/50 border border-slate-800 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div className="section-card flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <h3 className="text-xl font-bold text-white">B.Tech – ECE</h3>
-              <p className="text-slate-400 mt-1">Netaji Subhash Engineering College</p>
+              <h3 className="text-xl font-bold text-white">{cvData.education.degree}</h3>
+              <p className="text-slate-400 mt-1">{cvData.education.institution}</p>
             </div>
             <div className="text-left md:text-right">
-              <div className="text-blue-400 font-semibold text-lg">CGPA - 9.17/10</div>
-              <div className="text-slate-500 text-sm mt-1">2020</div>
+              <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
+                {cvData.education.cgpa}
+              </div>
+              <div className="text-sm text-slate-500 mt-1">{cvData.education.year}</div>
             </div>
           </div>
         </motion.section>
 
-        {/* Technical Skills */}
-        <motion.section 
+        {/* Skills */}
+        <motion.section
+          id="skills"
+          ref={(el) => { sectionRefs.current.skills = el; }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="mb-20"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+          className="mt-8"
         >
-          <h2 className="text-2xl font-bold flex items-center gap-3 mb-6 text-white">
-            <Code2 className="text-blue-400" /> Technical Skills
-          </h2>
+          <motion.h2 variants={fadeInUp} className="section-title mb-6">
+            <Code2 className="text-blue-400" size={22} />
+            Technical Skills
+          </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { title: "Programming Languages", desc: "Core Java, Java 8, Python, Oracle SQL, Shell Scripting, PL/SQL" },
-              { title: "Frameworks & Libraries", desc: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (JWT), Microservices, Junit, LangChain" },
-              { title: "Cloud & DevOps", desc: "AWS, Microsoft Azure, Jenkins, Git, Gitlab, Linux VMs, Jira, Maven" },
-              { title: "Methodologies & Tools", desc: "Agile, Scrum, RESTful API Integration, Amazon Q Developer" }
-            ].map((skill, idx) => (
-              <div key={idx} className="bg-slate-900/40 border border-slate-800 p-6 rounded-xl hover:bg-slate-800/50 transition-colors">
-                <h3 className="text-white font-semibold mb-2">{skill.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{skill.desc}</p>
-              </div>
+            {cvData.skills.map((skill) => (
+              <motion.div key={skill.id} variants={scaleIn} className="skill-card">
+                <h3 className="text-white font-semibold mb-2 text-sm uppercase tracking-wider">{skill.title}</h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {skill.items.split(", ").map((item, i) => (
+                    <span key={i} className="skill-tag">{item}</span>
+                  ))}
+                </div>
+              </motion.div>
             ))}
           </div>
         </motion.section>
 
         {/* Projects */}
-        <motion.section 
+        <motion.section
+          id="projects"
+          ref={(el) => { sectionRefs.current.projects = el; }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeInUp}
-          className="mb-20"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+          className="mt-8"
         >
-          <h2 className="text-2xl font-bold flex items-center gap-3 mb-6 text-white">
-            <Zap className="text-blue-400" /> Projects
-          </h2>
-          <div className="space-y-6">
-            <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-2xl group hover:border-slate-700 transition-colors">
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-2">
-                <span>Should I WFH? — Commute Decision Engine</span>
-                <a href="https://wfh.imrohit2611.co.in/" target="_blank" rel="noreferrer" className="text-sm font-normal text-blue-400 hover:text-blue-300 flex items-center gap-1"><Link2 size={14}/> wfh.imrohit2611.co.in</a>
-              </h3>
-              <ul className="space-y-2 text-slate-300 text-sm md:text-base">
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Purpose:</strong> A real-time decision engine that computes a "Commute Friction Score" to advise users on whether to work from home based on current weather and travel conditions.</span></li>
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Features:</strong> Features a mobile-first responsive UI, interactive map visualizations, dynamic scoring thresholds, and automated local alert overrides via web scraping.</span></li>
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span><strong>Tech Stack & APIs:</strong> Built with React, Python, FastAPI, and Selenium, integrated with Mapbox (Routing), TomTom (Traffic Incidents), and Open-Meteo APIs.</span></li>
-              </ul>
-            </div>
-
-            <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-2xl group hover:border-slate-700 transition-colors">
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">LLM-Based Trade Execution Bot for algorithmic trading</h3>
-              <ul className="space-y-2 text-slate-300 text-sm md:text-base">
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span>Built an AI-powered Python-based algorithmic trading platform utilizing <strong>Groq (LLaMA 3.1)</strong>, Selenium, and AWS EC2 to autonomously parse Telegram trading signals and execute risk-managed multi-leg GTT orders on the Upstox platform.</span></li>
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span>Engineered a robust system with automated daily OAuth login via TOTP, a 6-gate risk filter, and a GitHub Actions CI/CD pipeline for zero-touch deployment.</span></li>
-              </ul>
-            </div>
-            
-            <div className="bg-slate-900/40 border border-slate-800 p-6 md:p-8 rounded-2xl group hover:border-slate-700 transition-colors">
-              <h3 className="text-xl font-bold text-white mb-4 group-hover:text-blue-400 transition-colors">Ariel Droplets - Smart India Hackathon Runner-Up</h3>
-              <ul className="space-y-2 text-slate-300 text-sm md:text-base">
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span>Engineered a prototype system capable of condensing and generating potable drinking water directly from atmospheric moisture.</span></li>
-                <li className="flex items-start gap-3"><span className="text-blue-500 mt-1">•</span> <span>Presented the working prototype at the Smart India Hackathon 2019, securing the runner-up position on a national stage.</span></li>
-              </ul>
-            </div>
+          <motion.h2 variants={fadeInUp} className="section-title mb-6">
+            <Zap className="text-blue-400" size={22} />
+            Projects
+          </motion.h2>
+          <div className="space-y-4">
+            {cvData.projects.map((proj) => (
+              <motion.div key={proj.id} variants={fadeInUp} className="section-card group">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
+                  <h3 className="text-lg font-bold text-white group-hover:text-teal-400 transition-colors">
+                    {proj.name}
+                  </h3>
+                  {proj.link && (
+                    <a
+                      href={proj.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-sm text-teal-400 hover:text-teal-300 flex items-center gap-1 transition-colors"
+                    >
+                      <ExternalLink size={14} />
+                      {proj.linkLabel}
+                    </a>
+                  )}
+                </div>
+                <ul className="space-y-2">
+                  {proj.bullets.map((bullet) => (
+                    <li key={bullet.id} className="exp-bullet text-sm">
+                      <span className="exp-bullet-dot" />
+                      <span>
+                        {bullet.label && <strong className="text-slate-200">{bullet.label}: </strong>}
+                        <span className="text-slate-400">{bullet.text}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
           </div>
         </motion.section>
 
-        {/* Certifications & Leadership */}
-        <motion.section 
+        {/* Certifications */}
+        <motion.section
+          id="certifications"
+          ref={(el) => { sectionRefs.current.certifications = el; }}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-80px" }}
           variants={fadeInUp}
+          className="mt-8"
         >
-          <h2 className="text-2xl font-bold flex items-center gap-3 mb-6 text-white">
-            <Award className="text-blue-400" /> Certifications & Leadership
+          <h2 className="section-title mb-6">
+            <Award className="text-blue-400" size={22} />
+            Certifications & Leadership
           </h2>
-          <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-6 md:p-8">
-            <div className="space-y-6">
-              {[
-                { icon: "📜", title: "Cloud & Architecture", desc: "AWS Certified Solutions Architect - Associate (2025)" },
-                { icon: "📜", title: "Cloud & AI", desc: "Microsoft Certified: Azure Fundamentals (AZ-900) and Azure AI Fundamentals (AI-900) (2024)" },
-                { icon: "📜", title: "Data & Process", desc: "Certification in Data Analytics by LinkedIn and Microsoft (2024); CSSC Six Sigma White Belt (2023)" },
-                { icon: "🚀", title: "Pre-Screening Evaluator", desc: "Smart India Hackathon (2024 – 2025): Volunteered to rigorously review and evaluate technical solutions." },
-                { icon: "🚀", title: "Placement Representative", desc: "NSEC ECE Department (2019 – 2020): Managed corporate communications and oversaw placement for 120+ students." }
-              ].map((cert, idx) => (
-                <div key={idx} className="flex items-start gap-4 pb-6 border-b border-slate-800/60 last:border-0 last:pb-0">
-                  <span className="text-2xl mt-1 opacity-80">{cert.icon}</span>
+          <div className="section-card">
+            <div className="space-y-5">
+              {cvData.certifications.map((cert, idx) => (
+                <div
+                  key={cert.id}
+                  className={`flex items-start gap-4 ${
+                    idx < cvData.certifications.length - 1 ? "pb-5 border-b border-white/5" : ""
+                  }`}
+                >
+                  <span className="text-2xl mt-0.5">{cert.icon}</span>
                   <div>
                     <h4 className="font-semibold text-slate-200">{cert.title}</h4>
                     <p className="text-slate-400 text-sm mt-1">{cert.desc}</p>
@@ -240,12 +431,26 @@ export default function Home() {
             </div>
           </div>
         </motion.section>
-        
+
         {/* Footer */}
-        <footer className="mt-24 pt-8 border-t border-slate-800 text-center text-slate-500 text-sm">
-          <p>© {new Date().getFullYear()} Rohit Rambansh Yadav. All rights reserved.</p>
+        <footer className="mt-20 pt-8 border-t border-slate-800/50 text-center text-slate-600 text-sm">
+          <p>© {new Date().getFullYear()} {cvData.personalInfo.name}. All rights reserved.</p>
         </footer>
       </div>
+
+      {/* ── Floating download button (mobile) ────────────────────────────── */}
+      <motion.button
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 1, type: "spring", damping: 20 }}
+        onClick={() => setIsDownloadOpen(true)}
+        className="fab-download md:hidden"
+      >
+        <Download size={22} />
+      </motion.button>
+
+      {/* Download modal */}
+      <DownloadModal isOpen={isDownloadOpen} onClose={() => setIsDownloadOpen(false)} />
     </div>
   );
 }
