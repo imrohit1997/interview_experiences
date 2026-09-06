@@ -103,13 +103,9 @@ export default function Home() {
   const info = cvData.personalInfo;
 
   return (
-    <div className="min-h-screen bg-[#060b11] text-slate-200 selection:bg-teal-500/30">
-      {/* Background effects */}
-      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-teal-900/20 blur-[150px]" />
-        <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] rounded-full bg-cyan-900/15 blur-[150px]" />
-        <div className="absolute top-[40%] left-[60%] w-[30%] h-[30%] rounded-full bg-amber-900/8 blur-[120px]" />
-      </div>
+    <div className="min-h-screen">
+      {/* Background effects removed; handled in CSS with radial-gradients */}
+      <div className="fixed inset-0 z-0 pointer-events-none" />
 
       {/* ── Hero Section ─────────────────────────────────────────────────── */}
       <motion.div
@@ -136,14 +132,14 @@ export default function Home() {
                 <div className="flex-1 text-center md:text-left">
                   <motion.h1
                     variants={fadeInUp}
-                    className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-teal-300 via-cyan-300 to-amber-300 tracking-tight mb-2"
+                    className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#e27d60] via-[#e8a87c] to-[#c38d9e] tracking-tight mb-2"
                   >
                     {info.name}
                   </motion.h1>
 
                   <motion.p
                     variants={fadeInUp}
-                    className="text-lg md:text-xl text-slate-400 font-medium mb-6"
+                    className="text-lg md:text-xl text-[#4a5568] font-medium mb-6"
                   >
                     {info.title}
                   </motion.p>
@@ -234,7 +230,7 @@ export default function Home() {
             <Zap className="text-blue-400" size={22} />
             Summary
           </h2>
-          <p className="text-slate-300 leading-relaxed text-base md:text-lg">
+          <p className="text-slate-600 leading-relaxed text-base md:text-lg">
             {cvData.summary}
           </p>
         </motion.section>
@@ -258,10 +254,10 @@ export default function Home() {
             <div key={exp.id} className="section-card">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6">
                 <div>
-                  <h3 className="text-xl font-bold text-white">{exp.role}</h3>
-                  <h4 className="text-teal-400 font-medium">{exp.company}</h4>
+                  <h3 className="text-xl font-bold text-slate-800">{exp.role}</h3>
+                  <h4 className="text-[#e27d60] font-medium">{exp.company}</h4>
                 </div>
-                <span className="text-sm text-slate-500 font-medium bg-slate-800/50 px-3 py-1 rounded-full whitespace-nowrap">
+                <span className="text-sm text-slate-600 font-medium bg-black/5 px-3 py-1 rounded-full whitespace-nowrap">
                   {exp.dates}
                 </span>
               </div>
@@ -271,15 +267,15 @@ export default function Home() {
                   <li key={bullet.id} className="exp-bullet">
                     <span className="exp-bullet-dot" />
                     <span>
-                      <strong className="text-slate-200">{bullet.label}:</strong>{" "}
-                      <span className="text-slate-400">{bullet.text}</span>
+                      <strong className="text-slate-700">{bullet.label}:</strong>{" "}
+                      <span className="text-slate-600">{bullet.text}</span>
                     </span>
                   </li>
                 ))}
               </ul>
 
               {/* Achievements */}
-              <div className="mt-6 pt-6 border-t border-white/5">
+              <div className="mt-6 pt-6 border-t border-black/5">
                 <h5 className="text-xs font-semibold text-slate-500 uppercase tracking-widest mb-3">
                   Key Achievements
                 </h5>
@@ -309,11 +305,11 @@ export default function Home() {
           </h2>
           <div className="section-card flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <h3 className="text-xl font-bold text-white">{cvData.education.degree}</h3>
-              <p className="text-slate-400 mt-1">{cvData.education.institution}</p>
+              <h3 className="text-xl font-bold text-slate-800">{cvData.education.degree}</h3>
+              <p className="text-slate-600 mt-1">{cvData.education.institution}</p>
             </div>
             <div className="text-left md:text-right">
-              <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-cyan-400">
+              <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e27d60] to-[#e8a87c]">
                 {cvData.education.cgpa}
               </div>
               <div className="text-sm text-slate-500 mt-1">{cvData.education.year}</div>
@@ -338,7 +334,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {cvData.skills.map((skill) => (
               <motion.div key={skill.id} variants={scaleIn} className="skill-card">
-                <h3 className="text-white font-semibold mb-2 text-sm uppercase tracking-wider">{skill.title}</h3>
+                <h3 className="text-slate-800 font-semibold mb-2 text-sm uppercase tracking-wider">{skill.title}</h3>
                 <div className="flex flex-wrap gap-1.5">
                   {skill.items.split(", ").map((item, i) => (
                     <span key={i} className="skill-tag">{item}</span>
@@ -367,7 +363,7 @@ export default function Home() {
             {cvData.projects.map((proj) => (
               <motion.div key={proj.id} variants={fadeInUp} className="section-card group">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
-                  <h3 className="text-lg font-bold text-white group-hover:text-teal-400 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-800 group-hover:text-[#e27d60] transition-colors">
                     {proj.name}
                   </h3>
                   {proj.link && (
@@ -375,7 +371,7 @@ export default function Home() {
                       href={proj.link}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sm text-teal-400 hover:text-teal-300 flex items-center gap-1 transition-colors"
+                      className="text-sm text-[#e27d60] hover:text-[#d56a4c] flex items-center gap-1 transition-colors"
                     >
                       <ExternalLink size={14} />
                       {proj.linkLabel}
@@ -387,8 +383,8 @@ export default function Home() {
                     <li key={bullet.id} className="exp-bullet text-sm">
                       <span className="exp-bullet-dot" />
                       <span>
-                        {bullet.label && <strong className="text-slate-200">{bullet.label}: </strong>}
-                        <span className="text-slate-400">{bullet.text}</span>
+                        {bullet.label && <strong className="text-slate-700">{bullet.label}: </strong>}
+                        <span className="text-slate-600">{bullet.text}</span>
                       </span>
                     </li>
                   ))}
@@ -418,13 +414,13 @@ export default function Home() {
                 <div
                   key={cert.id}
                   className={`flex items-start gap-4 ${
-                    idx < cvData.certifications.length - 1 ? "pb-5 border-b border-white/5" : ""
+                    idx < cvData.certifications.length - 1 ? "pb-5 border-b border-black/5" : ""
                   }`}
                 >
                   <span className="text-2xl mt-0.5">{cert.icon}</span>
                   <div>
-                    <h4 className="font-semibold text-slate-200">{cert.title}</h4>
-                    <p className="text-slate-400 text-sm mt-1">{cert.desc}</p>
+                    <h4 className="font-semibold text-slate-800">{cert.title}</h4>
+                    <p className="text-slate-600 text-sm mt-1">{cert.desc}</p>
                   </div>
                 </div>
               ))}
@@ -433,7 +429,7 @@ export default function Home() {
         </motion.section>
 
         {/* Footer */}
-        <footer className="mt-20 pt-8 border-t border-slate-800/50 text-center text-slate-600 text-sm">
+        <footer className="mt-20 pt-8 border-t border-black/5 text-center text-slate-500 text-sm">
           <p>© {new Date().getFullYear()} {cvData.personalInfo.name}. All rights reserved.</p>
         </footer>
       </div>

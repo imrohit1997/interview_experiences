@@ -185,19 +185,19 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
               onClick={(e) => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between p-6 pb-4 border-b border-white/10">
+              <div className="flex items-center justify-between p-6 pb-4 border-b border-black/5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
                     <FileText size={20} className="text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-white">Download CV</h2>
-                    <p className="text-xs text-slate-400">ATS-compliant PDF format</p>
+                    <h2 className="text-lg font-bold text-slate-800">Download CV</h2>
+                    <p className="text-xs text-slate-500">ATS-compliant PDF format</p>
                   </div>
                 </div>
                 <button
                   onClick={onClose}
-                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/10 flex items-center justify-center transition-colors text-slate-400 hover:text-white"
+                  className="w-8 h-8 rounded-lg bg-black/5 hover:bg-black/10 flex items-center justify-center transition-colors text-slate-500 hover:text-slate-800"
                 >
                   <X size={16} />
                 </button>
@@ -210,7 +210,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${
                     mode === "full"
                       ? "bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-lg shadow-teal-500/25"
-                      : "bg-white/5 text-slate-400 hover:text-white hover:bg-white/10"
+                      : "bg-black/5 text-slate-500 hover:text-slate-800 hover:bg-black/10"
                   }`}
                 >
                   Full CV
@@ -220,7 +220,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${
                     mode === "custom"
                       ? "bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/25"
-                      : "bg-white/5 text-slate-400 hover:text-white hover:bg-white/10"
+                      : "bg-black/5 text-slate-500 hover:text-slate-800 hover:bg-black/10"
                   }`}
                 >
                   Customize Sections
@@ -234,15 +234,15 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500/20 to-cyan-500/20 flex items-center justify-center mx-auto mb-4">
                       <Download size={28} className="text-teal-400" />
                     </div>
-                    <h3 className="text-white font-semibold mb-2">Download Complete CV</h3>
-                    <p className="text-sm text-slate-400 max-w-xs mx-auto">
+                    <h3 className="text-slate-800 font-semibold mb-2">Download Complete CV</h3>
+                    <p className="text-sm text-slate-500 max-w-xs mx-auto">
                       Generate a complete, ATS-optimized PDF with all sections included. Text is fully selectable and machine-readable.
                     </p>
                   </div>
                 ) : (
                   <div>
                     {/* Select all / none */}
-                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-white/5">
+                    <div className="flex items-center justify-between mb-4 pb-3 border-b border-black/5">
                       <span className="text-xs text-slate-500 font-medium uppercase tracking-wider">
                         {selectedCount} / {totalCount} selected
                       </span>
@@ -273,7 +273,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                         return (
                           <div key={section.id}>
                             {/* Parent row */}
-                            <div className="flex items-center gap-2 py-2 px-2 rounded-lg hover:bg-white/5 transition-colors group">
+                            <div className="flex items-center gap-2 py-2 px-2 rounded-lg hover:bg-black/5 transition-colors group">
                               {/* Expand toggle */}
                               {hasChildren ? (
                                 <button
@@ -303,7 +303,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                               {/* Label */}
                               <span
                                 className={`text-sm font-medium cursor-pointer transition-colors ${
-                                  parentState !== "none" ? "text-slate-200" : "text-slate-500"
+                                  parentState !== "none" ? "text-slate-800" : "text-slate-500"
                                 }`}
                                 onClick={() => toggleSection(section.id)}
                               >
@@ -325,7 +325,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                                     {section.children!.map((child) => (
                                       <div
                                         key={child.id}
-                                        className="flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-white/5 transition-colors"
+                                        className="flex items-center gap-2 py-1.5 px-2 rounded-lg hover:bg-black/5 transition-colors"
                                       >
                                         <button
                                           onClick={() => toggleSection(child.id)}
@@ -339,7 +339,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                                         </button>
                                         <span
                                           className={`text-sm cursor-pointer transition-colors ${
-                                            selected[child.id] ? "text-slate-300" : "text-slate-600"
+                                            selected[child.id] ? "text-slate-700" : "text-slate-500"
                                           }`}
                                           onClick={() => toggleSection(child.id)}
                                         >
@@ -360,7 +360,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
               </div>
 
               {/* Footer */}
-              <div className="p-6 pt-4 border-t border-white/10">
+              <div className="p-6 pt-4 border-t border-black/5">
                 <button
                   onClick={handleDownload}
                   disabled={mode === "custom" && selectedCount === 0}
