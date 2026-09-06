@@ -103,6 +103,11 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "justify",
   },
+  certText: {
+    textAlign: "justify",
+    fontSize: 10,
+    color: "#555",
+  },
   bold: {
     fontFamily: "Helvetica-Bold",
   },
@@ -271,7 +276,7 @@ export const PdfTemplate: React.FC<PdfTemplateProps> = ({ data, selected }) => {
               .filter((c) => selected[c.id])
               .map((cert) => (
                 <View key={cert.id} style={styles.certRow}>
-                  <Text style={styles.bulletText}>
+                  <Text style={styles.certText}>
                     <Text style={styles.bold}>{cert.title}: </Text>
                     {cert.desc}
                   </Text>

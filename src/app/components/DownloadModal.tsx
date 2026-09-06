@@ -207,7 +207,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
               {/* Header */}
               <div className="flex items-center justify-between p-6 pb-4 border-b border-black/5">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#e27d60] to-[#e8a87c] flex items-center justify-center">
                     <FileText size={20} className="text-white" />
                   </div>
                   <div>
@@ -229,7 +229,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   onClick={() => setMode("full")}
                   className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${
                     mode === "full"
-                      ? "bg-gradient-to-r from-teal-600 to-teal-500 text-white shadow-lg shadow-teal-500/25"
+                      ? "bg-gradient-to-r from-[#e27d60] to-[#d56a4c] text-white shadow-lg shadow-[#e27d60]/25"
                       : "bg-black/5 text-slate-500 hover:text-slate-800 hover:bg-black/10"
                   }`}
                 >
@@ -239,7 +239,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                   onClick={() => setMode("custom")}
                   className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-medium transition-all ${
                     mode === "custom"
-                      ? "bg-gradient-to-r from-cyan-600 to-cyan-500 text-white shadow-lg shadow-cyan-500/25"
+                      ? "bg-gradient-to-r from-[#e8a87c] to-[#e27d60] text-white shadow-lg shadow-[#e8a87c]/25"
                       : "bg-black/5 text-slate-500 hover:text-slate-800 hover:bg-black/10"
                   }`}
                 >
@@ -251,8 +251,8 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
               <div className="flex-1 overflow-y-auto px-6 pb-2 custom-scrollbar">
                 {mode === "full" ? (
                   <div className="py-8 text-center">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-teal-500/20 to-cyan-500/20 flex items-center justify-center mx-auto mb-4">
-                      <Download size={28} className="text-teal-400" />
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#e27d60]/20 to-[#e8a87c]/20 flex items-center justify-center mx-auto mb-4">
+                      <Download size={28} className="text-[#e27d60]" />
                     </div>
                     <h3 className="text-slate-800 font-semibold mb-2">Download Complete CV</h3>
                     <p className="text-sm text-slate-500 max-w-xs mx-auto">
@@ -269,7 +269,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                       <div className="flex gap-2">
                         <button
                           onClick={() => selectAll(true)}
-                          className="text-xs text-teal-400 hover:text-teal-300 transition-colors"
+                          className="text-xs text-[#e27d60] hover:text-[#d56a4c] transition-colors"
                         >
                           Select All
                         </button>
@@ -309,7 +309,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                               {/* Checkbox */}
                               <button
                                 onClick={() => toggleSection(section.id)}
-                                className="text-teal-400 hover:text-teal-300 transition-colors"
+                                className="text-[#e27d60] hover:text-[#d56a4c] transition-colors"
                               >
                                 {parentState === "all" ? (
                                   <CheckSquare size={18} />
@@ -349,7 +349,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                                       >
                                         <button
                                           onClick={() => toggleSection(child.id)}
-                                          className="text-teal-400 hover:text-teal-300 transition-colors"
+                                          className="text-[#e27d60] hover:text-[#d56a4c] transition-colors"
                                         >
                                           {selected[child.id] ? (
                                             <CheckSquare size={16} />
@@ -384,7 +384,7 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
                 <button
                   onClick={handleDownload}
                   disabled={mode === "custom" && selectedCount === 0}
-                  className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-500 hover:to-cyan-500 shadow-lg shadow-teal-500/20 hover:shadow-teal-500/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full py-3 px-6 rounded-xl font-semibold text-white bg-gradient-to-r from-[#e27d60] to-[#d56a4c] hover:from-[#d56a4c] hover:to-[#e27d60] shadow-lg shadow-[#e27d60]/20 hover:shadow-[#e27d60]/30 transition-all disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   <Download size={18} />
                   {mode === "full" ? "Download Full CV" : `Download (${selectedCount} items selected)`}
