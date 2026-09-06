@@ -81,7 +81,7 @@ export const cvData: CVData = {
   },
 
   summary:
-    "Senior Backend Engineer with 5+ years of enterprise experience building large-scale, high-availability telecom billing platforms for UK based telecom operators. Specialized in Core Java, Spring Boot, microservices, telecom rating systems, AI/LLM automation pipelines and cloud technologies. Delivered performance improvements across CDR processing systems, led UAT for MVNO billing programs, and mentored 50+ engineers.",
+    "Senior Backend Engineer with 6+ years of experience designing, developing, and operating large-scale telecom billing and subscriber management platforms for leading UK telecom operators. Expertise in Java, Spring Boot, microservices, distributed systems, performance engineering, and cloud technologies. Delivered high-availability solutions processing 100M+ daily CDRs supporting £10M+ revenue streams, reduced critical processing latency by 50%, led UAT initiatives for MVNO billing programs, and contributed to technical mentoring and engineering excellence initiatives.",
 
   experience: [
     {
@@ -93,39 +93,44 @@ export const cvData: CVData = {
         {
           id: "exp-tcs-arch",
           label: "System Architecture & Development",
-          text: "Designed and delivered high-availability E2E telecom billing solutions processing 100M+ daily CDRs, driving ~£20M in revenue.",
+          text: "Designed and developed high-availability telecom billing and subscriber management platforms using Java, Spring Boot, Oracle OCOMC technologies, supporting 20+ MVNOs and processing 100M+ Call Detail Records (CDRs) daily, contributing to revenue streams exceeding ~£10M monthly.",
         },
         {
           id: "exp-tcs-domain",
           label: "Domain Expertise",
-          text: "Managed and optimized MVNO billing, interconnect billing, and complex subscriber provisioning systems.",
+          text: "Owned critical billing and provisioning modules covering subscriber lifecycle management, MVNO billing, interconnect billing, product catalog configuration, and telecom charging workflows.",
         },
         {
           id: "exp-tcs-perf",
           label: "Performance Engineering",
-          text: "Engineered real-time CDR processing utilizing multithreading, reducing processing latency by 50%.",
+          text: "Designed and implemented a multithreaded CDR processing framework that reduced processing latency by 50%, enabling near real-time billing operations while improving throughput and operational efficiency.",
+        },
+        {
+          id: "exp-tcs-ownership",
+          label: "Ownership",
+          text: "Led root cause analysis and resolution of critical production incidents, ensuring platform stability, minimizing customer impact, and maintaining strict SLA commitments. Collaborated with solution architects and cross-functional teams on application design reviews, performance optimization initiatives, deployment strategies, and platform modernization efforts.",
         },
         {
           id: "exp-tcs-client",
           label: "Client Leadership",
-          text: "Spearheaded UAT for an E2E billing application catering to a UK-based MVNO.",
+          text: "Spearheaded the User Acceptance Testing (UAT) phase for an E2E billing application catering to a UK-based MVNO, resulting in formal client appreciation.",
         },
         {
           id: "exp-tcs-mentor",
           label: "Mentorship & Leadership",
-          text: "Served as technical mentor for Java, upskilling over 50 associates. Technical SME for fresher hiring.",
+          text: "Conducted Java and backend engineering training programs for 50+ associates across internal and external learning initiatives, supporting onboarding, upskilling, and technical capability development. Actively volunteered in project-level and team-building activities. Participated in TCS fresher hiring process as a Technical SME.",
         },
         {
           id: "exp-tcs-promo",
           label: "Career Progression",
-          text: "Promoted to highly competitive TCS Digital cadre within 1.5 years.",
+          text: "Promoted to the highly competitive TCS Digital cadre within just 1.5 years of joining after successfully clearing rigorous internal technical assessments.",
         },
       ],
       achievements: [
-        "Bronze Guru Award (2026)",
-        "NextGen Mentorship Program (2025)",
-        "Top 50 in CMI Code Masters (2025 & 2026)",
-        "Contextual Master Award (2023)",
+        "Bronze Guru Award for talent development initiatives (2026)",
+        "Selected for TCS NextGen Mentorship Program (2025)",
+        "Ranked 22nd nationally in TCS CMI Code Masters (2025)",
+        "Contextual Master Award for system optimization (2023)",
       ],
     },
   ],
@@ -141,24 +146,23 @@ export const cvData: CVData = {
   skills: [
     {
       id: "skill-lang",
-      title: "Programming Languages",
+      title: "Programming",
       items: "Core Java, Java 8, Python, Oracle SQL, Shell Scripting, PL/SQL",
     },
     {
       id: "skill-fw",
       title: "Frameworks & Libraries",
-      items:
-        "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (JWT), Microservices, Junit, LangChain",
+      items: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT), Microservices, Junit, TDD",
     },
     {
       id: "skill-cloud",
       title: "Cloud & DevOps",
-      items: "AWS, Microsoft Azure, Jenkins, Git, Gitlab, Linux VMs, Jira, Maven",
+      items: "AWS, Microsoft Azure, Jenkins, Git, Gitlab CI/CD, Linux",
     },
     {
-      id: "skill-method",
-      title: "Methodologies & Tools",
-      items: "Agile, Scrum, RESTful API Integration, Amazon Q Developer",
+      id: "skill-ai",
+      title: "AI & Automation",
+      items: "LangChain, Groq/Gemini API, Claude AI, Amazon Q Developer",
     },
   ],
 
@@ -188,15 +192,15 @@ export const cvData: CVData = {
     },
     {
       id: "proj-trading",
-      name: "LLM-Based Trade Execution Bot for algorithmic trading",
+      name: "LLM-Based Trade Execution Platform",
       bullets: [
         {
           id: "proj-trading-1",
-          text: "Built an AI-powered Python-based algorithmic trading platform utilizing Groq (LLaMA 3.1), Selenium, and AWS EC2 to autonomously parse Telegram trading signals and execute risk-managed multi-leg GTT orders on the Upstox platform.",
+          text: "Developed a Python-based automated trading platform leveraging Groq (LLaMA 3.1), LangChain, Selenium, and AWS EC2 to convert Telegram trading signals into executable Upstox orders.",
         },
         {
           id: "proj-trading-2",
-          text: "Engineered a robust system with automated daily OAuth login via TOTP, a 6-gate risk filter, and a GitHub Actions CI/CD pipeline for zero-touch deployment.",
+          text: "Implemented automated authentication, risk management controls, EMA-based trend filtering, liquidity validation, and CI/CD deployment pipelines using GitHub Actions.",
         },
       ],
     },
@@ -218,34 +222,58 @@ export const cvData: CVData = {
 
   certifications: [
     {
+      id: "cert-ai",
+      icon: "🤖",
+      title: "AI & Agents",
+      desc: "Claude Certified Developer - Foundations (CCDV-F) (2026)",
+    },
+    {
       id: "cert-aws",
-      icon: "📜",
+      icon: "☁️",
       title: "Cloud & Architecture",
       desc: "AWS Certified Solutions Architect - Associate (2025)",
     },
     {
       id: "cert-azure",
-      icon: "📜",
+      icon: "☁️",
       title: "Cloud & AI",
       desc: "Microsoft Certified: Azure Fundamentals (AZ-900) and Azure AI Fundamentals (AI-900) (2024)",
     },
     {
       id: "cert-data",
-      icon: "📜",
+      icon: "📊",
       title: "Data & Process",
       desc: "Certification in Data Analytics by LinkedIn and Microsoft (2024); CSSC Six Sigma White Belt (2023)",
     },
     {
-      id: "cert-sih",
-      icon: "🚀",
-      title: "Pre-Screening Evaluator",
-      desc: "Smart India Hackathon (2024 – 2025): Volunteered to rigorously review and evaluate technical solutions.",
+      id: "cert-honors",
+      icon: "🏆",
+      title: "Academic Honors",
+      desc: "Achieved State-level ranks of 56 and 60 in the Science and Mathematics Olympiad, respectively (2015).",
     },
     {
-      id: "cert-placement",
+      id: "cert-training",
+      icon: "🎓",
+      title: "Additional Training",
+      desc: "Udemy certification in Core Java, DevOps, Shell scripting, Spring Boot (2021); NPTEL certification in Python Data Structures/Algorithms (2019).",
+    },
+    {
+      id: "leader-sih",
       icon: "🚀",
+      title: "Pre-Screening Evaluator",
+      desc: "Smart India Hackathon (2024 – 2025): Volunteered to rigorously review and evaluate technical solutions submitted by engineering teams nationwide.",
+    },
+    {
+      id: "leader-placement",
+      icon: "👥",
       title: "Placement Representative",
-      desc: "NSEC ECE Department (2019 – 2020): Managed corporate communications and oversaw placement for 120+ students.",
+      desc: "NSEC ECE Department (2019 – 2020): Managed corporate communications and oversaw the placement process for a batch of 120+ students.",
+    },
+    {
+      id: "leader-intern",
+      icon: "✍️",
+      title: "Content Writing Intern",
+      desc: "Connect My Edu (2018): Completed a virtual internship focused on researching, writing, and proofreading articles.",
     },
   ],
 };
