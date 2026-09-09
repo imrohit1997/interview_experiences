@@ -161,6 +161,11 @@ export default function Home() {
                     <a href={info.linkedin} target="_blank" rel="noreferrer" className="contact-pill contact-pill-link">
                       <Link2 size={14} /> {info.linkedinLabel}
                     </a>
+                    {info.website && (
+                      <a href={info.website} target="_blank" rel="noreferrer" className="contact-pill contact-pill-link">
+                        <ExternalLink size={14} /> {info.websiteLabel}
+                      </a>
+                    )}
                   </motion.div>
 
                   {/* CTA buttons */}

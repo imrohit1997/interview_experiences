@@ -11,6 +11,8 @@ export interface PersonalInfo {
   email: string;
   linkedin: string;
   linkedinLabel: string;
+  website?: string;
+  websiteLabel?: string;
 }
 
 export interface ExperienceBullet {
@@ -116,6 +118,11 @@ export const cvData: CVData = {
           text: "Spearheaded the User Acceptance Testing (UAT) phase for an E2E billing application catering to a UK-based MVNO, resulting in formal client appreciation.",
         },
         {
+          id: "exp-tcs-frontend",
+          label: "Frontend & UI Troubleshooting",
+          text: "Acquired basic working knowledge of React and frontend development, actively participating in UI troubleshooting and ensuring seamless frontend-backend integration.",
+        },
+        {
           id: "exp-tcs-mentor",
           label: "Mentorship & Leadership",
           text: "Conducted Java and backend engineering training programs for 50+ associates across internal and external learning initiatives, supporting onboarding, upskilling, and technical capability development. Actively volunteered in project-level and team-building activities. Participated in TCS fresher hiring process as a Technical SME.",
@@ -152,7 +159,7 @@ export const cvData: CVData = {
     {
       id: "skill-fw",
       title: "Frameworks & Libraries",
-      items: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT), Microservices, Junit, TDD",
+      items: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT), Microservices, Junit, React",
     },
     {
       id: "skill-cloud",
@@ -175,17 +182,14 @@ export const cvData: CVData = {
       bullets: [
         {
           id: "proj-wfh-purpose",
-          label: "Purpose",
           text: 'A real-time decision engine that computes a "Commute Friction Score" to advise users on whether to work from home based on current weather and travel conditions.',
         },
         {
           id: "proj-wfh-feat",
-          label: "Features",
           text: "Features a mobile-first responsive UI, interactive map visualizations, dynamic scoring thresholds, and automated local alert overrides via web scraping.",
         },
         {
           id: "proj-wfh-tech",
-          label: "Tech Stack & APIs",
           text: "Built with React, Python, FastAPI, and Selenium, integrated with Mapbox (Routing), TomTom (Traffic Incidents), and Open-Meteo APIs.",
         },
       ],
