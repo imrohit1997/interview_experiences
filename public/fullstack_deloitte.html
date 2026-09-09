@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senior Full Stack Deloitte Interview Experience</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #2980b9;
+            margin-top: 40px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .metadata {
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .metadata p {
+            margin: 5px 0;
+            font-size: 1.1em;
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .answer {
+            margin-bottom: 20px;
+            padding-left: 15px;
+        }
+
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            background-color: #f1f1f1;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            font-size: 0.9em;
+        }
+        
+        pre code {
+            display: block;
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Senior Full Stack Deloitte Interview Experience</h1>
+
+    <div class="metadata">
+        <p><strong>Date:</strong> September 9, 2026</p>
+        <p><strong>Duration:</strong> ~52 minutes (16:01:39 – 16:53:49)</p>
+    </div>
+
+    <h2>AI Tools & Development Practices (16:03:17)</h2>
+    <div class="question">1. Do you have experience using AI-assisted coding tools (like Copilot, Claude, etc.)? How do you incorporate them into your day-to-day activities? Do you just prompt the AI, or have you built your own agents?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <p>Yes, I heavily utilize AI-assisted tools to enhance productivity, but with a disciplined approach.</p>
+        <ul>
+            <li><strong>Daily Usage:</strong> I use tools like GitHub Copilot and Claude for generating boilerplate code, writing repetitive unit tests, and quickly exploring unfamiliar APIs. However, I always treat the output as a draft that requires strict code review, especially for security and edge cases.</li>
+            <li><strong>Custom Agents:</strong> Beyond simple prompting, I have integrated LLM APIs (like OpenAI) into my CLI workflows. For example, I built a custom script that analyzes complex stack traces from our APM tools, queries documentation, and provides a summarized root cause analysis to reduce Mean Time to Resolution (MTTR).</li>
+        </ul>
+    </div>
+
+    <h2>System Architecture: Telecom Billing (16:06:18)</h2>
+    <div class="question">2. You mentioned building a telecom billing platform handling 20+ MVNOs and 100M+ Call Detail Records (CDRs) daily. Can you walk me through the end-to-end architecture from CDR ingestion to billing output?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <p>The architecture is designed for high throughput, fault tolerance, and eventual consistency:</p>
+        <ul>
+            <li><strong>Ingestion Layer:</strong> Network elements push CDRs via SFTP. We use Apache NiFi or a custom Go/Java service to ingest and validate the raw files, pushing individual records onto an Apache Kafka topic partitioned by MVNO ID.</li>
+            <li><strong>Stream Processing & Deduplication:</strong> Apache Flink consumes the Kafka streams. It performs real-time deduplication (using state backends) and standardizes the CDR formats.</li>
+            <li><strong>Rating Engine:</strong> A microservice built with Spring Boot and a rule engine (like Drools) consumes the standardized CDRs. It applies complex tariff plans and discounts in memory for low latency.</li>
+            <li><strong>Storage:</strong> Processed records are persisted into a NoSQL database (like Apache Cassandra) for high write-throughput storage and fast retrieval.</li>
+            <li><strong>Billing & Invoicing:</strong> A batch processing system (Spring Batch) runs at the end of the billing cycle, aggregating data from Cassandra, generating invoices, and storing the final financial records in a relational database like PostgreSQL for ACID compliance.</li>
+        </ul>
+    </div>
+
+    <h2>System Design: Data Integrity (16:10:30)</h2>
+    <div class="question">3. In telecom billing, duplicate or lost CDRs directly impact revenue. How do you design safeguards against these issues?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>Duplicates:</strong> Every CDR must have a globally unique identifier generated at the source. At the ingestion layer, we implement deduplication using Bloom Filters combined with Redis for a sliding window of recent IDs. The database also enforces uniqueness constraints on this ID.</li>
+            <li><strong>Lost Records:</strong> We implement an "Exactly-Once" processing semantic where possible using Kafka transactional producers. Furthermore, we use end-to-end reconciliation: the ingestion layer logs the count of records received per batch, and the rating engine logs the count processed. An independent reconciliation service periodically compares these counts and alerts on discrepancies.</li>
+            <li><strong>Orphan Records:</strong> Records that fail validation or rating are sent to a Dead Letter Queue (DLQ). These are monitored and can be manually corrected or automatically replayed.</li>
+        </ul>
+    </div>
+
+    <h2>React: Rendering & Optimization (16:14:03)</h2>
+    <div class="question">4. What causes a React component to re-render, and how do you prevent unnecessary rendering? How would you optimize a page with an interactive map and multiple API-driven widgets?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>Causes of Re-renders:</strong> State changes (<code>useState</code>, <code>useReducer</code>), Prop changes, Parent component re-rendering, or changes in Context values.</li>
+            <li><strong>Prevention:</strong> I use <code>React.memo</code> for component-level memoization, and <code>useMemo</code> / <code>useCallback</code> to preserve object references across renders. Context is split granularly to prevent unrelated components from updating.</li>
+            <li><strong>Map & Widget Optimization:</strong> For heavy interactive pages, I lazy load the map component using <code>React.lazy()</code>. For the map events (like panning), I heavily debounce the event handlers to avoid spamming state updates. The API-driven widgets are decoupled; they manage their own data fetching using libraries like React Query, which handles caching and prevents redundant network requests.</li>
+        </ul>
+    </div>
+
+    <h2>React: Async Data Management (16:15:10)</h2>
+    <div class="question">5. How would you manage loading asynchronous data (weather, traffic, map data) at different times, handling errors, and managing stale states in the UI?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <p>I rely on a robust data-fetching library like <strong>React Query (TanStack Query)</strong> or SWR.</p>
+        <ul>
+            <li><strong>Loading States:</strong> These libraries provide <code>isLoading</code> and <code>isFetching</code> flags. I use these to render skeleton loaders for individual widgets so the rest of the page remains interactive.</li>
+            <li><strong>Error Handling:</strong> I use the <code>isError</code> flag for local widget fallbacks (e.g., "Failed to load weather"). For critical errors, I wrap the component tree in a React Error Boundary to prevent the entire app from crashing.</li>
+            <li><strong>Stale Data:</strong> I configure an appropriate <code>staleTime</code> for each data source (e.g., weather might be stale after 15 minutes, traffic after 2 minutes). React Query automatically refetches data in the background when the user refocuses the window or the data becomes stale, providing a seamless experience.</li>
+        </ul>
+    </div>
+
+    <h2>Frontend Security & Accessibility (16:17:57)</h2>
+    <div class="question">6. How do you build a secure front-end application consuming a JWT-protected API? What accessibility practices would you apply to a dashboard UI?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>JWT Security:</strong> I never store JWTs in <code>localStorage</code> or <code>sessionStorage</code> due to XSS vulnerability. Instead, I architect the backend to return the JWT inside an <code>HttpOnly</code>, <code>Secure</code> cookie. For protection against CSRF, I use anti-CSRF tokens or ensure <code>SameSite=Strict</code> attributes on the cookie.</li>
+            <li><strong>Accessibility (a11y):</strong> Dashboards must be navigable. I ensure proper semantic HTML (using <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>). Interactive elements like charts or custom dropdowns use proper ARIA roles and attributes (<code>aria-expanded</code>, <code>aria-live</code> for dynamic data updates). I also ensure a high color contrast ratio and full keyboard navigability (managing focus states).</li>
+        </ul>
+    </div>
+
+    <h2>Spring Boot: Dependency Injection & API Design (16:21:01)</h2>
+    <div class="question">7. Can you explain Spring Boot dependency injection? How would you design a REST API for a subscriber activation?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>Dependency Injection (DI):</strong> It's an implementation of Inversion of Control. Instead of objects creating their dependencies, the Spring IoC Container injects them. As a senior developer, I strictly use <strong>Constructor Injection</strong> over field injection (<code>@Autowired</code>) because it makes dependencies explicit, allows fields to be <code>final</code> (immutable), and simplifies unit testing without requiring the Spring context.</li>
+            <li><strong>API Design (Subscriber Activation):</strong> I would design an idempotent POST endpoint: <code>POST /api/v1/subscribers/{id}/activations</code>. It returns a <code>202 Accepted</code> if the activation is an asynchronous process (putting a message on a queue) along with a Location header pointing to a status endpoint. I would use standard HTTP status codes, correlation IDs for tracing, and robust payload validation.</li>
+        </ul>
+    </div>
+
+    <h2>Java: Exception Handling & Memory Leaks (16:25:17 & 16:32:54)</h2>
+    <div class="question">8. How do you structure exception handling in a Spring Boot API? What are common causes of memory leaks in Java backend services?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>Exception Handling:</strong> I use <code>@RestControllerAdvice</code> for global exception handling. I map custom business exceptions and standard exceptions (like validation errors) to a standardized JSON response format, usually following the RFC 7807 Problem Details specification. This ensures clients always receive a predictable error structure.</li>
+            <li><strong>Memory Leaks:</strong> Common causes include: Unclosed resources (database connections, streams), static collections (like HashMaps) that grow indefinitely as caches without eviction policies, un-removed <code>ThreadLocal</code> variables (especially dangerous in application servers with thread pools), and adding objects to HashSets/HashMaps without properly overriding <code>equals()</code> and <code>hashCode()</code>, causing duplicate entries.</li>
+        </ul>
+    </div>
+
+    <h2>Database: Indexing Trade-offs & Performance (16:27:05)</h2>
+    <div class="question">9. A billing query on a large CDR table is running slow. How do you diagnose it? What are the indexing trade-offs for a table receiving millions of records per day?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>Diagnosis:</strong> I start by running an <code>EXPLAIN ANALYZE</code> (in PostgreSQL) or equivalent to inspect the query execution plan. I look for full table scans, high-cost joins, or situations where the database planner is ignoring an index.</li>
+            <li><strong>Indexing Trade-offs:</strong> Indexes drastically speed up read queries by allowing O(log N) lookups instead of O(N) scans. However, for a table receiving millions of inserts daily, every new index adds overhead to write operations because the index tree must be updated. It also consumes disk space. In heavy write scenarios, I might prefer table partitioning (e.g., by date) over adding multiple secondary indexes, or delay index creation during bulk data loads.</li>
+        </ul>
+    </div>
+
+    <h2>AWS & Infrastructure (16:34:29 & 16:37:51)</h2>
+    <div class="question">10. How would you list all running EC2 instances using the AWS CLI? How do you view pod logs in Kubernetes?</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <ul>
+            <li><strong>AWS CLI (EC2):</strong> You can filter instances using:
+<pre><code>aws ec2 describe-instances --filters "Name=instance-state-name,Values=running" --query "Reservations[*].Instances[*].[InstanceId, State.Name]" --output table</code></pre>
+            </li>
+            <li><strong>S3 Bucket Creation:</strong>
+<pre><code>aws s3api create-bucket --bucket training-bucket-2026 --region ap-south-1 --create-bucket-configuration LocationConstraint=ap-south-1</code></pre>
+            </li>
+            <li><strong>Kubernetes Logs:</strong> I use <code>kubectl logs &lt;pod-name&gt;</code>. In a production environment, I often use <code>-f</code> to tail the logs live, or <code>--previous</code> if the pod recently crashed and restarted. If the pod has multiple containers, I specify the container with the <code>-c</code> flag.</li>
+        </ul>
+    </div>
+
+    <h2>Coding Assessment: Two Sum (16:39:28)</h2>
+    <div class="question">11. Write a program which takes an array of integers and a target, and returns the indices of two numbers that add up to that target.</div>
+    <div class="answer">
+        <p><strong>Senior Dev Answer:</strong></p>
+        <p>Instead of a brute-force O(N^2) approach, we can optimize this to O(N) time and O(N) space using a HashMap to store the complements.</p>
+<pre><code>class Solution {
+    public int[] twoSum(int[] nums, int target) {
+        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();
+        for (int i = 0; i &lt; nums.length; i++) {
+            int complement = target - nums[i];
+            if (map.containsKey(complement)) {
+                return new int[] { map.get(complement), i };
+            }
+            map.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No two sum solution");
+    }
+}</code></pre>
+    </div>
+
+</body>
+</html>
