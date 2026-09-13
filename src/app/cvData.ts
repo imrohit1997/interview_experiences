@@ -136,7 +136,7 @@ export const cvData: CVData = {
       achievements: [
         "Bronze Guru Award for talent development initiatives (2026)",
         "Completed TCS NextGen Mentorship Program (2025)",
-        "Under top 50 rank in TCS CMI Code Masters (2025 -2026)",
+        "Top 50 rank in TCS CMI Code Masters (2025 -2026)",
         "Contextual Master Award for system optimization (2023)",
       ],
     },
@@ -159,7 +159,7 @@ export const cvData: CVData = {
     {
       id: "skill-fw",
       title: "Frameworks & Libraries",
-      items: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security (with JWT), Microservices, Junit, React",
+      items: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security, Microservices, Junit, React",
     },
     {
       id: "skill-cloud",
@@ -169,7 +169,7 @@ export const cvData: CVData = {
     {
       id: "skill-ai",
       title: "AI & Automation",
-      items: "LangChain, Groq/Gemini API, Claude AI, Amazon Q Developer",
+      items: "LangChain, MCP, Groq/Gemini API, Claude AI, Amazon Q Developer",
     },
   ],
 
@@ -200,7 +200,7 @@ export const cvData: CVData = {
       bullets: [
         {
           id: "proj-trading-1",
-          text: "Developed a Python-based automated trading platform leveraging Groq (LLaMA 3.1), LangChain, Selenium, and AWS EC2 to convert Telegram trading signals into executable Upstox orders.",
+          text: "Developed a Python-based automated trading platform leveraging Groq APIs (LLaMA), LangChain, Selenium, and AWS EC2 to convert Telegram trading signals into executable Upstox orders.",
         },
         {
           id: "proj-trading-2",
