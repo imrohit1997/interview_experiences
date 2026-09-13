@@ -74,7 +74,7 @@ export interface CVData {
 export const cvData: CVData = {
   personalInfo: {
     name: "Rohit Rambansh Yadav",
-    title: "Senior Backend Engineer",
+    title: "Senior Software Engineer",
     location: "Kolkata, West Bengal, India",
     phone: "+91-9831808979",
     email: "rohitrambansh@gmail.com",
@@ -83,7 +83,7 @@ export const cvData: CVData = {
   },
 
   summary:
-    "Senior Backend Engineer with 6+ years of experience designing, developing, and operating large-scale telecom billing and subscriber management platforms for leading UK telecom operators. Expertise in Java, Spring Boot, microservices, distributed systems, performance engineering, and cloud technologies. Delivered high-availability solutions processing 100M+ daily CDRs supporting £10M+ revenue streams, reduced critical processing latency by 50%, led UAT initiatives for MVNO billing programs, and contributed to technical mentoring and engineering excellence initiatives.",
+    "Senior Software Engineer with 6+ years of experience designing, developing, and operating large-scale telecom billing and subscriber management platforms for leading UK telecom operators. Expertise in Java, Spring Boot, microservices, distributed systems, performance engineering, cloud technologies and full stack development. Delivered high-availability solutions processing 100M+ daily CDRs supporting £10M+ revenue streams, reduced critical processing latency by 50%, led UAT initiatives for MVNO billing programs, and contributed to technical mentoring and engineering excellence initiatives.",
 
   experience: [
     {
@@ -135,8 +135,8 @@ export const cvData: CVData = {
       ],
       achievements: [
         "Bronze Guru Award for talent development initiatives (2026)",
-        "Selected for TCS NextGen Mentorship Program (2025)",
-        "Ranked 22nd nationally in TCS CMI Code Masters (2025)",
+        "Completed TCS NextGen Mentorship Program (2025)",
+        "Under top 50 rank in TCS CMI Code Masters (2025 -2026)",
         "Contextual Master Award for system optimization (2023)",
       ],
     },

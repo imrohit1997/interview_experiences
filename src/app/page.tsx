@@ -132,7 +132,7 @@ export default function Home() {
                 <div className="flex-1 text-center md:text-left">
                   <motion.h1
                     variants={fadeInUp}
-                    className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#e27d60] via-[#e8a87c] to-[#c38d9e] tracking-tight mb-2"
+                    className="text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#2563eb] via-[#60a5fa] to-[#818cf8] tracking-tight mb-2"
                   >
                     {info.name}
                   </motion.h1>
@@ -260,7 +260,7 @@ export default function Home() {
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-6">
                 <div>
                   <h3 className="text-xl font-bold text-slate-800">{exp.role}</h3>
-                  <h4 className="text-[#e27d60] font-medium">{exp.company}</h4>
+                  <h4 className="text-[#2563eb] font-medium">{exp.company}</h4>
                 </div>
                 <span className="text-sm text-slate-600 font-medium bg-black/5 px-3 py-1 rounded-full whitespace-nowrap">
                   {exp.dates}
@@ -314,7 +314,7 @@ export default function Home() {
               <p className="text-slate-600 mt-1">{cvData.education.institution}</p>
             </div>
             <div className="text-left md:text-right">
-              <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#e27d60] to-[#e8a87c]">
+              <div className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#2563eb] to-[#60a5fa]">
                 {cvData.education.cgpa}
               </div>
               <div className="text-sm text-slate-500 mt-1">{cvData.education.year}</div>
@@ -368,7 +368,7 @@ export default function Home() {
             {cvData.projects.map((proj) => (
               <motion.div key={proj.id} variants={fadeInUp} className="section-card group">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-4">
-                  <h3 className="text-lg font-bold text-slate-800 group-hover:text-[#e27d60] transition-colors">
+                  <h3 className="text-lg font-bold text-slate-800 group-hover:text-[#2563eb] transition-colors">
                     {proj.name}
                   </h3>
                   {proj.link && (
@@ -376,7 +376,7 @@ export default function Home() {
                       href={proj.link}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sm text-[#e27d60] hover:text-[#d56a4c] flex items-center gap-1 transition-colors"
+                      className="text-sm text-[#2563eb] hover:text-[#1d4ed8] flex items-center gap-1 transition-colors"
                     >
                       <ExternalLink size={14} />
                       {proj.linkLabel}
