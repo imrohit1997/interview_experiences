@@ -15,67 +15,75 @@ import { CVData } from "../cvData";
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    paddingTop: 54,       // 0.75 inch
+    paddingBottom: 54,    // 0.75 inch
+    paddingHorizontal: 54, // 0.75 inch
     fontFamily: "Helvetica",
     fontSize: 10,
     color: "#333",
-    lineHeight: 1.5,
+    lineHeight: 1.15,
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 8,
     textAlign: "center",
   },
   name: {
-    fontSize: 24,
+    fontSize: 18,
     fontFamily: "Helvetica-Bold",
-    marginBottom: 4,
+    marginBottom: 6,
     color: "#000",
   },
   title: {
-    fontSize: 12,
+    fontSize: 11,
     color: "#555",
-    marginBottom: 8,
+    marginBottom: 4,
   },
   contactRow: {
     flexDirection: "row",
     justifyContent: "center",
     flexWrap: "wrap",
-    gap: 10,
     fontSize: 9,
     color: "#555",
+  },
+  contactSeparator: {
+    marginHorizontal: 4,
+    color: "#aaa",
   },
   link: {
     color: "#0056b3",
     textDecoration: "none",
   },
   section: {
-    marginBottom: 16,
+    marginTop: 7,         // 7pt before each section header
+    marginBottom: 2,
   },
   sectionTitle: {
-    fontSize: 12,
+    fontSize: 11,
     fontFamily: "Helvetica-Bold",
     color: "#000",
     textTransform: "uppercase",
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
+    letterSpacing: 0.5,
+    borderBottomWidth: 0.75,
+    borderBottomColor: "#888",
     paddingBottom: 2,
-    marginBottom: 8,
+    marginBottom: 4,
   },
   summaryText: {
     textAlign: "justify",
   },
   itemGroup: {
-    marginBottom: 10,
+    marginBottom: 5,
+    minPresenceAhead: 50,
   },
   itemHeaderRow: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-between",  // right-aligns dates via flexbox (tab-stop equivalent)
     alignItems: "flex-start",
-    marginBottom: 2,
+    marginBottom: 1,
   },
   itemTitle: {
     fontFamily: "Helvetica-Bold",
-    fontSize: 11,
+    fontSize: 10.5,
     color: "#000",
   },
   itemSubtitle: {
@@ -86,17 +94,19 @@ const styles = StyleSheet.create({
   itemDate: {
     fontSize: 10,
     color: "#555",
+    textAlign: "right",   // explicit right-alignment for ATS date parsing
   },
   bulletList: {
-    marginTop: 4,
+    marginTop: 2,
+    paddingLeft: 8,
   },
   bulletItem: {
     flexDirection: "row",
-    marginBottom: 3,
+    marginBottom: 1.5,
     alignItems: "flex-start",
   },
   bulletPoint: {
-    width: 10,
+    width: 8,
     fontSize: 10,
   },
   bulletText: {
@@ -106,24 +116,29 @@ const styles = StyleSheet.create({
   certText: {
     textAlign: "justify",
     fontSize: 10,
-    color: "#555",
+    color: "#333",
   },
   bold: {
     fontFamily: "Helvetica-Bold",
   },
   skillRow: {
     flexDirection: "row",
-    marginBottom: 4,
+    marginBottom: 2,
   },
   skillCategory: {
-    width: "25%",
+    width: "28%",
     fontFamily: "Helvetica-Bold",
   },
   skillItems: {
     flex: 1,
   },
   certRow: {
-    marginBottom: 4,
+    marginBottom: 2,
+  },
+  linkLine: {
+    fontSize: 9,
+    color: "#555",
+    marginTop: 1,
   },
 });
 
@@ -144,15 +159,15 @@ export const PdfTemplate: React.FC<PdfTemplateProps> = ({ data, selected }) => {
           <Text style={styles.title}>{info.title}</Text>
           <View style={styles.contactRow}>
             <Text>{info.location}</Text>
-            <Text>|</Text>
+            <Text style={styles.contactSeparator}>|</Text>
             <Text>{info.phone}</Text>
-            <Text>|</Text>
+            <Text style={styles.contactSeparator}>|</Text>
             <Link src={`mailto:${info.email}`} style={styles.link}>
               {info.email}
             </Link>
-            <Text>|</Text>
+            <Text style={styles.contactSeparator}>|</Text>
             <Link src={info.linkedin} style={styles.link}>
-              {info.linkedinLabel}
+              {info.linkedin.replace(/^https?:\/\//, "")}
             </Link>
           </View>
         </View>
@@ -240,16 +255,15 @@ export const PdfTemplate: React.FC<PdfTemplateProps> = ({ data, selected }) => {
               .filter((p) => selected[p.id])
               .map((proj) => (
                 <View key={proj.id} style={styles.itemGroup}>
-                  <View style={styles.itemHeaderRow}>
-                    <Text style={styles.itemTitle}>
-                      {proj.name}{" "}
-                      {proj.link && (
-                        <Link src={proj.link} style={styles.link}>
-                          ({proj.linkLabel})
-                        </Link>
-                      )}
+                  <Text style={styles.itemTitle}>{proj.name}</Text>
+                  {proj.link && (
+                    <Text style={styles.linkLine}>
+                      <Text>Link: </Text>
+                      <Link src={proj.link} style={styles.link}>
+                        {proj.link.replace(/^https?:\/\//, "")}
+                      </Link>
                     </Text>
-                  </View>
+                  )}
                   <View style={styles.bulletList}>
                     {proj.bullets.map((bullet) => (
                       <View key={bullet.id} style={styles.bulletItem}>

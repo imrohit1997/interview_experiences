@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Download, ChevronDown, ChevronRight, CheckSquare, Square, MinusSquare, FileText } from "lucide-react";
 import { pdf } from "@react-pdf/renderer";
+import { saveAs } from "file-saver";
 import { cvData, getSectionTree } from "../cvData";
 import { PdfTemplate } from "./PdfTemplate";
 
@@ -161,20 +162,12 @@ export default function DownloadModal({ isOpen, onClose }: DownloadModalProps) {
     // Generate PDF Blob using @react-pdf/renderer
     try {
       const blob = await pdf(<PdfTemplate data={cvData} selected={finalSelection} />).toBlob();
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
       const fileName = cvData.personalInfo.name.replace(/\s+/g, "_") + "_CV.pdf";
-      link.download = fileName;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      saveAs(blob, fileName);
     } catch (err) {
       console.error("Error generating PDF:", err);
       alert("Failed to generate PDF. Please try again.");
     }
-    
     onClose();
   }
 
