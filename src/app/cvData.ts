@@ -322,10 +322,13 @@ export function getSectionTree(): SectionMeta[] {
     {
       id: "experience",
       label: "Work Experience",
-      children: cvData.experience[0].bullets.map((b) => ({
-        id: b.id,
-        label: b.label,
-      })),
+      children: [
+        ...cvData.experience[0].bullets.map((b) => ({
+          id: b.id,
+          label: b.label,
+        })),
+        { id: "exp-achievements", label: "Key Achievements" },
+      ],
     },
     { id: "education", label: "Education" },
     {

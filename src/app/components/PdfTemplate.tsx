@@ -140,6 +140,16 @@ const styles = StyleSheet.create({
     color: "#555",
     marginTop: 1,
   },
+  achievementBlock: {
+    marginTop: 3,
+    paddingLeft: 8,
+  },
+  achievementText: {
+    fontSize: 9.5,
+    color: "#333",
+    lineHeight: 1.25,
+    textAlign: "justify",
+  },
 });
 
 interface PdfTemplateProps {
@@ -208,6 +218,17 @@ export const PdfTemplate: React.FC<PdfTemplateProps> = ({ data, selected }) => {
                       </View>
                     ))}
                 </View>
+                {/* Key Achievements */}
+                {(selected["exp-achievements"] ?? true) &&
+                  exp.achievements &&
+                  exp.achievements.length > 0 && (
+                    <View style={styles.achievementBlock}>
+                      <Text style={styles.achievementText}>
+                        <Text style={styles.bold}>Key Achievements: </Text>
+                        {exp.achievements.join("  •  ")}
+                      </Text>
+                    </View>
+                  )}
               </View>
             ))}
           </View>
