@@ -123,10 +123,10 @@ const styles = StyleSheet.create({
   },
   skillRow: {
     flexDirection: "row",
-    marginBottom: 2,
+    marginBottom: 2.5,
   },
   skillCategory: {
-    width: "28%",
+    width: "30%",
     fontFamily: "Helvetica-Bold",
   },
   skillItems: {

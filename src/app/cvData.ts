@@ -19,6 +19,7 @@ export interface ExperienceBullet {
   id: string;
   label: string;
   text: string;
+  team?: string;
 }
 
 export interface Experience {
@@ -42,6 +43,8 @@ export interface SkillCategory {
   id: string;
   title: string;
   items: string;
+  tier?: "primary" | "secondary" | "cloud" | "ai" | "domain";
+  badge?: string;
 }
 
 export interface Project {
@@ -83,7 +86,7 @@ export const cvData: CVData = {
   },
 
   summary:
-    "Senior Software Engineer with 6+ years of experience designing, developing, and operating large-scale telecom billing and subscriber management platforms for leading UK telecom operators. Expertise in Java, Spring Boot, microservices, distributed systems, performance engineering, cloud technologies and full stack development. Delivered high-availability solutions processing 100M+ daily CDRs supporting £10M+ revenue streams, reduced critical processing latency by 50%, led UAT initiatives for MVNO billing programs, and contributed to technical mentoring and engineering excellence initiatives.",
+    "Senior Software Engineer with 6+ years of experience architecting and operating high-throughput telecom billing platforms and cloud automation engines for leading UK telecom operators. Core expertise in Java, Spring Boot, microservices, multithreading, and distributed systems, complemented by practical delivery in Python, AWS serverless (Lambda), and GenAI integration (Amazon Bedrock). Proven track record of engineering mission-critical pipelines processing 100M+ daily CDRs (£10M+ monthly revenue), cutting processing latency by 50%, spearheading client UAT delivery for tier-1 MVNOs, and mentoring 50+ engineers.",
 
   experience: [
     {
@@ -93,43 +96,51 @@ export const cvData: CVData = {
       dates: "Aug 2020 – Present",
       bullets: [
         {
-          id: "exp-tcs-arch",
-          label: "System Architecture & Development",
-          text: "Designed and developed high-availability telecom billing and subscriber management platforms using Java, Spring Boot, Oracle OCOMC technologies, supporting 20+ MVNOs and processing 100M+ Call Detail Records (CDRs) daily, contributing to revenue streams exceeding ~£10M monthly.",
-        },
-        {
-          id: "exp-tcs-domain",
-          label: "Domain Expertise",
-          text: "Owned critical billing and provisioning modules covering subscriber lifecycle management, MVNO billing, interconnect billing, product catalog configuration, and telecom charging workflows.",
+          id: "exp-tcs-mediation",
+          label: "Mediation Engine & Ingestion (OCOMC)",
+          team: "Wholesale Billing",
+          text: "Designed and developed high-availability mediation pipelines using Java, Spring Boot, and Oracle OCOMC, ingesting and processing 100M+ Call Detail Records (CDRs) daily across 20+ MVNOs, supporting revenue streams exceeding ~£10M monthly.",
         },
         {
           id: "exp-tcs-perf",
-          label: "Performance Engineering",
-          text: "Designed and implemented a multithreaded CDR processing framework that reduced processing latency by 50%, enabling near real-time billing operations while improving throughput and operational efficiency.",
+          label: "Performance Engineering & Concurrency",
+          team: "Wholesale Billing",
+          text: "Architected and implemented a multithreaded CDR processing framework that reduced critical processing latency by 50%, enabling near real-time billing operations and significantly improving data throughput.",
         },
         {
-          id: "exp-tcs-ownership",
-          label: "Ownership",
-          text: "Led root cause analysis and resolution of critical production incidents, ensuring platform stability, minimizing customer impact, and maintaining strict SLA commitments. Collaborated with solution architects and cross-functional teams on application design reviews, performance optimization initiatives, deployment strategies, and platform modernization efforts.",
+          id: "exp-tcs-billing",
+          label: "MVNO Rating & Subscriber Lifecycle Core",
+          team: "Wholesale Billing",
+          text: "Owned critical billing, rating, and provisioning microservices covering subscriber lifecycle management, interconnect billing, usage charging workflows, and dynamic product catalog configurations.",
         },
         {
           id: "exp-tcs-client",
-          label: "Client Leadership",
-          text: "Spearheaded the User Acceptance Testing (UAT) phase for an E2E billing application catering to a UK-based MVNO, resulting in formal client appreciation.",
+          label: "Client Leadership & UAT Delivery",
+          team: "Wholesale Billing",
+          text: "Spearheaded the User Acceptance Testing (UAT) phase for an end-to-end billing application for a UK-based MVNO, collaborating directly with client stakeholders to achieve zero-defect delivery and formal client appreciation.",
         },
         {
-          id: "exp-tcs-frontend",
-          label: "Frontend & UI Troubleshooting",
-          text: "Acquired basic working knowledge of React and frontend development, actively participating in UI troubleshooting and ensuring seamless frontend-backend integration.",
+          id: "exp-tcs-ownership",
+          label: "Platform Reliability & Incident RCA",
+          team: "Wholesale Billing",
+          text: "Led root cause analysis (RCA) and mitigation for critical production incidents, maintaining 99.99%+ SLA compliance; partnered with solution architects on system design reviews, performance optimization, and platform modernization.",
+        },
+        {
+          id: "exp-tcs-automation",
+          label: "Enterprise Billing Automation",
+          team: "International Billing",
+          text: "Contributed to the development of a serverless billing automation platform using Python, AWS Lambda, and React/TypeScript to replace manual Excel workflows for enterprise accounts; implemented Python processing modules for automated Excel pivot generation, OCR-based PDF data extraction, and invoice assembly, while supporting integration with an Amazon Bedrock LLM deterministic intent layer and deployed on AWS via Gitlab CI/CD pipelines.",
         },
         {
           id: "exp-tcs-mentor",
-          label: "Mentorship & Leadership",
-          text: "Conducted Java and backend engineering training programs for 50+ associates across internal and external learning initiatives, supporting onboarding, upskilling, and technical capability development. Actively volunteered in project-level and team-building activities. Participated in TCS fresher hiring process as a Technical SME.",
+          label: "Technical Mentorship & Capability Building",
+          team: "TCS",
+          text: "Conducted Java and backend engineering training programs for 50+ associates across internal and external learning initiatives, supporting onboarding, upskilling, and technical capability development; actively served as Technical SME for TCS campus recruitment.",
         },
         {
           id: "exp-tcs-promo",
-          label: "Career Progression",
+          label: "Career Progression & Digital Cadre",
+          team: "TCS",
           text: "Promoted to the highly competitive TCS Digital cadre within just 1.5 years of joining after successfully clearing rigorous internal technical assessments.",
         },
       ],
@@ -152,24 +163,39 @@ export const cvData: CVData = {
 
   skills: [
     {
-      id: "skill-lang",
-      title: "Programming",
-      items: "Core Java, Java 8, Python, Oracle SQL, Shell Scripting, PL/SQL",
+      id: "skill-primary",
+      title: "Primary / Advanced",
+      items: "Core Java, Java 8/11, Spring Boot, Microservices, REST API, Oracle OCOMC, JUnit, Multithreading, Distributed Systems, Oracle SQL, Performance Tuning",
+      tier: "primary",
+      badge: "Core Production",
     },
     {
-      id: "skill-fw",
-      title: "Frameworks & Libraries",
-      items: "Oracle OCOMC/ONM, Spring Boot, Spring MVC, Spring Security, Microservices, Junit, React",
+      id: "skill-secondary",
+      title: "Secondary / Familiar",
+      items: "Python, React/TypeScript, PL/SQL, Shell Scripting",
+      tier: "secondary",
+      badge: "Working Knowledge",
     },
     {
       id: "skill-cloud",
       title: "Cloud & DevOps",
-      items: "AWS, Microsoft Azure, Jenkins, Git, Gitlab CI/CD, Linux",
+      items: "AWS, Microsoft Azure, Linux, Docker, Git, GitLab CI/CD, Jenkins",
+      tier: "cloud",
+      badge: "Cloud & Infra",
     },
     {
       id: "skill-ai",
       title: "AI & Automation",
-      items: "LangChain, MCP, Groq/Gemini API, Claude AI, Amazon Q Developer",
+      items: "LangChain, Model Context Protocol (MCP), Groq/Gemini APIs, Claude AI, Amazon Q Developer, AWS Bedrock",
+      tier: "ai",
+      badge: "GenAI & Automation",
+    },
+    {
+      id: "skill-domain",
+      title: "Domain & Core Architecture",
+      items: "Telecom Billing (BSS/OSS), CDR Mediation, High-Throughput Pipelines, MVNO Integration, SLA Incident RCA",
+      tier: "domain",
+      badge: "Domain Expertise",
     },
   ],
 
@@ -196,15 +222,15 @@ export const cvData: CVData = {
     },
     {
       id: "proj-trading",
-      name: "LLM-Based Trade Execution Platform",
+      name: "LLM-Based Algorithmic Trading Platform",
       bullets: [
         {
           id: "proj-trading-1",
-          text: "Developed a Python-based automated trading platform leveraging Groq APIs (LLaMA), LangChain, Selenium, and AWS EC2 to convert Telegram trading signals into executable Upstox orders.",
+          text: "Architected a hybrid, Human-in-the-Loop (HITL) trading platform in Python leveraging Groq (LLaMA) and LangChain to ingest unstructured natural language trade inputs and autonomously convert them into validated, executable GTT orders.",
         },
         {
           id: "proj-trading-2",
-          text: "Implemented automated authentication, risk management controls, EMA-based trend filtering, liquidity validation, and CI/CD deployment pipelines using GitHub Actions.",
+          text: "Engineered a multi-broker execution layer integrating automated headless 2FA authentication, multi-gate quantitative risk filters (EMA trend, liquidity spreads, slippage guards), and CI/CD pipelines backed by 270+ unit tests and deployed on AWS EC2 instance.",
         },
       ],
     },

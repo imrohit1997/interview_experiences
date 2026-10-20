@@ -56,6 +56,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("summary");
   const [isDownloadOpen, setIsDownloadOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [selectedSkillTier, setSelectedSkillTier] = useState<string>("all");
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({});
   const navRef = useRef<HTMLDivElement>(null);
 
@@ -267,14 +268,23 @@ export default function Home() {
                 </span>
               </div>
 
-              <ul className="space-y-3">
+              <ul className="space-y-4">
                 {exp.bullets.map((bullet) => (
-                  <li key={bullet.id} className="exp-bullet">
+                  <li key={bullet.id} className="exp-bullet group">
                     <span className="exp-bullet-dot" />
-                    <span>
-                      <strong className="text-slate-700">{bullet.label}:</strong>{" "}
-                      <span className="text-slate-600">{bullet.text}</span>
-                    </span>
+                    <div className="flex-1 space-y-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <strong className="text-slate-800 font-semibold">{bullet.label}</strong>
+                        {bullet.team && (
+                          <span className="text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60 shadow-xs">
+                            {bullet.team}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-slate-600 leading-relaxed text-sm md:text-base">
+                        {bullet.text}
+                      </p>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -332,21 +342,98 @@ export default function Home() {
           variants={staggerContainer}
           className="mt-8"
         >
-          <motion.h2 variants={fadeInUp} className="section-title mb-6">
-            <Code2 className="text-blue-400" size={22} />
-            Technical Skills
-          </motion.h2>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <motion.h2 variants={fadeInUp} className="section-title">
+              <Code2 className="text-blue-400" size={22} />
+              Technical Skills
+            </motion.h2>
+
+            {/* Filter Pills */}
+            <motion.div variants={fadeInUp} className="flex flex-wrap gap-1.5">
+              {[
+                { id: "all", label: "All Skills" },
+                { id: "primary", label: "⚡ Primary / Advanced" },
+                { id: "secondary", label: "🛠️ Secondary / Familiar" },
+                { id: "cloud-ai", label: "☁️ Cloud & AI" },
+                { id: "domain", label: "🏛️ Domain" },
+              ].map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setSelectedSkillTier(tab.id)}
+                  className={`text-xs font-semibold px-3 py-1.5 rounded-full transition-all duration-200 cursor-pointer ${
+                    selectedSkillTier === tab.id
+                      ? "bg-[#2563eb] text-white shadow-sm shadow-blue-500/30 scale-102"
+                      : "bg-white/80 hover:bg-white text-slate-600 hover:text-slate-900 border border-slate-200/80 shadow-xs"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </motion.div>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {cvData.skills.map((skill) => (
-              <motion.div key={skill.id} variants={scaleIn} className="skill-card">
-                <h3 className="text-slate-800 font-semibold mb-2 text-sm uppercase tracking-wider">{skill.title}</h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {skill.items.split(", ").map((item, i) => (
-                    <span key={i} className="skill-tag">{item}</span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+            {cvData.skills
+              .filter((skill) => {
+                if (selectedSkillTier === "all") return true;
+                if (selectedSkillTier === "primary") return skill.tier === "primary";
+                if (selectedSkillTier === "secondary") return skill.tier === "secondary";
+                if (selectedSkillTier === "cloud-ai") return skill.tier === "cloud" || skill.tier === "ai";
+                if (selectedSkillTier === "domain") return skill.tier === "domain";
+                return true;
+              })
+              .map((skill) => {
+                const isPrimary = skill.tier === "primary";
+                return (
+                  <motion.div
+                    key={skill.id}
+                    variants={scaleIn}
+                    layout
+                    className={`skill-card relative transition-all ${
+                      isPrimary
+                        ? "border-blue-400/40 bg-gradient-to-br from-white/95 to-blue-50/30 ring-1 ring-blue-500/10 shadow-sm"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <h3 className="text-slate-800 font-bold text-sm tracking-wider uppercase">
+                        {skill.title}
+                      </h3>
+                      {skill.badge && (
+                        <span
+                          className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full ${
+                            skill.tier === "primary"
+                              ? "bg-blue-100 text-blue-800 border border-blue-200/80"
+                              : skill.tier === "secondary"
+                              ? "bg-slate-100 text-slate-700 border border-slate-200"
+                              : skill.tier === "cloud"
+                              ? "bg-sky-50 text-sky-700 border border-sky-200"
+                              : skill.tier === "ai"
+                              ? "bg-purple-50 text-purple-700 border border-purple-200"
+                              : "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                          }`}
+                        >
+                          {skill.badge}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {skill.items.split(", ").map((item, i) => (
+                        <span
+                          key={i}
+                          className={`skill-tag ${
+                            isPrimary
+                              ? "font-medium text-slate-800 bg-white border-blue-100/80 shadow-xs hover:border-blue-300 hover:text-blue-600"
+                              : ""
+                          }`}
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                );
+              })}
           </div>
         </motion.section>
 
